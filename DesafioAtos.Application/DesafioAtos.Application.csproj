@@ -10,6 +10,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj"/>
     <ProjectReference Include="..\DesafioAtos.Service\DesafioAtos.Service.csproj"/>
+    <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj"/>
   </ItemGroup>
 
 </Project>
