@@ -1,8 +1,11 @@
-public interface IBaseRepository<T> where T : Base
+namespace DesafioAtos.Infra.Repository.Interfaces
 {
-    Task<T> Create(T entity);
-    Task Update(T entity);
-    Task Remove(long id);
-    Task<List<T>> Get();
-    Task<T> GetById(long id);
+    public interface IBaseRepository<T> where T : Base
+    {
+        Task<T> Create(T entity);
+        Task Update(T entity);
+        Task Remove(long id);
+        Task<List<T>> Get();
+        Task<T> GetById(long id);
+    }
 }
