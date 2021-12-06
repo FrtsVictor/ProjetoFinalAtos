@@ -1,52 +1,64 @@
+using System.Threading.Tasks;
+using DesafioAtos.Application.ActionFilters.ValidateModel;
+using DesafioAtos.Infra.UnitfWork;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
-[Route("api/v1/user")]
-[ApiController]
-public class UserController : ControllerBase
+namespace DesafioAtos.Application.Controllers
 {
-    private readonly ICustomerRepository _cutomerRepository;
-
-    public UserController(ICustomerRepository cutomerRepository)
+    [Route("api/v1/user")]
+    [ApiController]
+    [ValidateModelActionFilter]
+    public class UserController : ControllerBase
     {
-        _cutomerRepository = cutomerRepository;
-    }
+        private readonly ILogger<UserController> _logger;
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IResponseFactory _responseFactory;
 
-    [HttpPost]
-    public async Task<IActionResult> Create(Customer customer)
-    {
-        var crated = await _cutomerRepository.Create(customer);
-        return Ok(crated);
-    }
+        public UserController(ILogger<UserController> logger, IUnitOfWork unitOfWork, IResponseFactory responseFactory)
+        {
+            _responseFactory = responseFactory;
+            _logger = logger;
+            _unitOfWork = unitOfWork;
+        }
 
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update(long id, Customer customer)
-    {
-        var userToBeUpdated = await _cutomerRepository.GetById(id);
-        userToBeUpdated.Cpf = customer.Cpf;
-        userToBeUpdated.Name = customer.Name;
-        userToBeUpdated.Password = customer.Password;
-        userToBeUpdated.Username = customer.Username;
+        [HttpPost]
+        public async Task<IActionResult> Create(Customer customer)
+        {
+            var crated = await _unitOfWork.Customers.Create(customer);
+            return Ok(crated);
+        }
 
-        await _cutomerRepository.Update(userToBeUpdated);
-        return NoContent();
-    }
+        [HttpPut("{id:long}")]
+        public async Task<IActionResult> Update(long id, Customer customer)
+        {
+            var userToBeUpdated = await _unitOfWork.Customers.GetById(id);
+            userToBeUpdated.Cpf = customer.Cpf;
+            userToBeUpdated.Name = customer.Name;
+            userToBeUpdated.Password = customer.Password;
+            userToBeUpdated.Username = customer.Username;
 
-    [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(long id)
-    {
-        await _cutomerRepository.Remove(id);
-        return NoContent();
-    }
+            await _unitOfWork.Customers.Update(userToBeUpdated);
+            return NoContent();
+        }
 
-    [HttpGet("custommer/{id}")]    
-    public async Task<IActionResult> GetByid(long id)
-    {        
-        return Ok(await _cutomerRepository.GetById(id));
-    }
+        [HttpDelete("{id:long}")]
+        public async Task<IActionResult> Delete(long id)
+        {
+            await _unitOfWork.Customers.Remove(id);
+            return NoContent();
+        }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
-    {
-        return Ok(await _cutomerRepository.Get());
+        [HttpGet("customer/{id:long}")]
+        public async Task<IActionResult> GetById(long id)
+        {
+            return Ok(await _unitOfWork.Customers.GetById(id));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetAll()
+        {
+            return Ok(await _unitOfWork.Customers.Get());
+        }
     }
 }
