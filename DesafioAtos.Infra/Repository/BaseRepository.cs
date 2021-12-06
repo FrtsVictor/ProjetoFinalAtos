@@ -1,26 +1,34 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using DesafioAtos.Infra.Context;
+using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : Base
 {
-    private readonly DatabaseContext _context;
+    protected DatabaseContext _context;
+    protected DbSet<T> dbSet;
+    private DatabaseContext context;
+    protected readonly ILogger _logger;
 
-    public BaseRepository(DatabaseContext context)
+    protected BaseRepository(DatabaseContext context, ILogger logger)
     {
+        _logger = logger;
         _context = context;
+        this.dbSet = context.Set<T>();
     }
+
+    public BaseRepository(DatabaseContext context) => this.context = context;
 
     public virtual async Task<T> Create(T entity)
     {
-        _context.Set<T>().Add(entity);
+        await dbSet.AddAsync(entity);
         await _context.SaveChangesAsync();
         return entity;
     }
 
     public virtual async Task Update(T entity)
     {
-        _context.Set<T>().Update(entity);
+        dbSet.Update(entity);
         await _context.SaveChangesAsync();
     }
 
@@ -30,7 +38,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 
         if (userToBeRemoved != null)
         {
-            _context.Set<T>().Remove(userToBeRemoved);
+            dbSet.Remove(userToBeRemoved);
         }
 
         await _context.SaveChangesAsync();
@@ -38,7 +46,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 
     public virtual async Task<T> GetById(long id)
     {
-        var entity = await _context.Set<T>()
+        var entity = await dbSet
                                  .AsNoTracking()
                                  .Where(x => x.Id == id)
                                  .ToListAsync();
@@ -48,6 +56,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 
     public virtual async Task<List<T>> Get()
     {
-        return await _context.Set<T>().AsNoTracking().ToListAsync();
+        return await dbSet.AsNoTracking().ToListAsync();
     }
 }
