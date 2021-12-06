@@ -13,5 +13,6 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="6.0.0"/>
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.0"/>
+    <PackageReference Include="UnitOfWork" Version="0.24.0"/>
   </ItemGroup>
 </Project>

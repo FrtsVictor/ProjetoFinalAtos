@@ -1,29 +1,33 @@
-using DesafioAtos.Infra.Repository;
-using Microsoft.AspNetCore.Builder;
+using DesafioAtos.Application.Controllers;
+using DesafioAtos.Infra.Context;
+using DesafioAtos.Infra.UnitfWork;
 using Microsoft.EntityFrameworkCore;
-
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
+using Np.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
+var dbKey = builder.Configuration["cryptography:AppDbKey"];
+var cryptography = new Cryptography();
+var connectionString = cryptography.Decrypt(dbKey, builder.Configuration.GetConnectionString("AppDb"));
+var environment = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
-// Add services to the container.
-
-var connectionString = builder.Configuration.GetConnectionString("AppDb");
-
-builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddSingleton<IResponseFactory, ResponseFactory>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IMapper, Mapper>();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+.ConfigureApiBehaviorOptions(options =>
+    {
+        options.SuppressModelStateInvalidFilter = true;
+    });
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-
-
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -36,4 +40,10 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+
+
 app.Run();
+
+
+
+
