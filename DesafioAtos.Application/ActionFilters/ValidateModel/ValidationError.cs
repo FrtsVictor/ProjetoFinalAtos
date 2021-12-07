@@ -4,6 +4,7 @@ namespace DesafioAtos.Application.ActionFilters.ValidateModel
 {
     public class ValidationError
     {
+
         [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
         public string Field { get; }
 

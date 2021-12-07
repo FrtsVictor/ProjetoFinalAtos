@@ -1,5 +1,4 @@
-using System.Collections.Generic;
-
+namespace DesafioAtos.Domain.Entities;
 public class Customer : User
 {
     public string Name { get; set; }

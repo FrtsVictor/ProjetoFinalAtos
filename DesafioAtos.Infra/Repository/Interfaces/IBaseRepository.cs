@@ -1,3 +1,5 @@
+using DesafioAtos.Domain.Entities;
+
 namespace DesafioAtos.Infra.Repository.Interfaces
 {
     public interface IBaseRepository<T> where T : Base

@@ -1,3 +1,5 @@
+namespace DesafioAtos.Domain.Dtos;
+
 public class LoginDto
 {
     public int Username { get; set; }

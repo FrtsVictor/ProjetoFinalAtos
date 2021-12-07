@@ -1,3 +1,4 @@
+using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.Extensions.Logging;

@@ -1,8 +1,7 @@
-using System.Threading.Tasks;
 using DesafioAtos.Application.ActionFilters.ValidateModel;
+using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.UnitfWork;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace DesafioAtos.Application.Controllers
 {

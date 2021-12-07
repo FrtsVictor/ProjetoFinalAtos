@@ -1,6 +1,6 @@
-using System;
 using System.Text.Json.Serialization;
 
+namespace DesafioAtos.Domain.Entities;
 public abstract class Base
 {
     [JsonIgnore]
