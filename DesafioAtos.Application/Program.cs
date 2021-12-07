@@ -2,6 +2,7 @@ using DesafioAtos.Application.Controllers;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitfWork;
+using DesafioAtos.Service;
 using Microsoft.EntityFrameworkCore;
 using Np.Cryptography;
 
@@ -11,9 +12,11 @@ var cryptography = new Cryptography();
 var connectionString = cryptography.Decrypt(dbKey, builder.Configuration.GetConnectionString("AppDb"));
 var environment = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+builder.Services.AddSingleton<ICryptography, Cryptography>();
 builder.Services.AddSingleton<IResponseFactory, ResponseFactory>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddSingleton<IMapper, Mapper>();
+builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString));
 
 builder.Services.AddControllers()
@@ -26,7 +29,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-
 
 
 if (app.Environment.IsDevelopment())
