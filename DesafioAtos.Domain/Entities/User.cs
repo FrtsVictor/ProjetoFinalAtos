@@ -1,3 +1,5 @@
+namespace DesafioAtos.Domain.Entities;
+
 public class User : Base
 {
     public string Username { get; set; }

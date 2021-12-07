@@ -1,3 +1,5 @@
+namespace DesafioAtos.Domain.Entities;
+
 public class Address : Base
 {
     public int Number { get; set; }

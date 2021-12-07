@@ -1,3 +1,4 @@
+using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -6,10 +7,9 @@ namespace DesafioAtos.Infra.Context
 {
     public class DatabaseContext : DbContext
     {
-        public virtual DbSet<Customer> Customers { get; set; }
+        public DbSet<Customer> Customers { get; set; }
         //    DbSet<Address> Addresses { get; set; }
-        private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => { builder.AddConsole();});
-
+        private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(Console.WriteLine);
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

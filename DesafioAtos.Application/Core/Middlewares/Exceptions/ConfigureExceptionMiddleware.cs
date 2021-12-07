@@ -15,6 +15,7 @@ namespace DesafioAtos.Application.Core.Middlewares.Exceptions
                         context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
                         context.Response.ContentType = "text/html";
                         var exceptionObject = context.Features.Get<IExceptionHandlerFeature>();
+
                         if (null != exceptionObject)
                         {
                             var errorMessage = $"{exceptionObject.Error.Message}";

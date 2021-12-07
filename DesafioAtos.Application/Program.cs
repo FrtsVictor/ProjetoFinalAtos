@@ -1,4 +1,5 @@
 using DesafioAtos.Application.Controllers;
+using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitfWork;
 using Microsoft.EntityFrameworkCore;

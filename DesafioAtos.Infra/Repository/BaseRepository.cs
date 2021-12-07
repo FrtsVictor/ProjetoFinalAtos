@@ -1,3 +1,4 @@
+using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 {
     protected DatabaseContext _context;
     protected DbSet<T> dbSet;
-    private DatabaseContext context;
     protected readonly ILogger _logger;
 
     protected BaseRepository(DatabaseContext context, ILogger logger)
@@ -16,8 +16,6 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
         _context = context;
         this.dbSet = context.Set<T>();
     }
-
-    public BaseRepository(DatabaseContext context) => this.context = context;
 
     public virtual async Task<T> Create(T entity)
     {
