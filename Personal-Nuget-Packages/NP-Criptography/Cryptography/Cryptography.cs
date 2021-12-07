@@ -1,11 +1,8 @@
-﻿using System;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography;
+﻿using System.Security.Cryptography;
 
 namespace Np.Cryptography;
 
-public sealed class Cryptography
+public sealed class Cryptography : ICryptography
 {
     private readonly byte[] Salt;
 
