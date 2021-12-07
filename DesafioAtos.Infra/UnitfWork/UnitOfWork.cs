@@ -10,6 +10,7 @@ namespace DesafioAtos.Infra.UnitfWork
         private readonly DatabaseContext _context;
         private readonly ILogger _logger;
         public ICustomerRepository Customers { get; private set; }
+        public IUserRepository Users { get; private set; }
 
         public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory)
         {
@@ -17,9 +18,10 @@ namespace DesafioAtos.Infra.UnitfWork
             _logger = loggerFactory.CreateLogger("logs");
 
             if (Customers == null)
-            {
                 Customers = new CustomerRepository(_context, _logger);
-            }
+
+            if (Users == null)
+                Users = new UserRepository(_context, _logger);
         }
 
         public async Task CompleteAsync()

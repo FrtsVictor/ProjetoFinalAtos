@@ -5,6 +5,7 @@ namespace DesafioAtos.Infra.UnitfWork
     public interface IUnitOfWork
     {
         ICustomerRepository Customers { get; }
+        IUserRepository Users { get; }
 
         Task CompleteAsync();
     }
