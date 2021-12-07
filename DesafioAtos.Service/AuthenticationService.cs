@@ -34,7 +34,7 @@ namespace DesafioAtos.Service
 
             if(user == null || !user.Password.Equals(ecryptedPassword) )
             {
-                throw new Exception("Usuario invalido");
+                throw new Exception("Usuario invalido");                
             }
 
             return user;
@@ -44,7 +44,7 @@ namespace DesafioAtos.Service
         {
             var userToBeCreated = _mapper.MapUserDtoToUser(userDto);
             userToBeCreated.Password = _cryptography.Encrypt(_encryptKey, userToBeCreated.Password);
-            var userCreated = await _unitOfWork.Users.Create(userToBeCreated);
+            var userCreated = await _unitOfWork.ExecuteAsync<User>(() => _unitOfWork.Users.Create(userToBeCreated));
             return userCreated;
         }
     }
