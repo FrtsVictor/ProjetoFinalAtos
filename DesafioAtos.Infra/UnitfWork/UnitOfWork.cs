@@ -26,7 +26,24 @@ namespace DesafioAtos.Infra.UnitfWork
 
         public async Task CompleteAsync()
         {
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();            
+        }
+
+        public async Task<T> ExecuteAsync<T>(Func<Task<T>> callback)
+        {            
+            using (var transaction = _context.Database.BeginTransactionAsync())
+            {
+                try
+                {
+                    var result = await callback();                    
+                    await CompleteAsync();
+                    return result;
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+            }
         }
 
         public void Dispose()
