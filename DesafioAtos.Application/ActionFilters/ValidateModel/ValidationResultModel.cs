@@ -12,7 +12,7 @@ namespace DesafioAtos.Application.ActionFilters.ValidateModel
         {
             Message = "Validation Failed";
             Errors = modelState.Keys
-                    .SelectMany(key => modelState[key]?.Errors.Select(x => new ValidationError(key, x.ErrorMessage)))
+                    .SelectMany(key => modelState[key]?.Errors?.Select(x => new ValidationError(key, x?.ErrorMessage)))
                     .ToList();
         }
     }
