@@ -24,8 +24,8 @@ namespace DesafioAtos.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(Customer customer)
         {
-            var crated = await _unitOfWork.Customers.Create(customer);
-            return Ok(crated);
+            await _unitOfWork.Customers.Create(customer);
+            return Ok("crated");
         }
 
         [HttpPut("{id:long}")]
@@ -37,7 +37,7 @@ namespace DesafioAtos.Application.Controllers
             userToBeUpdated.Password = customer.Password;
             userToBeUpdated.Username = customer.Username;
 
-            await _unitOfWork.Customers.Update(userToBeUpdated);
+            _unitOfWork.Customers.Update(userToBeUpdated);
             return NoContent();
         }
 
