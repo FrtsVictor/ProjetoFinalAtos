@@ -1,13 +1,15 @@
 using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.Context;
+using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 public class BaseRepository<T> : IBaseRepository<T> where T : Base
 {
-    protected DatabaseContext _context;
-    protected DbSet<T> dbSet;
+    private const string ErrorMessage = "Sorry we got an error ate repository layer check inner exception";
+    internal DatabaseContext _context;
+    internal DbSet<T> dbSet;
     protected readonly ILogger _logger;
 
     protected BaseRepository(DatabaseContext context, ILogger logger)
@@ -19,41 +21,56 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
 
     public virtual async Task<T> Create(T entity)
     {
-        await dbSet.AddAsync(entity);
-        //await _context.SaveChangesAsync();
+        await ExecuteWithErrorHandler(
+            async () =>
+            {
+                return await dbSet.AddAsync(entity);
+            });
+
         return entity;
     }
 
-    public virtual async Task Update(T entity)
+    public virtual void Update(T entity)
     {
         dbSet.Update(entity);
-        await _context.SaveChangesAsync();
     }
 
     public virtual async Task Remove(long id)
     {
-        var userToBeRemoved = await GetById(id);
-
-        if (userToBeRemoved != null)
+        await ExecuteWithErrorHandler(async () =>
         {
-            dbSet.Remove(userToBeRemoved);
-        }
+            var userToBeRemoved = await GetById(id);
 
-        await _context.SaveChangesAsync();
+            if (userToBeRemoved != null)
+            {
+                dbSet.Remove(userToBeRemoved);
+            }
+
+            return await _context.SaveChangesAsync();
+        });
     }
 
     public virtual async Task<T> GetById(long id)
     {
-        var entity = await dbSet
-                                 .AsNoTracking()
-                                 .Where(x => x.Id == id)
-                                 .ToListAsync();
-
-        return entity.FirstOrDefault();
+        return await ExecuteWithErrorHandler<T>(
+            async () => await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync());
     }
 
     public virtual async Task<List<T>> Get()
     {
-        return await dbSet.AsNoTracking().ToListAsync();
+        return await ExecuteWithErrorHandler(
+            async () => await dbSet.AsNoTracking().ToListAsync());
+    }
+
+    protected async Task<T> ExecuteWithErrorHandler<T>(Func<Task<T>> callback)
+    {
+        try
+        {
+            return await callback();
+        }
+        catch (Exception e)
+        {
+            throw new DatabaseException(ErrorMessage, e);
+        }
     }
 }

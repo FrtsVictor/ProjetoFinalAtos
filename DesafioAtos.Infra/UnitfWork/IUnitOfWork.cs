@@ -6,9 +6,8 @@ namespace DesafioAtos.Infra.UnitfWork
     {
         ICustomerRepository Customers { get; }
         IUserRepository Users { get; }
-
+        IRoleRepository Roles { get; }
         Task CompleteAsync();
-
-        Task<T> ExecuteAsync<T>(Func<Task<T>> callback);
+        Task<T> ExecuteChangesAsync<T>(Func<Task<T>> callback);
     }
 }
