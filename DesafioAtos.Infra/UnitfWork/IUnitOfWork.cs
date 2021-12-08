@@ -9,6 +9,6 @@ namespace DesafioAtos.Infra.UnitfWork
         IRoleRepository Roles { get; }
         Task CompleteAsync();
         Task<T> ExecuteAsync<T>(Func<Task<T>> callback);
-        Task ExecuteAsync<T>(Func<Task> callback);
+        Task VoidExecuteAsync<T>(Func<Task<T>> callback);
     }
 }

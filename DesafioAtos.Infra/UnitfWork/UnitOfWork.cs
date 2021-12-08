@@ -1,5 +1,6 @@
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Exceptions;
+using DesafioAtos.Infra.Mapping;
 using DesafioAtos.Infra.Repository;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -9,7 +10,9 @@ namespace DesafioAtos.Infra.UnitfWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
+        private const string DefaulMessage = "Database Exeption, please check inner exception for details";
         private readonly DatabaseContext _context;
+        private readonly IDatabaseConstraintMapper _databaseConstraintMapper;
         private readonly ILogger _logger;
         private ICustomerRepository _cutomerRepository;
         public ICustomerRepository Customers
@@ -49,8 +52,10 @@ namespace DesafioAtos.Infra.UnitfWork
             private set => _roleRepository = value;
         }
 
-        public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory)
+        public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory,
+            IDatabaseConstraintMapper databaseConstraintMapper)
         {
+            _databaseConstraintMapper = databaseConstraintMapper;
             _context = context;
             _logger = loggerFactory.CreateLogger("logs");
         }
@@ -61,21 +66,12 @@ namespace DesafioAtos.Infra.UnitfWork
             DetachAllEntities();
         }
 
-        public async Task ExecuteAsync<T>(Func<Task> callback)
+        public async Task VoidExecuteAsync<T>(Func<Task<T>> callback)
         {
-            try
-            {
-                await callback();
-                await CompleteAsync();
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.InnerException?.Message ?? e.Message);
-                throw new DatabaseException();
-            }
+            await ExecuteAsync<T>(callback);
         }
 
-        
+
         public async Task<T> ExecuteAsync<T>(Func<Task<T>> callback)
         {
             try
@@ -86,8 +82,8 @@ namespace DesafioAtos.Infra.UnitfWork
             }
             catch (Exception e)
             {
-                _logger.LogError(e.InnerException?.Message ?? e.Message);
-                throw new DatabaseException();
+                _databaseConstraintMapper.Map(e);
+                throw new DatabaseException(DefaulMessage, e);
             }
         }
 

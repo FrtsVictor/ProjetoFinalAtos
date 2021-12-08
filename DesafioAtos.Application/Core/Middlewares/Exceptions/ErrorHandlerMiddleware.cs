@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using DesafioAtos.Application.Controllers;
+using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Service.Exceptions;
 
 namespace DesafioAtos.Application.Core.Middlewares.Exceptions
@@ -30,18 +31,17 @@ namespace DesafioAtos.Application.Core.Middlewares.Exceptions
 
                 switch (error)
                 {
+                    case DataBaseConstraintException:
                     case BadRequestException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     case KeyNotFoundException e:
-                        // not found error
                         response.StatusCode = (int)HttpStatusCode.NotFound;
                         break;
                     case Exception e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
                     default:
-                        // unhandled error
                         response.StatusCode = (int)HttpStatusCode.InternalServerError;
                         break;
                 }
