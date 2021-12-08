@@ -1,7 +1,7 @@
 using DesafioAtos.Infra.Exceptions;
 using Microsoft.Extensions.Logging;
 
-namespace DesafioAtos.Infra.Mapping
+namespace DesafioAtos.Infra.UnitOfWorks
 {
     public class DatabaseConstraintMapper : IDatabaseConstraintMapper
     {

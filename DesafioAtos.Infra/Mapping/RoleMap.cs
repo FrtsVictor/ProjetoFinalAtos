@@ -3,33 +3,34 @@ using DesafioAtos.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DesafioAtos.Infra.Mapping;
-
-public class RoleMap : IEntityTypeConfiguration<Role>
+namespace DesafioAtos.Infra.Mapping
 {
-    public void Configure(EntityTypeBuilder<Role> b)
+    public class RoleMap : IEntityTypeConfiguration<Role>
     {
-        b.HasKey(u => u.Id);
+        public void Configure(EntityTypeBuilder<Role> b)
+        {
+            b.HasKey(u => u.Id);
 
-        b.Property(u => u.Id)
-               .IsRequired();
+            b.Property(u => u.Id)
+                   .IsRequired();
 
-        b.HasIndex(b => b.Name)
-        .IsUnique();
-        b.Property(c => c.Name)
-        .HasColumnType("VARCHAR(10)")
-        .IsRequired();
+            b.HasIndex(b => b.Name)
+            .IsUnique();
+            b.Property(c => c.Name)
+            .HasColumnType("VARCHAR(10)")
+            .IsRequired();
 
-        b.Property(c => c.CreatedAt)
-        .HasColumnType("smalldatetime")
-        .IsRequired();
+            b.Property(c => c.CreatedAt)
+            .HasColumnType("smalldatetime")
+            .IsRequired();
 
-        b.HasData(CreateSeed());
+            b.HasData(CreateSeed());
+        }
+
+        private List<Role> CreateSeed() => new List<Role>
+        {
+            new Role { Id = 1, Name = ERole.User.ToString() },
+            new Role() { Id = 2, Name = ERole.Admin.ToString() }
+        };
     }
-
-    private List<Role> CreateSeed() => new List<Role>
-    {
-        new Role { Id = 1, Name = ERole.User.ToString() },
-        new Role() { Id = 2, Name = ERole.Admin.ToString() }
-    };
 }

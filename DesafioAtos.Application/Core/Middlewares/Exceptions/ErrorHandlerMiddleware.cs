@@ -27,25 +27,28 @@ namespace DesafioAtos.Application.Core.Middlewares.Exceptions
             {
                 var response = context.Response;
                 response.ContentType = "application/json";
-                var responseModel = _responseFactory.Create(error.Message);
+                var errorMessage = error.Message;
 
                 switch (error)
                 {
+                    case KeyNotFoundException e:
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        break;
+
                     case DataBaseConstraintException:
                     case BadRequestException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
-                    case KeyNotFoundException e:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
-                        break;
+
+                    case DatabaseException:
                     case Exception e:
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
-                        break;
                     default:
-                        response.StatusCode = (int)HttpStatusCode.InternalServerError;
+                        response.StatusCode = 500;
+                        errorMessage = defaultErrorMessage;
                         break;
                 }
 
+                var responseModel = _responseFactory.Create(errorMessage);
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }

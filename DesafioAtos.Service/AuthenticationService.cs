@@ -2,7 +2,7 @@
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entities;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitfWork;
+using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Np.Cryptography;
@@ -66,11 +66,11 @@ namespace DesafioAtos.Service
 
         private void ValidateUser(User user, CreateUserDto userDto)
         {
-            var ecryptedPassword = _cryptography.Encrypt(_encryptKey, userDto.Password);
+            var encryptedPassword = _cryptography.Encrypt(_encryptKey, userDto.Password);
 
-            if (user == null || !user.Password.Equals(ecryptedPassword))
+            if (user == null || !user.Password.Equals(encryptedPassword))
             {
-                throw new BadRequestException("Usuario invalido");
+                throw new BadRequestException("Username os password invalid!");
             }
         }
     }

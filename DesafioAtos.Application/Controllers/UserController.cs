@@ -1,6 +1,6 @@
 using DesafioAtos.Application.ActionFilters.ValidateModel;
 using DesafioAtos.Domain.Entities;
-using DesafioAtos.Infra.UnitfWork;
+using DesafioAtos.Infra.UnitOfWorks;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioAtos.Application.Controllers

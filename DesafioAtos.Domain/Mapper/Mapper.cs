@@ -1,14 +1,15 @@
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entities;
 
-namespace DesafioAtos.Domain.Mapper;
-
-public class Mapper : IMapper
+namespace DesafioAtos.Domain.Mapper
 {
-    public User MapUserDtoToUser(CreateUserDto loginDto) => new User()
+    public class Mapper : IMapper
     {
-        Username = loginDto.Username,
-        Password = loginDto.Password,
-        Roles = new List<Role>()
-    };
+        public User MapUserDtoToUser(CreateUserDto loginDto) => new User()
+        {
+            Username = loginDto.Username,
+            Password = loginDto.Password,
+            Roles = new List<Role>()
+        };
+    }
 }

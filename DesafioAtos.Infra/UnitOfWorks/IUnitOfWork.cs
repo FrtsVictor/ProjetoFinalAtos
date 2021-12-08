@@ -1,6 +1,6 @@
 using DesafioAtos.Infra.Repository.Interfaces;
 
-namespace DesafioAtos.Infra.UnitfWork
+namespace DesafioAtos.Infra.UnitOfWorks
 {
     public interface IUnitOfWork
     {

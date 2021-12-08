@@ -1,16 +1,15 @@
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Exceptions;
-using DesafioAtos.Infra.Mapping;
 using DesafioAtos.Infra.Repository;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DesafioAtos.Infra.UnitfWork
+namespace DesafioAtos.Infra.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private const string DefaulMessage = "Database Exeption, please check inner exception for details";
+        private const string DefaultMessage = "Database Exception, please check inner exception for details";
         private readonly DatabaseContext _context;
         private readonly IDatabaseConstraintMapper _databaseConstraintMapper;
         private readonly ILogger _logger;
@@ -45,7 +44,7 @@ namespace DesafioAtos.Infra.UnitfWork
             get
             {
                 if (_roleRepository == null)
-                    _roleRepository = new RoleRepositoy(_context, _logger);
+                    _roleRepository = new RoleRepository(_context, _logger);
 
                 return _roleRepository;
             }
@@ -83,7 +82,7 @@ namespace DesafioAtos.Infra.UnitfWork
             catch (Exception e)
             {
                 _databaseConstraintMapper.Map(e);
-                throw new DatabaseException(DefaulMessage, e);
+                throw new DatabaseException(DefaultMessage, e);
             }
         }
 
