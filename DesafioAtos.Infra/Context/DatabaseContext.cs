@@ -12,6 +12,13 @@ namespace DesafioAtos.Infra.Context
 
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
+        public DbSet<Coleta> Coletas { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<ItemDeColeta> ItensDeColetas { get; set; }
+
+
         private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
@@ -19,6 +26,12 @@ namespace DesafioAtos.Infra.Context
         {
             modelBuilder.ApplyConfiguration(new UserMap());
             modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new ColetaMap());
+            modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
+            modelBuilder.ApplyConfiguration(new EnderecoMap());
+            modelBuilder.ApplyConfiguration(new ItemDeColetaMap());
+
+
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
