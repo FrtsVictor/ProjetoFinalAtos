@@ -2,6 +2,7 @@ using DesafioAtos.Application.Controllers;
 using DesafioAtos.Application.Core.Middlewares.Exceptions;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
+using DesafioAtos.Infra.Mapping;
 using DesafioAtos.Infra.UnitfWork;
 using DesafioAtos.Service;
 using Microsoft.EntityFrameworkCore;
@@ -18,6 +19,7 @@ builder.Services.AddSingleton<IResponseFactory, ResponseFactory>();
 builder.Services.AddSingleton<IMapper, Mapper>();
 builder.Services.AddScoped<IUserAuthenticationService, UserAuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("DesafioAtos.Infra")));
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
