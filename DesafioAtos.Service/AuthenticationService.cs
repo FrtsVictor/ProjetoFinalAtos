@@ -41,7 +41,7 @@ namespace DesafioAtos.Service
             var encryptedPassword = _cryptography.Encrypt(_encryptKey, userToBeCreated.Password);
             userToBeCreated.Password = encryptedPassword;
 
-            return await _unitOfWork.ExecuteChangesAsync<User>(async () =>
+            return await _unitOfWork.ExecuteAsync<User>( async () =>
             {
                 foreach (var roleId in userDto.RoleIds)
                 {

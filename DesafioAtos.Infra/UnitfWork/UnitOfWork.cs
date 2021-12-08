@@ -1,4 +1,5 @@
 using DesafioAtos.Infra.Context;
+using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Infra.Repository;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -60,28 +61,39 @@ namespace DesafioAtos.Infra.UnitfWork
             DetachAllEntities();
         }
 
-        public async Task<T> ExecuteChangesAsync<T>(Func<Task<T>> callback)
+        public async Task ExecuteAsync<T>(Func<Task> callback)
         {
             try
             {
-                using var transaction = await _context.Database.BeginTransactionAsync();
+                await callback();
+                await CompleteAsync();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e.InnerException?.Message ?? e.Message);
+                throw new DatabaseException();
+            }
+        }
+
+        
+        public async Task<T> ExecuteAsync<T>(Func<Task<T>> callback)
+        {
+            try
+            {
                 var result = await callback();
-                await _context.SaveChangesAsync();
-                await transaction.CommitAsync();
-                DetachAllEntities();
+                await CompleteAsync();
                 return result;
             }
             catch (Exception e)
             {
-                _logger.LogError(e.Message);
-                Dispose();
-                throw;
+                _logger.LogError(e.InnerException?.Message ?? e.Message);
+                throw new DatabaseException();
             }
         }
 
         public void Dispose()
         {
-            _logger.LogWarning("Disposing");
+            _logger.LogWarning("Disposing database contex.");
             _context.Dispose();
         }
 
@@ -94,5 +106,25 @@ namespace DesafioAtos.Infra.UnitfWork
             foreach (var entry in changedEntriesCopy)
                 entry.State = EntityState.Detached;
         }
+
+
+
+        // public async Task<T> ExecuteTransactionAsync<T>(Func<Task<T>> callback)
+        // {
+        //     try
+        //     {
+        //         using var transaction = await _context.Database.BeginTransactionAsync();
+        //         var result = await callback();
+        //         await _context.SaveChangesAsync();
+        //         await transaction.CommitAsync();
+        //         DetachAllEntities();
+        //         return result;
+        //     }
+        //     catch (Exception e)
+        //     {
+        //         _logger.LogError(e.InnerException?.Message ?? e.Message);
+        //         throw new DatabaseException();
+        //     }
+        // }
     }
 }
