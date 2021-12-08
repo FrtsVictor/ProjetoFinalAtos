@@ -17,14 +17,14 @@ namespace DesafioAtos.Application.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(UserDto userDto)
+        public async Task<IActionResult> Login(CreateUserDto userDto)
         {
             var user = await _authenticationService.Login(userDto);
             return Ok(user);
         }
 
         [HttpPost("create_account")]
-        public async Task<IActionResult> CreateAccount(UserDto userDto)
+        public async Task<IActionResult> CreateAccount(CreateUserDto userDto)
         {
             var user = await _authenticationService.CreateAccount(userDto);
             return Ok(user);
