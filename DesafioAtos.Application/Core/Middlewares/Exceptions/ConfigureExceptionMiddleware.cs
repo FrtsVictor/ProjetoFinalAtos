@@ -24,7 +24,6 @@ namespace DesafioAtos.Application.Core.Middlewares.Exceptions
                     });
                 }
             );
-
             app.UseMiddleware<ErrorHandlerMiddleware>();
         }
     }
