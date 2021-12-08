@@ -12,12 +12,8 @@ namespace DesafioAtos.Infra.Repository
         public UserRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
         public async Task<User> GetByUsername(string username)
-        { 
-            var user = await dbSet.Where(x => x.Username.ToLower() == username.ToLower())
-                                   .AsNoTracking()
-                                   .ToListAsync();
-
-            return user.FirstOrDefault();
+        {
+                return await dbSet.FirstOrDefaultAsync(x => x.Username.ToLower() == username.ToLower());
         }
     }
 }

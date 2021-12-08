@@ -10,14 +10,15 @@ namespace DesafioAtos.Infra.Context
         //public DbSet<Customer> Customers { get; set; }
         //    DbSet<Address> Addresses { get; set; }
 
-        DbSet<User> Users { get; set; }
-        private static readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(Console.WriteLine);
+        public DbSet<User> Users { get; set; }
+        public DbSet<Role> Roles { get; set; }
+        private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
- 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.ApplyConfiguration(new CustomerMap());
             modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new RoleMap());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
