@@ -5,9 +5,10 @@ namespace DesafioAtos.Domain.Mapper;
 
 public class Mapper : IMapper
 {
-    public User MapUserDtoToUser(UserDto loginDto) => new User()
+    public User MapUserDtoToUser(CreateUserDto loginDto) => new User()
     {
         Username = loginDto.Username,
-        Password = loginDto.Password
+        Password = loginDto.Password,
+        Roles = new List<Role>()
     };
 }

@@ -6,5 +6,5 @@ namespace DesafioAtos.Domain.Mapper;
 
 public interface IMapper
 {
-    User MapUserDtoToUser(UserDto userDto);
+    User MapUserDtoToUser(CreateUserDto userDto);
 }
