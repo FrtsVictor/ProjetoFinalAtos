@@ -5,6 +5,6 @@ namespace DesafioAtos.Service;
 
 public interface IUserAuthenticationService
 {
-    Task<User> Login(UserDto luserto);
-    Task<User> CreateAccount(UserDto userDto);
+    Task<User> Login(CreateUserDto luserto);
+    Task<User> CreateAccount(CreateUserDto createUserDto);
 }
