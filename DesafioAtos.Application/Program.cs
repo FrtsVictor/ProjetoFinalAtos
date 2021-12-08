@@ -3,7 +3,7 @@ using DesafioAtos.Application.Core.Middlewares.Exceptions;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Mapping;
-using DesafioAtos.Infra.UnitfWork;
+using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service;
 using Microsoft.EntityFrameworkCore;
 using Np.Cryptography;

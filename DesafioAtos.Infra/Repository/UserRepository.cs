@@ -3,7 +3,6 @@ using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using System.Linq;
 
 namespace DesafioAtos.Infra.Repository
 {

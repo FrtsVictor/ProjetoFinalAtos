@@ -1,8 +1,10 @@
 using DesafioAtos.Domain.Entities;
 
-namespace DesafioAtos.Infra.Repository.Interfaces;
-
-public interface IUserRepository : IBaseRepository<User>
+namespace DesafioAtos.Infra.Repository.Interfaces
 {
-    Task<User> GetByUsername(string username);
+    public interface IUserRepository : IBaseRepository<User>
+    {
+        Task<User> GetByUsername(string username);
+    }
 }
+

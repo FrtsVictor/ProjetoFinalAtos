@@ -1,10 +1,11 @@
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entities;
 
-namespace DesafioAtos.Service;
-
-public interface IUserAuthenticationService
+namespace DesafioAtos.Service
 {
-    Task<User> Login(CreateUserDto luserto);
-    Task<User> CreateAccount(CreateUserDto createUserDto);
+    public interface IUserAuthenticationService
+    {
+        Task<User> Login(CreateUserDto createUserDto);
+        Task<User> CreateAccount(CreateUserDto createUserDto);
+    }
 }
