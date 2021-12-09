@@ -1,5 +1,4 @@
-using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Infra.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -11,8 +10,7 @@ namespace DesafioAtos.Infra.Context
         //public DbSet<Customer> Customers { get; set; }
         //    DbSet<Address> Addresses { get; set; }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Usuario> Users { get; set; }
         public DbSet<Coleta> Coletas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
@@ -26,7 +24,6 @@ namespace DesafioAtos.Infra.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new RoleMap());
             modelBuilder.ApplyConfiguration(new ColetaMap());
             modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());

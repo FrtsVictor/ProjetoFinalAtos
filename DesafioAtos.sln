@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Infra", "Desafi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Service", "DesafioAtos.Service\DesafioAtos.Service.csproj", "{777A6326-BB5E-4B43-A40F-659347A88364}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Cryptography", "Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Cryptography.csproj", "{DA8B3C9C-7480-4E34-B18D-71753988A8F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Criptografia", "Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj", "{DA8B3C9C-7480-4E34-B18D-71753988A8F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

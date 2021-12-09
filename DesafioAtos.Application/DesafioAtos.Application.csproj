@@ -11,7 +11,7 @@
     <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />
     <ProjectReference Include="..\DesafioAtos.Service\DesafioAtos.Service.csproj" />
     <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj" />
-    <ProjectReference Include="..\Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Cryptography.csproj" />
+    <ProjectReference Include="..\Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
   </ItemGroup>
 
 </Project>

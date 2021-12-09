@@ -11,8 +11,8 @@ namespace DesafioAtos.Application.Core.Middlewares.Exceptions
         private const string defaultErrorMessage = "Internal server error!!!";
 
         private readonly RequestDelegate _next;
-        private readonly IResponseFactory _responseFactory;
-        public ErrorHandlerMiddleware(RequestDelegate next, IResponseFactory responseFactory)
+        private readonly IFabricaResponse _responseFactory;
+        public ErrorHandlerMiddleware(RequestDelegate next, IFabricaResponse responseFactory)
         {
             _responseFactory = responseFactory;
             _next = next;

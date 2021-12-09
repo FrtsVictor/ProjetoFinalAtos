@@ -1,4 +1,4 @@
-﻿using DesafioAtos.Domain.Entities;
+﻿using DesafioAtos.Domain.Entidades;
 
 namespace DesafioAtos.Domain.Request
 {

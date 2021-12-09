@@ -10,11 +10,11 @@ namespace DesafioAtos.Application.ActionFilters.ValidateModel
         {
             if (!context.ModelState.IsValid)
             {
-                List<string> errorList = context.ModelState.SelectMany(sm => sm.Value?.Errors!)
+                List<string> listaDeErros = context.ModelState.SelectMany(sm => sm.Value?.Errors!)
                      .Select(s => s.ErrorMessage).ToList();
 
-                context.Result = new BadRequestObjectResult(new ResponseFactory()
-                    .Create("One or more fields are invalid!", errorList));
+                context.Result = new BadRequestObjectResult(new FabricaResponse()
+                    .Create("One or more fields are invalid!", listaDeErros));
             }
         }
     }
