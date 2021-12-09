@@ -11,7 +11,6 @@ namespace DesafioAtos.Domain.Dtos
         public DateTime CreatedAt { get; set; }
         public long EmpresaColetaId { get; set; }
         public EmpresaColetoraDto EmpresaColetora { get; set; }
-
         public List<ItemDeColeta> ItensDeColeta { get; set; }
     }
 }

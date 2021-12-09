@@ -1,3 +1,4 @@
+using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entities;
 using DesafioAtos.Infra.Mapping;
 using Microsoft.EntityFrameworkCore;
