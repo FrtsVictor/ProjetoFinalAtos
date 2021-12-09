@@ -2,19 +2,19 @@
 
 namespace DesafioAtos.Domain.Dtos
 {
-    public class CreateEmpresaColetoraDto
+    public class CriarEmpresaColetoraDto
     {
-        public string Name { get; set; }
+        public string Nome { get; set; }
         public string Cnpj { get; set; }
-        public string Phone { get; set; }
+        public string Telefone { get; set; }
         public string Email { get; set; }
-        public List<Endereco> Endereco { get; set; }
+        public List<EnderecoDto> Endereco { get; set; }
         //criar lista Enum
         public List<Categoria> Categoria { get; set; }
 
-        public CreateEmpresaColetoraDto()
+        public CriarEmpresaColetoraDto()
         {
-            this.Endereco = new List<Endereco>();
+            this.Endereco = new List<EnderecoDto>();
             this.Categoria = new List<Categoria>();
         }
     }

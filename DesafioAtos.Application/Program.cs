@@ -26,6 +26,7 @@ builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("DesafioAtos.Infra")));
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     {

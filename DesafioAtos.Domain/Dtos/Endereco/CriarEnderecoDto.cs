@@ -1,6 +1,6 @@
 ﻿namespace DesafioAtos.Domain.Dtos
 {
-    public class EditEnderecoDto
+    public class CriarEnderecoDto
     {
 
         public string Numero { get; set; }
@@ -10,6 +10,6 @@
         public string Cidade { get; set; }
         public string Estado { get; set; }
         public string Bairro { get; set; }
-
+        public DateTime CreatedAt { get; set; }
     }
 }

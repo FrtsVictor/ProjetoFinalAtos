@@ -7,8 +7,7 @@ namespace DesafioAtos.Infra.Repository
 {
     public class EnderecoRepository : BaseRepository<Endereco>, IEnderecoRepository
     {
-        protected EnderecoRepository(DatabaseContext context, ILogger logger) : base(context, logger)
-        {
-        }
+        public EnderecoRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
+
     }
 }
