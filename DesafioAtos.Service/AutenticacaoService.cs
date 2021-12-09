@@ -1,5 +1,6 @@
 ﻿
 using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitOfWorks;
@@ -16,23 +17,24 @@ namespace DesafioAtos.Service
         private readonly ICriptografo _criptografo;
         private readonly IConfiguration _configuration;
         private readonly string _chaveParaCriptografia;
+        private readonly ITokenService _tokenService;
 
-        public UserAuthenticationService(IUnitOfWork unitOfWork, IMapper mapper, ICriptografo criptografo, IConfiguration configuration)
+        public UserAuthenticationService(IUnitOfWork unitOfWork, IMapper mapper, ICriptografo criptografo, IConfiguration configuration, ITokenService tokenService)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
             this._configuration = configuration;
             this._chaveParaCriptografia = _configuration["cryptography:AppPasswordKey"];
+            this._tokenService = tokenService;
         }
 
-        public async Task<Usuario> Logar(CriarUsuarioDto criarUsuarioDto)
-        {
-            var usuarioParaLogin = _mapper.MapUsuarioDtoToUsuario(criarUsuarioDto);
-            Usuario usuario = await _unitOfWork.Users.ObterPorLogin(usuarioParaLogin.Login);
-            ValidarUsuario(usuario, criarUsuarioDto);
-
-            return usuario;
+        public async Task<TokenResponseDto> Logar(LoginDto? loginDto)
+        {            
+            Usuario usuario = await _unitOfWork.Users.ObterPorLogin(loginDto?.Login);
+            ValidarUsuario(usuario, loginDto);
+            var createTokenDto = _mapper.MapUsuarioToCreateUserDto(usuario);
+            return _tokenService.CriarToken(createTokenDto);            
         }
 
         public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
@@ -47,9 +49,9 @@ namespace DesafioAtos.Service
             });
         }
 
-        private void ValidarUsuario(Usuario usuario, CriarUsuarioDto criarUsuarioDto)
+        private void ValidarUsuario(Usuario usuario, LoginDto? loginDto)
         {
-            var encryptedPassword = _criptografo.Criptografar(_chaveParaCriptografia, criarUsuarioDto.Senha);
+            var encryptedPassword = _criptografo.Criptografar(_chaveParaCriptografia, loginDto?.Senha);
 
             if (usuario == null || !usuario.Senha.Equals(encryptedPassword))
             {

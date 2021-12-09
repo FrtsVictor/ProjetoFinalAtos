@@ -17,6 +17,7 @@ var environment = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONM
 builder.Services.AddSingleton<ICriptografo, Criptografo>();
 builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
 builder.Services.AddSingleton<IMapper, Mapper>();
+builder.Services.AddSingleton<ITokenService, TokenService>();
 builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
