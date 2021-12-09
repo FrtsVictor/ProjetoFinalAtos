@@ -15,7 +15,6 @@ namespace DesafioAtos.Infra.Context
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
-        public DbSet<ItemDeColeta> ItensDeColetas { get; set; }
 
 
         private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
@@ -27,7 +26,7 @@ namespace DesafioAtos.Infra.Context
             modelBuilder.ApplyConfiguration(new ColetaMap());
             modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
-            modelBuilder.ApplyConfiguration(new ItemDeColetaMap());
+
 
 
         }

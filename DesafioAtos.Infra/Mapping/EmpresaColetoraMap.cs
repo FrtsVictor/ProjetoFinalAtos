@@ -14,11 +14,11 @@ namespace DesafioAtos.Infra.Mapping
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.Property(c => c.Name)
+            builder.Property(c => c.Nome)
             .HasColumnType("VARCHAR(100)")
             .IsRequired();    
 
-            builder.Property(c => c.Phone)
+            builder.Property(c => c.Telefone)
             .HasColumnType("CHAR(11)")
             .IsRequired();
 

@@ -18,7 +18,12 @@ namespace DesafioAtos.Infra.Mapping
                 .HasColumnType("VARCHAR(100)")
                 .IsRequired();
 
-            builder.Property(a => a.Descricao)
+            builder.Property(a => a.ItemDeColeta)
+                .HasColumnType("VARCHAR(100)")
+                .IsRequired();
+
+
+            builder.Property(a => a.Observacao)
                 .HasColumnType("VARCHAR(100)")
                 .IsRequired();
 
