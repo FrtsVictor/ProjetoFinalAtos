@@ -4,11 +4,9 @@ namespace DesafioAtos.Infra.UnitOfWorks
 {
     public interface IUnitOfWork
     {
-        ICustomerRepository Customers { get; }
-        IUserRepository Users { get; }
-        IRoleRepository Roles { get; }
-        Task CompleteAsync();
-        Task<T> ExecuteAsync<T>(Func<Task<T>> callback);
-        Task VoidExecuteAsync<T>(Func<Task<T>> callback);
+        IUsuarioRepository Users { get; }
+        Task SalvarAsync();
+        Task<T> ExecutarAsync<T>(Func<Task<T>> callback);
+        Task VoidExecutarAsync<T>(Func<Task<T>> callback);
     }
 }

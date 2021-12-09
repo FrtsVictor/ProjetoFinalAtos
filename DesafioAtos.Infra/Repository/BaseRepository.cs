@@ -1,10 +1,10 @@
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : Base
+public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
 {
     internal DatabaseContext _context;
     internal DbSet<T> dbSet;
@@ -17,33 +17,33 @@ public class BaseRepository<T> : IBaseRepository<T> where T : Base
         this.dbSet = context.Set<T>();
     }
 
-    public virtual async Task<T> Create(T entity)
+    public virtual async Task<T> CriarAsync(T entidade)
     {
-        await dbSet.AddAsync(entity);
-        return entity;
+        await dbSet.AddAsync(entidade);
+        return entidade;
     }
 
-    public virtual void Update(T entity)
+    public virtual void Atualizar(T entidade)
     {
-        dbSet.Update(entity);
+        dbSet.Update(entidade);
     }
 
-    public virtual async Task Remove(long id)
+    public virtual async Task RemoverAsync(long id)
     {
-        var userToBeRemoved = await GetById(id);
+        var usuarioParaDeletar = await ObterPorIdAsync(id);
 
-        if (userToBeRemoved != null)
+        if (usuarioParaDeletar != null)
         {
-            dbSet.Remove(userToBeRemoved);
+            dbSet.Remove(usuarioParaDeletar);
         }
     }
 
-    public virtual async Task<T> GetById(long id)
+    public virtual async Task<T> ObterPorIdAsync(long id)
     {
         return await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
 
-    public virtual async Task<List<T>> Get()
+    public virtual async Task<List<T>> ObterTodosAsync()
     {
         return await dbSet.AsNoTracking().ToListAsync();
     }

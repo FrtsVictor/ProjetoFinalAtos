@@ -1,12 +1,12 @@
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DesafioAtos.Infra.Mapping
 {
-    public class UserMap : IEntityTypeConfiguration<User>
+    public class UserMap : IEntityTypeConfiguration<Usuario>
     {
-        public void Configure(EntityTypeBuilder<User> builder)
+        public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder.HasKey(c => c.Id);
 
@@ -14,17 +14,17 @@ namespace DesafioAtos.Infra.Mapping
             .ValueGeneratedOnAdd()
             .IsRequired();
 
-            builder.HasIndex(b => b.Username)
+            builder.HasIndex(b => b.Login)
             .IsUnique();
-            builder.Property(c => c.Username)
+            builder.Property(c => c.Login)
             .HasColumnType("VARCHAR(10)")
             .IsRequired();
 
-            builder.Property(c => c.Password)
+            builder.Property(c => c.Senha)
             .HasColumnType("VARCHAR(30)")
             .IsRequired();
 
-            builder.Property(c => c.CreatedAt)
+            builder.Property(c => c.DataCriacao)
             .HasColumnType("smalldatetime")
             .IsRequired();
 

@@ -1,13 +1,13 @@
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 
 namespace DesafioAtos.Infra.Repository.Interfaces
 {
-    public interface IBaseRepository<T> where T : Base
+    public interface IBaseRepository<T> where T : EntidadeBase
     {
-        Task<T> Create(T entity);
-        void Update(T entity);
-        Task Remove(long id);
-        Task<List<T>> Get();
-        Task<T> GetById(long id);
+        Task<T> CriarAsync(T entity);
+        void Atualizar(T entity);
+        Task RemoverAsync(long id);
+        Task<List<T>> ObterTodosAsync();
+        Task<T> ObterPorIdAsync(long id);
     }
 }

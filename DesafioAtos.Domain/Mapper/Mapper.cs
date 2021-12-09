@@ -1,15 +1,28 @@
 using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
+using DesafioAtos.Domain.Enums;
+using DesafioAtos.Domain.Exceptions;
 
 namespace DesafioAtos.Domain.Mapper
 {
     public class Mapper : IMapper
     {
-        public User MapUserDtoToUser(CreateUserDto loginDto) => new User()
+        public Usuario MapUsuarioDtoToUsuario(CriarUsuarioDto criarUsuarioDto) => new Usuario()
         {
-            Username = loginDto.Username,
-            Password = loginDto.Password,
-            Roles = new List<Role>()
+            Login = criarUsuarioDto.Login,
+            Senha = criarUsuarioDto.Senha,
+            Role = ObterEnum(criarUsuarioDto.RoleId)
         };
+
+        public ERole ObterEnum(int valor)
+        {
+            if (!Enum.IsDefined(typeof(ERole), valor))
+            {
+                throw new InvalidEnumException("Role inv�lido!");
+            }
+
+            return (ERole)valor;
+        }
+
     }
 }

@@ -1,4 +1,4 @@
-﻿using DesafioAtos.Domain.Entities;
+﻿using DesafioAtos.Domain.Entidades;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -19,7 +19,7 @@ namespace DesafioAtos.Infra.Mapping
                 .IsRequired();
 
 
-            builder.Property(c => c.CreatedAt)
+            builder.Property(c => c.DataCriacao)
                 .HasColumnType("smalldatetime")
                 .IsRequired();
 

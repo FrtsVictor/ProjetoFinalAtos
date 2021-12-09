@@ -33,7 +33,7 @@ namespace DesafioAtos.Infra.Migrations
                     b.Property<int>("Categorias")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("datetime2");
 
                     b.Property<int?>("EmpresaColetoraId")
@@ -57,7 +57,7 @@ namespace DesafioAtos.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("smalldatetime");
 
                     b.Property<string>("Descricao")
@@ -95,7 +95,7 @@ namespace DesafioAtos.Infra.Migrations
                     b.Property<int?>("ColetaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("smalldatetime");
 
                     b.Property<string>("Nome")
@@ -112,7 +112,7 @@ namespace DesafioAtos.Infra.Migrations
                     b.ToTable("ItensDeColetas");
                 });
 
-            modelBuilder.Entity("DesafioAtos.Domain.Entities.Role", b =>
+            modelBuilder.Entity("DesafioAtos.Domain.Entities.Usuario", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -120,65 +120,26 @@ namespace DesafioAtos.Infra.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("smalldatetime");
 
-                    b.Property<string>("Name")
+                    b.Property<string>("Login")
                         .IsRequired()
                         .HasColumnType("VARCHAR(10)");
 
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Name")
-                        .IsUnique();
-
-                    b.ToTable("Roles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            CreatedAt = new DateTime(2021, 12, 8, 22, 47, 8, 391, DateTimeKind.Local).AddTicks(1544),
-                            Name = "User",
-                            Status = true
-                        },
-                        new
-                        {
-                            Id = 2,
-                            CreatedAt = new DateTime(2021, 12, 8, 22, 47, 8, 391, DateTimeKind.Local).AddTicks(1636),
-                            Name = "Admin",
-                            Status = true
-                        });
-                });
-
-            modelBuilder.Entity("DesafioAtos.Domain.Entities.User", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("Role")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("smalldatetime");
-
-                    b.Property<string>("Password")
+                    b.Property<string>("Senha")
                         .IsRequired()
                         .HasColumnType("VARCHAR(30)");
 
                     b.Property<bool>("Status")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Username")
-                        .IsRequired()
-                        .HasColumnType("VARCHAR(10)");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Username")
+                    b.HasIndex("Login")
                         .IsUnique();
 
                     b.ToTable("Users");
@@ -197,7 +158,7 @@ namespace DesafioAtos.Infra.Migrations
                         .HasColumnType("CHAR(12)")
                         .IsFixedLength();
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("smalldatetime");
 
                     b.Property<string>("Email")
@@ -247,7 +208,7 @@ namespace DesafioAtos.Infra.Migrations
                         .IsRequired()
                         .HasColumnType("VARCHAR(100)");
 
-                    b.Property<DateTime>("CreatedAt")
+                    b.Property<DateTime>("DataCriacao")
                         .HasColumnType("smalldatetime");
 
                     b.Property<int?>("EmpresaColetoraId")
@@ -273,21 +234,6 @@ namespace DesafioAtos.Infra.Migrations
                     b.HasIndex("EmpresaColetoraId");
 
                     b.ToTable("Enderecos");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.Property<int>("RolesId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersId")
-                        .HasColumnType("int");
-
-                    b.HasKey("RolesId", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("RoleUser");
                 });
 
             modelBuilder.Entity("DesafioAtos.Domain.Dtos.Categoria", b =>
@@ -320,21 +266,6 @@ namespace DesafioAtos.Infra.Migrations
                     b.HasOne("EmpresaColetora", null)
                         .WithMany("Endereco")
                         .HasForeignKey("EmpresaColetoraId");
-                });
-
-            modelBuilder.Entity("RoleUser", b =>
-                {
-                    b.HasOne("DesafioAtos.Domain.Entities.Role", null)
-                        .WithMany()
-                        .HasForeignKey("RolesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("DesafioAtos.Domain.Entities.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("DesafioAtos.Domain.Entities.Coleta", b =>

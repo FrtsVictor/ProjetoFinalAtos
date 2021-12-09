@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 
@@ -13,7 +13,7 @@ public class TokenService : ITokenService
         _tokenKey = configuration["jwtKey"];
     }
 
-    public string GenerateToken(User user)
+    public string GenerateToken(Usuario user)
     {
         var tokenHandler = new JwtSecurityTokenHandler();
         var key = Encoding.ASCII.GetBytes(_tokenKey);
@@ -22,7 +22,7 @@ public class TokenService : ITokenService
         {
             Subject = new ClaimsIdentity(new Claim[]
             {
-                    new Claim(ClaimTypes.Name, user?.Username)
+                    new Claim(ClaimTypes.Name, user?.Login)
             }),
 
             Expires = DateTime.UtcNow.AddHours(1),
@@ -32,10 +32,10 @@ public class TokenService : ITokenService
                 algorithm: SecurityAlgorithms.HmacSha256Signature)
         };
 
-        foreach (var role in user.Roles)
-        {
-            tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role.Name));
-        }
+        //foreach (var role in user.Roles)
+        //{
+        //    tokenDescriptor.Subject.AddClaim(new Claim(ClaimTypes.Role, role.Name));
+        //}
 
         var token = tokenHandler.CreateToken(tokenDescriptor);
         return tokenHandler.WriteToken(token);
