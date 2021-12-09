@@ -2,14 +2,15 @@
 
 namespace DesafioAtos.Domain.Dtos
 {
-    public class ColetaDto
+    public class CreateColetaDto
     {
         public string Nome { get; set; }
         public string Descricao { get; set; }
-        public bool Status { get; set; }
-        public DateTime CreatedAt { get; set; }
-        public long EmpresaColetaId { get; set; }
-        public EmpresaColetoraDto EmpresaColetora { get; set; }
         public List<ItemDeColeta> ItensDeColeta { get; set; }
+        public EmpresaColetora EmpresaColetora { get; set; }
+        public CreateColetaDto()
+        {
+            this.ItensDeColeta = new List<ItemDeColeta>();
+        }
     }
 }
