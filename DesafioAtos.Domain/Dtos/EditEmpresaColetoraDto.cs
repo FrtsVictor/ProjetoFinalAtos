@@ -1,6 +1,6 @@
 ﻿namespace DesafioAtos.Domain.Dtos
 {
-    public class EmpresaColetoraPutDto
+    public class EditEmpresaColetoraDto
     {
         public long Id { get; set; }
         public string Name { get; set; }
