@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DesafioAtos.Infra.Mapping
 {
-    public class UserMap : IEntityTypeConfiguration<Usuario>
+    public class UsuarioMap : IEntityTypeConfiguration<Usuario>
     {
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
@@ -17,7 +17,7 @@ namespace DesafioAtos.Infra.Mapping
             builder.HasIndex(b => b.Login)
             .IsUnique();
             builder.Property(c => c.Login)
-            .HasColumnType("VARCHAR(10)")
+            .HasColumnType("VARCHAR(20)")
             .IsRequired();
 
             builder.Property(c => c.Senha)

@@ -23,7 +23,7 @@ namespace DesafioAtos.Infra.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserMap());
+            modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new ColetaMap());
             modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());

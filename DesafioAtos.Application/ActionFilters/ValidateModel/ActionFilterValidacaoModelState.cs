@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace DesafioAtos.Application.ActionFilters.ValidateModel
 {
-    public class ValidateModelActionFilter : ActionFilterAttribute
+    public class ActionFilterValidacaoModelState : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {

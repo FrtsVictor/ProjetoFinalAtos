@@ -8,7 +8,7 @@ namespace DesafioAtos.Application.Controllers
 {
     [Route("api/v1/auth")]
     [ApiController]
-    [ValidateModelActionFilter]
+    [ActionFilterValidacaoModelState]
     public class AutenticacaoController : ControllerBase
     {
         private readonly IAutenticacaoService _authenticationService;
@@ -18,9 +18,9 @@ namespace DesafioAtos.Application.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(CriarUsuarioDto userDto)
+        public async Task<IActionResult> Login(LoginDto loginDto)
         {
-            var user = await _authenticationService.Logar(userDto);
+            var user = await _authenticationService.Logar(loginDto);
             return Ok(user);
         }
 
