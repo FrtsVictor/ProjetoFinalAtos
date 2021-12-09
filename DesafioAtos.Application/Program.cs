@@ -1,11 +1,14 @@
 using DesafioAtos.Application.Controllers;
 using DesafioAtos.Application.Core.Middlewares.Exceptions;
+using DesafioAtos.Application.Core.Swagger;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service;
+using DesafioAtos.Service.Usuarios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using Np.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +21,7 @@ builder.Services.AddSingleton<ICriptografo, Criptografo>();
 builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
 builder.Services.AddSingleton<IMapper, Mapper>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
@@ -29,7 +33,7 @@ builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
     });
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+SwaggerMiddlaware.ConfiguarSwagger(builder.Services);
 
 var app = builder.Build();
 ConfigureExceptionMiddleware.ConfigureExceptionHandler(app);
