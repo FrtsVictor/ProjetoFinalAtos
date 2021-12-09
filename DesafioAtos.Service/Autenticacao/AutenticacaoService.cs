@@ -29,7 +29,7 @@ namespace DesafioAtos.Service
             this._tokenService = tokenService;
         }
 
-        public async Task<TokenResponseDto> Logar(LoginDto? loginDto)
+        public async Task<TokenResponseDto> Logar(LogarUsuarioDto? loginDto)
         {            
             Usuario usuario = await _unitOfWork.Users.ObterPorLogin(loginDto?.Login);
             ValidarUsuario(usuario, loginDto);
@@ -49,7 +49,7 @@ namespace DesafioAtos.Service
             });
         }
 
-        private void ValidarUsuario(Usuario usuario, LoginDto? loginDto)
+        private void ValidarUsuario(Usuario usuario, LogarUsuarioDto? loginDto)
         {
             var encryptedPassword = _criptografo.Criptografar(_chaveParaCriptografia, loginDto?.Senha);
 

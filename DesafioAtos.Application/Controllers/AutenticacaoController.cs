@@ -18,7 +18,7 @@ namespace DesafioAtos.Application.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<IActionResult> Login(LogarUsuarioDto loginDto)
         {
             var user = await _authenticationService.Logar(loginDto);
             return Ok(user);

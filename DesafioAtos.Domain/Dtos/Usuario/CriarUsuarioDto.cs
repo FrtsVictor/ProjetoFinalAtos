@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
 {
-    public class CriarUsuarioDto : LoginDto
+    public class CriarUsuarioDto : LogarUsuarioDto
     {
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         public int RoleId { get; set; }

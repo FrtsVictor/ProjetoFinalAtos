@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
 {
-    public class LoginDto
+    public class LogarUsuarioDto
     {
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 20, MinimumLength = 4,
