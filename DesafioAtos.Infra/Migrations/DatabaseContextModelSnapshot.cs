@@ -24,23 +24,17 @@ namespace DesafioAtos.Infra.Migrations
 
             modelBuilder.Entity("DesafioAtos.Domain.Entidades.Categoria", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<int>("Categorias")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("EmpresaColetoraId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

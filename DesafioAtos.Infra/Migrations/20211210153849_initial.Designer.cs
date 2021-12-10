@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DesafioAtos.Infra.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20211209235707_editada")]
-    partial class editada
+    [Migration("20211210153849_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,23 +26,17 @@ namespace DesafioAtos.Infra.Migrations
 
             modelBuilder.Entity("DesafioAtos.Domain.Entidades.Categoria", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"), 1L, 1);
 
                     b.Property<int>("Categorias")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
-
                     b.Property<int?>("EmpresaColetoraId")
                         .HasColumnType("int");
-
-                    b.Property<bool>("Status")
-                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

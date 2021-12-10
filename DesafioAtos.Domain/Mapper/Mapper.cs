@@ -33,5 +33,21 @@ namespace DesafioAtos.Domain.Mapper
             return (ERole)valor;
         }
 
+        public Coleta MapColetaDtoToEmpresaColeta(ColetaDto coletaDto) => new Coleta()
+        {
+            ItemDeColeta = coletaDto.ItemDeColeta,
+            Observacao = coletaDto.Observacao
+        };
+        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
+        {
+            Categoria = empresaColetoraDto.Categoria,
+            Cnpj =  empresaColetoraDto.Cnpj,
+            DataCriacao = empresaColetoraDto.CreatedAt,
+            Email = empresaColetoraDto.Email,
+            Nome = empresaColetoraDto.Nome,
+            Status = empresaColetoraDto.Status,
+            Telefone = empresaColetoraDto.Telefone        
+
+        };
     }
 }
