@@ -22,7 +22,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = await _service.PegaTodasEmpresaColetora();
+            var data = await _service.GetTodasEmpresaColetora();
             return Ok(new List<EmpresaColetoraDto>());
         }
 
@@ -30,7 +30,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
-            var data = await _service.PegaEmpresaColetoraPorId(id);
+            var data = await _service.GetEmpresaColetoraPorId(id);
             return Ok();
         }
 

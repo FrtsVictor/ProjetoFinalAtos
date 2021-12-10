@@ -72,21 +72,8 @@ namespace DesafioAtos.Service.EmpresaColetora
             }
         }
 
-        public async Task DeletaEmpresaColetora(long id)
-        {
-            try
-            {
-                var empresaColetoraOrigem = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(id);
-                //_unitOfWork.ColetaRepository.RemoverAsync(empresaColetoraOrigem);
-                await _unitOfWork.SalvarAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
 
-        public async Task<EmpresaColetoraDto> PegaEmpresaColetoraPorId(long id)
+        public async Task<EmpresaColetoraDto> GetEmpresaColetoraPorId(long id)
         {
             try
             {
@@ -101,7 +88,7 @@ namespace DesafioAtos.Service.EmpresaColetora
             }
         }
 
-        public async Task<List<EmpresaColetoraDto>> PegaTodasEmpresaColetora()
+        public async Task<List<EmpresaColetoraDto>> GetTodasEmpresaColetora()
         {
             try
             {
@@ -115,5 +102,15 @@ namespace DesafioAtos.Service.EmpresaColetora
                 throw ex;
             }
         }
+
+        public async Task DeletaEmpresaColetora(long id)
+        {
+            await _unitOfWork.ExecutarAsync(async () =>
+            {
+                await _unitOfWork.EmpresaColetoraRepository.RemoverAsync(id);
+                return id;
+            });
+        }
+
     }
 }

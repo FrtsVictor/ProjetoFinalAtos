@@ -7,8 +7,8 @@ namespace DesafioAtos.Service.Coleta
 
         Task ColetaPost(CriarColetaDto request);
         Task ColetaPut(EditarColetaDto request);
-        Task<ColetaDto> PegaColetaPorId(long id);
-        Task<List<ColetaDto>> PegaTodasColeta();
+        Task<ColetaDto> GetColetaPorId(long id);
+        Task<List<ColetaDto>> GetTodasColeta();
         Task DeletaColeta(long id);
     }
 }

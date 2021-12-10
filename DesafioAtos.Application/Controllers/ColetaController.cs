@@ -21,7 +21,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = await _service.PegaTodasColeta();
+            var data = await _service.GetTodasColeta();
             return Ok(new List<ColetaDto>());
         }
 
@@ -29,7 +29,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
-            var data = await _service.PegaColetaPorId(id);
+            var data = await _service.GetColetaPorId(id);
             return Ok();
         }
 
