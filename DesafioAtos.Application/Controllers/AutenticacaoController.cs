@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioAtos.Application.Controllers
 {
-    [Route("api/v1/auth")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     [ActionFilterValidacaoModelState]
     public class AutenticacaoController : ControllerBase
