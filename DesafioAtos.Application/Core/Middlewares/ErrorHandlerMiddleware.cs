@@ -4,7 +4,7 @@ using DesafioAtos.Application.Controllers;
 using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Service.Exceptions;
 
-namespace DesafioAtos.Application.Core.Middlewares.Exceptions
+namespace DesafioAtos.Application.Core.Middlewares
 {
     public class ErrorHandlerMiddleware
     {

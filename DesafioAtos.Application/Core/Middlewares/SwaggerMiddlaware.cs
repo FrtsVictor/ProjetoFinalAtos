@@ -1,6 +1,6 @@
 using Microsoft.OpenApi.Models;
 
-namespace DesafioAtos.Application.Core.Swagger
+namespace DesafioAtos.Application.Core.Middlewares
 {
     public class SwaggerMiddlaware
     {
