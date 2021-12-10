@@ -34,10 +34,11 @@ namespace DesafioAtos.Service.EmpresaColetora
                     Email = request.Email,
                     Cnpj = request.Cnpj,
                     Telefone = request.Telefone,
-                    
+
                 };
 
                 await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetoraOrigem);
+
                 await _unitOfWork.SalvarAsync();
             }
             catch (Exception ex)

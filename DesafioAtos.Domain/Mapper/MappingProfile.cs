@@ -8,8 +8,13 @@ namespace DesafioAtos.Domain.Mapper
     {
         public MappingProfile()
         {
-            CreateMap<Coleta, ColetaDto>().ReverseMap();
+            CreateMap<ColetaDto, Coleta>().ReverseMap();
+            CreateMap<CriarColetaDto, Coleta>().ReverseMap();
+            CreateMap<EditarColetaDto, Coleta>().ReverseMap();
+
             CreateMap<EmpresaColetora, EmpresaColetoraDto>().ReverseMap();
+            CreateMap<EmpresaColetora, CriarEmpresaColetoraDto>().ReverseMap();
+            CreateMap<EmpresaColetora, EditarEmpresaColetoraDto>().ReverseMap();
         }
     }
 }
