@@ -1,9 +1,7 @@
 using System.Net;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
-using Microsoft.AspNetCore.Http;
 
-namespace DesafioAtos.Application.Core.Middlewares.Exceptions
+namespace DesafioAtos.Application.Core.Middlewares
 {
     public class ConfigureExceptionMiddleware
     {
