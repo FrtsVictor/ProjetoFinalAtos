@@ -1,11 +1,9 @@
-﻿using AutoMapper;
+﻿
+using AutoMapper;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Infra.UnitOfWorks;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using Np.Cryptography;
 
 namespace DesafioAtos.Service.EmpresaColetora
 {
@@ -13,44 +11,58 @@ namespace DesafioAtos.Service.EmpresaColetora
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
+        private readonly ICriptografo _criptografo;
+        private readonly IConfiguration _configuration;
+        private readonly string _chaveParaCriptografia;
+        private readonly ITokenService _tokenService;
 
-        public EmpresaColetoraService(IUnitOfWork unitOfWork, IMapper mapper)
+        public EmpresaColetoraService(IUnitOfWork unitOfWork, IMapper mapper, ICriptografo criptografo, IConfiguration configuration, ITokenService tokenService)
         {
-            _unitOfWork = unitOfWork;
-            _mapper = mapper;
-
+            this._unitOfWork = unitOfWork;
+            this._mapper = mapper;
+            this._criptografo = criptografo;
+            this._configuration = configuration;
+            this._chaveParaCriptografia = _configuration["cryptography:AppPasswordKey"];
+            this._tokenService = tokenService;
         }
 
-        public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto request)
+        public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
         {
-            try
+            //var empresaParaCriacao = _mapper.MapEmpresaColetoraDtoToEmpresaColetora(empresaColetoraDto);
+
+            //return await _unitOfWork.ExecutarAsync(async () =>
+            //{
+            //    return await _unitOfWork.Users.CriarAsync(empresaParaCriacao);
+            //});
+
+
+            var empresaColetora = _mapper.Map<EmpresaColetoraDto>(empresaColetoraDto);
+
+            var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
             {
-                var empresaColetora = _mapper.Map<EmpresaColetoraDto>(request);
+                Categoria = empresaColetoraDto.Categoria,
+                Cnpj = empresaColetoraDto.Cnpj,
+                Email = empresaColetoraDto.Email,
+                Nome = empresaColetoraDto.Nome,
+                Telefone = empresaColetoraDto.Telefone
 
-                var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
-                {
-                    Nome = request.Nome,
-                    Categoria = request.Categoria,
-                    Email = request.Email,
-                    Cnpj = request.Cnpj,
-                    Telefone = request.Telefone,
+            };
 
-                };
+            //await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetoraOrigem);
 
-                await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetoraOrigem);
-
-                await _unitOfWork.SalvarAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            //await _unitOfWork.SalvarAsync();
         }
 
         public async Task EmpresaColetoraPut(EditarEmpresaColetoraDto request)
         {
-            try
-            {
+            //await _unitOfWork.VoidExecutarAsync(async () =>
+            //{
+            //    var empresa = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(request.Id);
+            //    _unitOfWork.EmpresaColetoraRepository.Atualizar(empresa);
+            //    return empresa;
+            //});
+
+
                 var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
 
                 var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
@@ -65,11 +77,6 @@ namespace DesafioAtos.Service.EmpresaColetora
                 _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
 
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
 
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DesafioAtos.Infra.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,10 +15,10 @@ namespace DesafioAtos.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false),
                     Cnpj = table.Column<string>(type: "CHAR(12)", fixedLength: true, nullable: false),
-                    Phone = table.Column<string>(type: "CHAR(11)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Telefone = table.Column<string>(type: "CHAR(11)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "smalldatetime", nullable: false)
                 },
@@ -33,7 +33,7 @@ namespace DesafioAtos.Infra.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Login = table.Column<string>(type: "VARCHAR(10)", nullable: false),
+                    Login = table.Column<string>(type: "VARCHAR(20)", nullable: false),
                     Senha = table.Column<string>(type: "VARCHAR(30)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
@@ -48,12 +48,10 @@ namespace DesafioAtos.Infra.Migrations
                 name: "Categorias",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Categorias = table.Column<int>(type: "int", nullable: false),
-                    EmpresaColetoraId = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EmpresaColetoraId = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -72,7 +70,9 @@ namespace DesafioAtos.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false),
-                    Descricao = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    ItemDeColeta = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    Observacao = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    Categoria = table.Column<int>(type: "int", nullable: false),
                     EmpresaColetoraId = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "bit", nullable: false),
                     DataCriacao = table.Column<DateTime>(type: "smalldatetime", nullable: false)
@@ -95,7 +95,7 @@ namespace DesafioAtos.Infra.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Numero = table.Column<string>(type: "VARCHAR(12)", nullable: false),
-                    Complemento = table.Column<string>(type: "VARCHAR(100)", nullable: false),
+                    Complemento = table.Column<string>(type: "VARCHAR(100)", nullable: true),
                     Rua = table.Column<string>(type: "VARCHAR(100)", nullable: false),
                     Cep = table.Column<string>(type: "VARCHAR(8)", nullable: false),
                     Cidade = table.Column<string>(type: "VARCHAR(100)", nullable: false),
@@ -112,28 +112,6 @@ namespace DesafioAtos.Infra.Migrations
                         name: "FK_Enderecos_EmpresasColetoras_EmpresaColetoraId",
                         column: x => x.EmpresaColetoraId,
                         principalTable: "EmpresasColetoras",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ItensDeColetas",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Nome = table.Column<string>(type: "VARCHAR(100)", nullable: false),
-                    Categoria = table.Column<int>(type: "int", nullable: false),
-                    ColetaId = table.Column<int>(type: "int", nullable: true),
-                    Status = table.Column<bool>(type: "bit", nullable: false),
-                    DataCriacao = table.Column<DateTime>(type: "smalldatetime", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ItensDeColetas", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ItensDeColetas_Coletas_ColetaId",
-                        column: x => x.ColetaId,
-                        principalTable: "Coletas",
                         principalColumn: "Id");
                 });
 
@@ -159,11 +137,6 @@ namespace DesafioAtos.Infra.Migrations
                 column: "EmpresaColetoraId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ItensDeColetas_ColetaId",
-                table: "ItensDeColetas",
-                column: "ColetaId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Users_Login",
                 table: "Users",
                 column: "Login",
@@ -176,16 +149,13 @@ namespace DesafioAtos.Infra.Migrations
                 name: "Categorias");
 
             migrationBuilder.DropTable(
+                name: "Coletas");
+
+            migrationBuilder.DropTable(
                 name: "Enderecos");
 
             migrationBuilder.DropTable(
-                name: "ItensDeColetas");
-
-            migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Coletas");
 
             migrationBuilder.DropTable(
                 name: "EmpresasColetoras");

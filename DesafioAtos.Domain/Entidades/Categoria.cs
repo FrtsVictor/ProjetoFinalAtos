@@ -3,8 +3,9 @@ using DesafioAtos.Domain.Enums;
 
 namespace DesafioAtos.Domain.Entidades
 {
-    public class Categoria : EntidadeBase
+    public class Categoria
     {
+        public long Id { get; set; }
         public ECategoria Categorias { get; set; }
     }
 }
