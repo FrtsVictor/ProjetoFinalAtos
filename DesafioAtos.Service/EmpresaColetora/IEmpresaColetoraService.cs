@@ -6,8 +6,8 @@ namespace DesafioAtos.Service.EmpresaColetora
     {
         Task EmpresaColetoraPost(CriarEmpresaColetoraDto request);
         Task EmpresaColetoraPut(EditarEmpresaColetoraDto request);
-        Task<EmpresaColetoraDto> PegaEmpresaColetoraPorId(long id);
-        Task<List<EmpresaColetoraDto>> PegaTodasEmpresaColetora();
+        Task<EmpresaColetoraDto> GetEmpresaColetoraPorId(long id);
+        Task<List<EmpresaColetoraDto>> GetTodasEmpresaColetora();
         Task DeletaEmpresaColetora(long id);
     }
 }

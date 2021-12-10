@@ -68,7 +68,7 @@ namespace DesafioAtos.Service.Coleta
         }
 
 
-        public async Task<List<ColetaDto>> PegaTodasColeta()
+        public async Task<List<ColetaDto>> GetTodasColeta()
         {
             try
             {
@@ -83,7 +83,7 @@ namespace DesafioAtos.Service.Coleta
             }
         }
 
-        public async Task<ColetaDto> PegaColetaPorId(long id)
+        public async Task<ColetaDto> GetColetaPorId(long id)
         {
             try
             {
@@ -100,16 +100,11 @@ namespace DesafioAtos.Service.Coleta
 
         public async Task DeletaColeta(long id)
         {
-            try
+            await _unitOfWork.ExecutarAsync(async () =>
             {
-                var coletaOrigem = await _unitOfWork.ColetaRepository.ObterPorIdAsync(id);
-                //_unitOfWork.ColetaRepository.RemoverAsync(coletaOrigem);
-                await _unitOfWork.SalvarAsync();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+                await _unitOfWork.ColetaRepository.RemoverAsync(id);
+                return id;
+            });
         }
 
 
