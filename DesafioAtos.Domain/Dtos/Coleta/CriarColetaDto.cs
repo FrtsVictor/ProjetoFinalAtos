@@ -9,8 +9,8 @@ namespace DesafioAtos.Domain.Dtos
         public string? ItemDeColeta { get; set; }
         public string? Observacao { get; set; }
         public ECategoria Categoria { get; set; }
-        public EmpresaColetora EmpresaColetora { get; set; }
-        public bool Status { get; set; }
+        public long EmpresaColetaId { get; set; }
+
 
     }
 }

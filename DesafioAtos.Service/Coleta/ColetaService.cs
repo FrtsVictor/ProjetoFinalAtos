@@ -27,10 +27,8 @@ namespace DesafioAtos.Service.Coleta
                     Nome = request.Nome,
                     ItemDeColeta = request.ItemDeColeta,
                     Observacao = request.Observacao,
-                    Status = request.Status,
                     Categoria = request.Categoria,
-                    EmpresaColetora = request.EmpresaColetora,
-
+ 
                 };
 
                 await _unitOfWork.ColetaRepository.CriarAsync(coletaOrigem);
@@ -52,10 +50,12 @@ namespace DesafioAtos.Service.Coleta
 
                 coletaBanco.ItemDeColeta = request.ItemDeColeta;
                 coletaBanco.Nome = request.Nome;
-                coletaBanco.EmpresaColetora = request.EmpresaColetora;
+                coletaBanco.Status = request.Status;
                 coletaBanco.Categoria = request.Categoria;
                 coletaBanco.Observacao = request.Observacao;
-
+                coletaBanco.EmpresaColetora.Id = (int)request.EmpresaColetaId;
+         
+            
                 _unitOfWork.ColetaRepository.Atualizar(coletaBanco);
 
 
