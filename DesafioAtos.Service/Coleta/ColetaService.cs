@@ -53,7 +53,7 @@ namespace DesafioAtos.Service.Coleta
                 coletaBanco.Status = request.Status;
                 coletaBanco.Categoria = request.Categoria;
                 coletaBanco.Observacao = request.Observacao;
-                coletaBanco.EmpresaColetora.Id = (int)request.EmpresaColetaId;
+
          
             
                 _unitOfWork.ColetaRepository.Atualizar(coletaBanco);

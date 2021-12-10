@@ -5,6 +5,8 @@ using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service;
+using DesafioAtos.Service.Coleta;
+using DesafioAtos.Service.EmpresaColetora;
 using DesafioAtos.Service.Usuarios;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -17,12 +19,16 @@ var cryptography = new Criptografo();
 var connectionString = cryptography.Descriptografar(dbKey, builder.Configuration.GetConnectionString("AppDb"));
 var environment = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
 
+
+builder.Services.AddScoped<IUsuarioService, UsuarioService>();
+builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
+builder.Services.AddScoped<IEmpresaColetoraService, EmpresaColetoraService>();
+builder.Services.AddScoped<IColetaService, ColetaService>();
+
 builder.Services.AddSingleton<ICriptografo, Criptografo>();
 builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
 builder.Services.AddSingleton<IMapper, Mapper>();
 builder.Services.AddSingleton<ITokenService, TokenService>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(connectionString, x => x.MigrationsAssembly("DesafioAtos.Infra")));
