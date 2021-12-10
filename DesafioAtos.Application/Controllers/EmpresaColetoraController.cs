@@ -34,13 +34,13 @@ namespace DesafioAtos.Application.Controllers
             return Ok();
         }
 
-        // POST api/<ColetaController>
-        //[HttpPost]
-        //public async Task<IActionResult> Post(EmpresaColetoraDto request)
-        //{
-        //    await _service.EmpresaColetoraPost(request);
-        //    return Ok();
-        //}
+        
+        [HttpPost]
+        public async Task<IActionResult> Post(CriarEmpresaColetoraDto request)
+        {
+            await _service.EmpresaColetoraPost(request);
+            return Ok();
+        }
 
         // PUT api/<ColetaController>/5
         [HttpPut("{id}")]
