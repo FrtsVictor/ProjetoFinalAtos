@@ -24,14 +24,13 @@ pela API principal escolhida e que irá registrar esses eventos em banco de dado
 ***Versionamento** = Git*
 
 **Persistenticia =** EnitityFramework **;** UnitOfWork;
+**Database = Sql Server**
 
 **Segurança =** JwtBearerToken com filtro para Roles. ; Criptografia;
 
 **Mapemanto Enditades** = AutoMapper
 
 **Arquitetura = DDD, RepositoryPatern, UnitOfWork**
-
-
 
 
 ## Requisitos
