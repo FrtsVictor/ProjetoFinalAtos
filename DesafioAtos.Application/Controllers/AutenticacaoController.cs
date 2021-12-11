@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using DesafioAtos.Application.ActionFilters.ValidateModel;
 using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Service;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,23 +13,26 @@ namespace DesafioAtos.Application.Controllers
     public class AutenticacaoController : ControllerBase
     {
         private readonly IAutenticacaoService _authenticationService;
-        public AutenticacaoController(IAutenticacaoService authenticationService)
+        private readonly IFabricaResponse _fabricaResponse;
+        public AutenticacaoController(IAutenticacaoService authenticationService, IFabricaResponse fabricaResponse)
         {
             this._authenticationService = authenticationService;
+            this._fabricaResponse = fabricaResponse;
         }
 
-        [HttpPost("login")]
-        public async Task<IActionResult> Login(LogarUsuarioDto loginDto)
+        [HttpPost("login-usuario")]
+        public async Task<IActionResult> LogarUsuario(LogarUsuarioDto loginDto)
         {
-            var user = await _authenticationService.Logar(loginDto);
-            return Ok(user);
+            var tokenResponse = await _authenticationService.LogarUsuario(loginDto);
+            return Ok(_fabricaResponse.Create<TokenResponseDto>(tokenResponse));
         }
 
-        [HttpPost("create_account")]
-        public async Task<IActionResult> CreateAccount(CriarUsuarioDto userDto)
+        [HttpPost("login-empresa")]
+        public async Task<IActionResult> LogarEmpresa(LogarUsuarioDto loginDto)
         {
-            var user = await _authenticationService.CriarConta(userDto);
-            return Ok(user);
+            var tokenResponse = await _authenticationService.LogarUsuario(loginDto);
+            return Ok(_fabricaResponse.Create<TokenResponseDto>(tokenResponse));
         }
+
     }
 }

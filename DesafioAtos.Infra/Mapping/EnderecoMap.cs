@@ -60,9 +60,11 @@ namespace DesafioAtos.Infra.Mapping
                 .WithMany(p => p.Enderecos)
                 .HasForeignKey(d => d.IdEmpresaColeta)
                 .HasConstraintName("FK__Endereco__id_emp__5CA1C101");
+
+            entity.HasData(Seed());
         }
 
-        private void Seed() => new List<Endereco>()
+        private List<Endereco> Seed() => new List<Endereco>()
         {
             new Endereco()
             {
@@ -127,7 +129,7 @@ namespace DesafioAtos.Infra.Mapping
                 Cidade = "São Tomé",
                 Complemento = "Casa 15",
                 Estado = "MG",
-                IdEmpresaColeta = 5
+                IdEmpresaColeta = 6
             },
             new Endereco()
             {
@@ -193,8 +195,7 @@ namespace DesafioAtos.Infra.Mapping
                 Complemento = "Casa 06",
                 Estado = "RJ",
                 IdEmpresaColeta = 10
-            },
-
+            }
         };
 
     }

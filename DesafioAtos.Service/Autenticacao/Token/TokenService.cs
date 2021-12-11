@@ -30,7 +30,7 @@ public class TokenService : ITokenService
                 Subject = new ClaimsIdentity(new Claim[]
                 {
                     new Claim(ClaimTypes.Name, criacaoTokenDto.Identificador),
-                    new Claim("Id", criacaoTokenDto.Id.ToString()),
+                    new Claim("id", criacaoTokenDto.Id.ToString()),
                     new Claim(ClaimTypes.Role, criacaoTokenDto.Role)
                 }),
 

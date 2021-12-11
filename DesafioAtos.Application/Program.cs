@@ -41,6 +41,8 @@ AuthenticationMiddlaware.ConfigurarAutenticacao(builder.Services, tokenKey);
 var app = builder.Build();
 ConfigureExceptionMiddleware.ConfigureExceptionHandler(app);
 
+
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
