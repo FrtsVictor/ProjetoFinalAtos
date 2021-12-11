@@ -13,22 +13,10 @@ namespace DesafioAtos.Infra.UnitOfWorks
         private readonly DatabaseContext _context;
         private readonly IDatabaseConstraintMapper _databaseConstraintMapper;
         private readonly ILogger _logger;
-        private IColetaRepository _coletaRepository;
         private IEmpresaColetoraRepository _empresaColetoraRepository;
         private IEnderecoRepository _enderecoRepository;
         private IUsuarioRepository _userRepository;
 
-
-        public IColetaRepository ColetaRepository
-        {
-            get
-            {
-                if (_coletaRepository == null)
-                    _coletaRepository = new ColetaRepository(_context, _logger);
-                return _coletaRepository;
-            }
-            private set => _coletaRepository = value;
-        }
 
         public IEmpresaColetoraRepository EmpresaColetoraRepository
         {

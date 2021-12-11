@@ -1,5 +1,4 @@
-﻿using DesafioAtos.Domain.Dtos.Usuario;
-using DesafioAtos.Domain.Entidades;
+﻿using DesafioAtos.Domain.Dtos;
 
 namespace DesafioAtos.Service.Usuarios
 {

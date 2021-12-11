@@ -1,4 +1,4 @@
-﻿namespace DesafioAtos.Domain.Dtos.Usuario
+﻿namespace DesafioAtos.Domain.Dtos
 {
     public class AtualizarUsuarioDto : LogarUsuarioDto
     {

@@ -9,9 +9,8 @@ namespace DesafioAtos.Infra.Context
     {
 
         public DbSet<Usuario> Users { get; set; }
-        public DbSet<Coleta> Coletas { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
+        public DbSet<EmpresaColeta> EmpresasColetoras { get; set; }
         public DbSet<Endereco> Enderecos { get; set; }
 
 
@@ -21,9 +20,10 @@ namespace DesafioAtos.Infra.Context
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UsuarioMap());
-            modelBuilder.ApplyConfiguration(new ColetaMap());
-            modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
+            modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
+            modelBuilder.ApplyConfiguration(new UsuarioEmpresaCategoriaMap());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -33,7 +33,8 @@ namespace DesafioAtos.Infra.Context
             optionsBuilder.EnableSensitiveDataLogging();
 
             // HardCode por conta do bug com as migrations
-            optionsBuilder.UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Initial Catalog=DesafioAtos;Integrated Security=True;MultipleActiveResultSets=true");
+            //optionsBuilder.UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Initial Catalog=DesafioAtos;Integrated Security=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
         }
     }
 }

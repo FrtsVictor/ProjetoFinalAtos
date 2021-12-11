@@ -4,7 +4,6 @@ using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service;
-using DesafioAtos.Service.Coleta;
 using DesafioAtos.Service.EmpresaColetora;
 using DesafioAtos.Service.Usuarios;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +18,6 @@ var connectionString = cryptography.Descriptografar(dbKey, builder.Configuration
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IAutenticacaoService, UserAuthenticationService>();
 builder.Services.AddScoped<IEmpresaColetoraService, EmpresaColetoraService>();
-builder.Services.AddScoped<IColetaService, ColetaService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
 

@@ -4,7 +4,6 @@ namespace DesafioAtos.Infra.UnitOfWorks
 {
     public interface IUnitOfWork
     {
-        IColetaRepository ColetaRepository { get; }
         IEmpresaColetoraRepository EmpresaColetoraRepository { get; }
         IEnderecoRepository EnderecoRepository { get; }
         IUsuarioRepository Users { get; }
