@@ -6,49 +6,68 @@ namespace DesafioAtos.Infra.Mapping
 {
     public class EnderecoMap : IEntityTypeConfiguration<Endereco>
     {
-        public void Configure(EntityTypeBuilder<Endereco> builder)
+        public void Configure(EntityTypeBuilder<Endereco> entity)
         {
-            builder.HasKey(a => a.Id);
+            entity.ToTable("Endereco");
 
-            builder.Property(a => a.Id)
-            .ValueGeneratedOnAdd()
-            .IsRequired();
+            entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
-            builder.Property(a => a.Cidade)
-            .HasColumnType("VARCHAR(100)")
-            .IsRequired();    
+            entity.Property(e => e.Bairro)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("bairro");
 
-            builder.Property(a => a.Estado)
-            .HasColumnType("VARCHAR(100)")
-            .IsRequired();
+            entity.Property(e => e.Cep)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .HasColumnName("cep");
 
-            builder.Property(b => b.Complemento)
-              .HasColumnType("VARCHAR(100)");
+            entity.Property(e => e.Cidade)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("cidade");
 
-            builder.Property(b => b.Bairro)
-                .HasColumnType("VARCHAR(100)")
-                .IsRequired();
+            entity.Property(e => e.Complemento)
+                .HasMaxLength(20)
+                .IsUnicode(false)
+                .HasColumnName("complemento");
 
-            builder.Property(b => b.Cep)
-                .HasColumnType("VARCHAR(8)")
-                .IsRequired();
-
-            builder.Property(b => b.Numero)
-              .HasColumnType("VARCHAR(12)")
-           .IsRequired();
-
-            builder.Property(b => b.Rua)
-               .HasColumnType("VARCHAR(100)")
-               .IsRequired();
-
-            builder.Property(c => c.DataCriacao)
+            entity.Property(e => e.DataCriacao)
                 .HasColumnType("smalldatetime")
-                .IsRequired();
+                .HasColumnName("data_criacao")
+                .HasDefaultValueSql("(getdate())");
 
-            builder.Property(c => c.Status)
-                .HasColumnType("bit")
-                .IsRequired();
+            entity.Property(e => e.Estado)
+                .HasMaxLength(50)
+                .IsUnicode(false)
+                .HasColumnName("estado");
+
+            entity.Property(e => e.IdEmpresaColeta).HasColumnName("id_empresa_coletora");
+
+            entity.Property(e => e.Numero)
+                .HasMaxLength(8)
+                .IsUnicode(false)
+                .HasColumnName("numero");
+
+            entity.Property(e => e.Rua)
+                .HasMaxLength(100)
+                .IsUnicode(false)
+                .HasColumnName("rua");
+
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasOne(d => d.IdEmpresaColetaNavigation)
+                .WithMany(p => p.Enderecos)
+                .HasForeignKey(d => d.IdEmpresaColeta)
+                .HasConstraintName("FK__Endereco__id_emp__5CA1C101");
         }
+
+        private void Seed() => new List<Endereco>()
+        {
+            new Endereco() { Id = 1, Bairro = "cccc", Rua = "ccccc",Status =true,Numero = "asd", Cep= "123123", Cidade = "Cidade4", Complemento = "compsasd", Estado = "RJ", IdEmpresaColeta = 1 },
+            new Endereco() {Bairro = "123", Rua = "bbbb",Status =true,Numero = "123", Cep= "123123", Cidade = "Cidade1", Complemento = "comp", Estado = "RJ",  IdEmpresaColeta = 1 },
+            new Endereco() {Bairro = "321", Rua = "aaaa",Status =true,Numero = "123123", Cep= "1515", Cidade = "Cidade2", Complemento = "asd", Estado = "RJ",  IdEmpresaColeta = 2 }
+        };
 
     }
 }

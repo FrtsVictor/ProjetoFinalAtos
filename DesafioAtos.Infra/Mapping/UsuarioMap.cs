@@ -6,31 +6,44 @@ namespace DesafioAtos.Infra.Mapping
 {
     public class UsuarioMap : IEntityTypeConfiguration<Usuario>
     {
-        public void Configure(EntityTypeBuilder<Usuario> builder)
+        public void Configure(EntityTypeBuilder<Usuario> entity)
         {
-            builder.HasKey(c => c.Id);
+            entity.ToTable("Usuario");
 
-            builder.Property(c => c.Id)
-            .ValueGeneratedOnAdd()
-            .IsRequired();
+            entity.HasIndex(e => e.Login, "UQ__Usuario__7838F27200D08C37")
+                .IsUnique();
 
-            builder.HasIndex(b => b.Login)
-            .IsUnique();
-            builder.Property(c => c.Login)
-            .HasColumnType("VARCHAR(20)")
-            .IsRequired();
+            entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
-            builder.Property(c => c.Senha)
-            .HasColumnType("VARCHAR(30)")
-            .IsRequired();
+            entity.Property(e => e.Role).HasColumnName("role");
 
-            builder.Property(c => c.DataCriacao)
-            .HasColumnType("smalldatetime")
-            .IsRequired();
+            entity.Property(e => e.DataCriacao)
+                .HasColumnType("smalldatetime")
+                .HasColumnName("data_criacao")
+                .HasDefaultValueSql("(getdate())");
 
-            builder.Property(c => c.Status)
-            .HasColumnType("bit")
-            .IsRequired();
+            entity.Property(e => e.Login)
+                .HasMaxLength(25)
+                .IsUnicode(false)
+                .HasColumnName("login");
+
+            entity.Property(e => e.Senha)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("senha");
+
+            entity.Property(e => e.Status).HasColumnName("status");
+
+            entity.HasData(Seed());
         }
+
+        private List<Usuario> Seed() => new List<Usuario>()
+        {
+            new Usuario(){Id = 1, DataCriacao = DateTime.Now, Role = Domain.Enums.ERole.Usuario, Login = "MyUsername 1", Senha = "asudasu", Status = true},
+            new Usuario(){Id = 2, DataCriacao = DateTime.Now, Role = Domain.Enums.ERole.Usuario, Login = "MyUsername 2", Senha = "asudasu", Status = true},
+            new Usuario(){Id = 3, DataCriacao = DateTime.Now, Role = Domain.Enums.ERole.Usuario, Login = "MyUsername 3", Senha = "asudasu", Status = true},
+            new Usuario(){Id = 4, DataCriacao = DateTime.Now, Role = Domain.Enums.ERole.Usuario, Login = "MyUsername 4", Senha = "asudasu", Status = true},
+            new Usuario(){Id = 5, DataCriacao = DateTime.Now, Role = Domain.Enums.ERole.Usuario, Login = "MyUsername 5", Senha = "asudasu", Status = true}
+        };
     }
 }

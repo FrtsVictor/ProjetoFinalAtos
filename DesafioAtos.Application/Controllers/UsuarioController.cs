@@ -1,5 +1,5 @@
 ﻿using DesafioAtos.Application.ActionFilters.ValidateModel;
-using DesafioAtos.Domain.Dtos.Usuario;
+using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Service.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

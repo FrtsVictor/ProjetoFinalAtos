@@ -1,11 +1,14 @@
-﻿using DesafioAtos.Domain.Entidades;
-using DesafioAtos.Domain.Enums;
-
-namespace DesafioAtos.Domain.Entidades
+﻿namespace DesafioAtos.Domain.Entidades
 {
-    public class Categoria
+    public partial class Categoria : EntidadeBase
     {
-        public long Id { get; set; }
-        public ECategoria Categorias { get; set; }
+        public Categoria()
+        {
+            UsuarioEmpresaCategoria = new HashSet<UsuarioEmpresaCategoria>();
+        }
+     
+        public string Nome { get; set; } = null!;
+
+        public virtual ICollection<UsuarioEmpresaCategoria> UsuarioEmpresaCategoria { get; set; }
     }
 }

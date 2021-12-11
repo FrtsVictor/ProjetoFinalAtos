@@ -33,14 +33,8 @@ namespace DesafioAtos.Domain.Mapper
             return (ERole)valor;
         }
 
-        public Coleta MapColetaDtoToEmpresaColeta(ColetaDto coletaDto) => new Coleta()
+        public EmpresaColeta MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColeta()
         {
-            ItemDeColeta = coletaDto.ItemDeColeta,
-            Observacao = coletaDto.Observacao
-        };
-        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
-        {
-            Categoria = empresaColetoraDto.Categoria,
             Cnpj =  empresaColetoraDto.Cnpj,
             DataCriacao = empresaColetoraDto.CreatedAt,
             Email = empresaColetoraDto.Email,

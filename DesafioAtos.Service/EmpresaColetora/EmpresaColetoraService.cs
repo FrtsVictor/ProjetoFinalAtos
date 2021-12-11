@@ -38,9 +38,8 @@ namespace DesafioAtos.Service.EmpresaColetora
 
             var empresaColetora = _mapper.Map<EmpresaColetoraDto>(empresaColetoraDto);
 
-            var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
+            var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColeta
             {
-                Categoria = empresaColetoraDto.Categoria,
                 Cnpj = empresaColetoraDto.Cnpj,
                 Email = empresaColetoraDto.Email,
                 Nome = empresaColetoraDto.Nome,
