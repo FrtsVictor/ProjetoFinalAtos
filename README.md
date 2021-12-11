@@ -1,4 +1,4 @@
-# Projeto Final Atos #
+# Projeto Final Atos EColeta #
 
 * [Escopo](#escopo)
 * [Requisitos](#requisitos)
