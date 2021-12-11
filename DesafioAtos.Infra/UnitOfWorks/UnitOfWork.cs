@@ -13,43 +13,44 @@ namespace DesafioAtos.Infra.UnitOfWorks
         private readonly DatabaseContext _context;
         private readonly IDatabaseConstraintMapper _databaseConstraintMapper;
         private readonly ILogger _logger;
-        private ICustomerRepository _cutomerRepository;
-        public ICustomerRepository Customers
+        private IEmpresaColetoraRepository _empresaColetoraRepository;
+        private IEnderecoRepository _enderecoRepository;
+        private IUsuarioRepository _userRepository;
+
+
+        public IEmpresaColetoraRepository EmpresaColetoraRepository
         {
             get
             {
-                if (_cutomerRepository == null)
-                    _cutomerRepository = new CustomerRepository(_context, _logger);
-
-                return _cutomerRepository;
+                if (_empresaColetoraRepository == null)
+                    _empresaColetoraRepository = new EmpresaColetoraRepository(_context, _logger);
+                return _empresaColetoraRepository;
             }
-            private set => _cutomerRepository = value;
+            private set => _empresaColetoraRepository = value;
         }
 
-        private IUserRepository _userRepository;
-        public IUserRepository Users
+
+        public IEnderecoRepository EnderecoRepository
+        {
+            get
+            {
+                if (_enderecoRepository == null)
+                    _enderecoRepository = new EnderecoRepository(_context, _logger);
+                return _enderecoRepository;
+            }
+            private set => _enderecoRepository = value;
+        }
+        public IUsuarioRepository Users
         {
             get
             {
                 if (_userRepository == null)
-                    _userRepository = new UserRepository(_context, _logger);
+                    _userRepository = new UsuarioRepository(_context, _logger);
 
                 return _userRepository;
             }
             private set => _userRepository = value;
-        }
-        private IRoleRepository _roleRepository;
-        public IRoleRepository Roles
-        {
-            get
-            {
-                if (_roleRepository == null)
-                    _roleRepository = new RoleRepository(_context, _logger);
-
-                return _roleRepository;
-            }
-            private set => _roleRepository = value;
-        }
+        }        
 
         public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory,
             IDatabaseConstraintMapper databaseConstraintMapper)
@@ -59,24 +60,24 @@ namespace DesafioAtos.Infra.UnitOfWorks
             _logger = loggerFactory.CreateLogger("logs");
         }
 
-        public async Task CompleteAsync()
+        public async Task SalvarAsync()
         {
             await _context.SaveChangesAsync();
             DetachAllEntities();
         }
 
-        public async Task VoidExecuteAsync<T>(Func<Task<T>> callback)
+        public async Task VoidExecutarAsync<T>(Func<Task<T>> function)
         {
-            await ExecuteAsync<T>(callback);
+            await ExecutarAsync<T>(function);
         }
 
 
-        public async Task<T> ExecuteAsync<T>(Func<Task<T>> callback)
+        public async Task<T> ExecutarAsync<T>(Func<Task<T>> callback)
         {
             try
             {
                 var result = await callback();
-                await CompleteAsync();
+                await SalvarAsync();
                 return result;
             }
             catch (Exception e)

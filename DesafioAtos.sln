@@ -1,23 +1,22 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioAtos.Application", "DesafioAtos.Application\DesafioAtos.Application.csproj", "{544144C9-39B6-4B0A-95B4-B31A1A08A1FA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Application", "DesafioAtos.Application\DesafioAtos.Application.csproj", "{544144C9-39B6-4B0A-95B4-B31A1A08A1FA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioAtos.Domain", "DesafioAtos.Domain\DesafioAtos.Domain.csproj", "{548F1CCB-08E5-42E9-886D-369C7124C714}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Domain", "DesafioAtos.Domain\DesafioAtos.Domain.csproj", "{548F1CCB-08E5-42E9-886D-369C7124C714}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioAtos.Infra", "DesafioAtos.Infra\DesafioAtos.Infra.csproj", "{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Infra", "DesafioAtos.Infra\DesafioAtos.Infra.csproj", "{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesafioAtos.Service", "DesafioAtos.Service\DesafioAtos.Service.csproj", "{777A6326-BB5E-4B43-A40F-659347A88364}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Service", "DesafioAtos.Service\DesafioAtos.Service.csproj", "{777A6326-BB5E-4B43-A40F-659347A88364}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Criptografia", "Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj", "{DA8B3C9C-7480-4E34-B18D-71753988A8F3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{544144C9-39B6-4B0A-95B4-B31A1A08A1FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -25,16 +24,26 @@ Global
 		{544144C9-39B6-4B0A-95B4-B31A1A08A1FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{544144C9-39B6-4B0A-95B4-B31A1A08A1FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{548F1CCB-08E5-42E9-886D-369C7124C714}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548F1CCB-08E5-42E9-886D-369C7124C714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{548F1CCB-08E5-42E9-886D-369C7124C714}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{548F1CCB-08E5-42E9-886D-369C7124C714}.Release|Any CPU.Build.0 = Release|Any CPU
-		{548F1CCB-08E5-42E9-886D-369C7124C714}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1DA4E97D-3C55-43D7-92D0-F43DF4D46D8D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{777A6326-BB5E-4B43-A40F-659347A88364}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Release|Any CPU.Build.0 = Release|Any CPU
-		{777A6326-BB5E-4B43-A40F-659347A88364}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1CEDF6BA-6995-45DF-8CCE-851F69A6AEC7}
 	EndGlobalSection
 EndGlobal

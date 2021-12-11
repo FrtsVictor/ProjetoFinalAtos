@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />
     <ProjectReference Include="..\DesafioAtos.Service\DesafioAtos.Service.csproj" />
     <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj" />
-    <ProjectReference Include="..\Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Cryptography.csproj" />
+    <ProjectReference Include="..\Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
   </ItemGroup>
 
 </Project>

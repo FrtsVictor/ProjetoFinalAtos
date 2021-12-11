@@ -1,4 +1,4 @@
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Infra.Mapping;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -7,18 +7,23 @@ namespace DesafioAtos.Infra.Context
 {
     public class DatabaseContext : DbContext
     {
-        //public DbSet<Customer> Customers { get; set; }
-        //    DbSet<Address> Addresses { get; set; }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<Usuario> Users { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
+        public DbSet<EmpresaColeta> EmpresasColetoras { get; set; }
+        public DbSet<Endereco> Enderecos { get; set; }
+
+
         private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.ApplyConfiguration(new UserMap());
-            modelBuilder.ApplyConfiguration(new RoleMap());
+            modelBuilder.ApplyConfiguration(new UsuarioMap());
+            modelBuilder.ApplyConfiguration(new EnderecoMap());
+            modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
+            modelBuilder.ApplyConfiguration(new CategoriaMap());
+            modelBuilder.ApplyConfiguration(new UsuarioEmpresaCategoriaMap());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,7 +33,8 @@ namespace DesafioAtos.Infra.Context
             optionsBuilder.EnableSensitiveDataLogging();
 
             // HardCode por conta do bug com as migrations
-            optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password;");
+            //optionsBuilder.UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Initial Catalog=DesafioAtos;Integrated Security=True;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
         }
     }
 }

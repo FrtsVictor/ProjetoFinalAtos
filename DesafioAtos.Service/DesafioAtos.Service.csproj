@@ -7,8 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj"/>
-    <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj"/>
+    <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />
+    <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj" />
   </ItemGroup>
 
   <ItemGroup>

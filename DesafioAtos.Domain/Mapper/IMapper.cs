@@ -1,10 +1,14 @@
 using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Entities;
+using DesafioAtos.Domain.Dtos.Token;
+using DesafioAtos.Domain.Entidades;
 
 namespace DesafioAtos.Domain.Mapper
 {
     public interface IMapper
     {
-        User MapUserDtoToUser(CreateUserDto userDto);
+        Usuario MapUsuarioDtoToUsuario(CriarUsuarioDto userDto);
+        EmpresaColeta MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto);
+        CreateTokenDto MapUsuarioToCreateUserDto(Usuario usuario);
+
     }
 }
