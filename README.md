@@ -19,6 +19,20 @@ Construir uma outra aplicação com a única finalidade de consumir eventos e
 expor consulta desses eventos deve ser construída para consumir os eventos gerados
 pela API principal escolhida e que irá registrar esses eventos em banco de dados.
 
+
+
+***Versionamento** = Git*
+
+**Persistenticia =** EnitityFramework **;** UnitOfWork;
+
+**Segurança =** JwtBearerToken com filtro para Roles. ; Criptografia;
+
+**Mapemanto Enditades** = AutoMapper
+
+
+
+
+
 ## Requisitos
 
 * [ ] Criação de um microsserviço de Domínio e uma API consumidora dos eventos.
