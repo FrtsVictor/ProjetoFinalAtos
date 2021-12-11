@@ -59,21 +59,84 @@ namespace DesafioAtos.Infra.Mapping
         {
             new EmpresaColeta()
             {
-                Id= 1,
-                Cnpj = "1234567891235",
+                Id = 1,
+                Nome = "Recicla Mais",
+                Email = "reciclaMais@gmail.com",
+                Cnpj = "12345678912351",
+                Telefone = "21968645988",
                 Status = true,
-                Email = "email.empresa1@gmail",
-                Nome = "Empresa 1",
-                Telefone = "9011s9q0990"
             },
             new EmpresaColeta()
             {
                 Id = 2,
-                Cnpj = "321654987789",
+                Nome = "E-Colleta",
+                Email = "e-colleta@gmail.com",
+                Cnpj = "221345678912351",
+                Telefone = "21968645223",
                 Status = true,
-                Email = "email.empresa2@gmail",
-                Nome = "Empresa 2",
-                Telefone = "91d9qw0",
+            },
+            new EmpresaColeta()
+            {
+                Id = 3,
+                Nome = "Serra-Plast",
+                Email = "serra-plast@gmail.com",
+                Cnpj = "35454267891235",
+                Telefone = "21991478963",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 4,
+                Nome = "Atos",
+                Email = "atos.net@atos.com",
+                Cnpj = "33475567708295",
+                Telefone = "21984896849",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 6,
+                Nome = "Santos Reciclaveis",
+                Email = "santos@gmail.com",
+                Cnpj = "19273546516573",
+                Telefone = "21928495826",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 7,
+                Nome = "Mega Reciclaveis",
+                Email = "mega-reciclaveis@gmail.com",
+                Cnpj = "59677586910513",
+                Telefone = "21465567728",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 8,
+                Nome = "New Reciclaveis",
+                Email = "new-reciclaveis@gmail.com",
+                Cnpj = "49576576819503",
+                Telefone = "21162547526",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 9,
+                Nome = "SuperCollect",
+                Email = "super-collect@gmail.com",
+                Cnpj = "19273546516573",
+                Telefone = "21948192846",
+                Status = true,
+            },
+            new EmpresaColeta()
+            {
+                Id = 10,
+                Nome = "NiceCollect",
+                Email = "nice-collect@gmail.com",
+                Cnpj = "19273455678848",
+                Telefone = "21948596876",
+                Status = true,
             }
         };
     }
