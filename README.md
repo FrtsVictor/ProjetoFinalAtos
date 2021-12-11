@@ -29,6 +29,7 @@ pela API principal escolhida e que irá registrar esses eventos em banco de dado
 
 **Mapemanto Enditades** = AutoMapper
 
+**Arquitetura = DDD, RepositoryPatern, UnitOfWork**
 
 
 
