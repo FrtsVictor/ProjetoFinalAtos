@@ -64,9 +64,137 @@ namespace DesafioAtos.Infra.Mapping
 
         private void Seed() => new List<Endereco>()
         {
-            new Endereco() { Id = 1, Bairro = "cccc", Rua = "ccccc",Status =true,Numero = "asd", Cep= "123123", Cidade = "Cidade4", Complemento = "compsasd", Estado = "RJ", IdEmpresaColeta = 1 },
-            new Endereco() {Bairro = "123", Rua = "bbbb",Status =true,Numero = "123", Cep= "123123", Cidade = "Cidade1", Complemento = "comp", Estado = "RJ",  IdEmpresaColeta = 1 },
-            new Endereco() {Bairro = "321", Rua = "aaaa",Status =true,Numero = "123123", Cep= "1515", Cidade = "Cidade2", Complemento = "asd", Estado = "RJ",  IdEmpresaColeta = 2 }
+            new Endereco()
+            {
+                Id = 1,
+                Bairro = "Alto",
+                Rua = "Rua das palmeiras",
+                Status = true,
+                Numero = "135",
+                Cep= "25964369",
+                Cidade = "Teresópolis",
+                Complemento = "Casa",
+                Estado = "RJ",
+                IdEmpresaColeta = 1
+            },
+            new Endereco()
+            {
+                Id = 2,
+                Bairro = "Santa Clara",
+                Rua = "Av Rio Branco",
+                Status = true,
+                Numero = "2698",
+                Cep= "69864598",
+                Cidade = "Rio de janeiro",
+                Complemento = "Apt 101",
+                Estado = "RJ",
+                IdEmpresaColeta = 2
+            },
+            new Endereco()
+            {
+                Id = 3,
+                Bairro = "Vargem Grande",
+                Rua = "Rua Tupinambás",
+                Status = true,
+                Numero = "280",
+                Cep= "29684598",
+                Cidade = "São Paulo",
+                Complemento = "Casa",
+                Estado = "SP",
+                IdEmpresaColeta = 3
+            },
+            new Endereco()
+            {
+                Id = 4,
+                Bairro = "Salaco",
+                Rua = "Estrada das Rosas",
+                Status = true,
+                Numero = "980",
+                Cep= "69875364",
+                Cidade = "Teresópolis",
+                Complemento = "Apt 101",
+                Estado = "RJ",
+                IdEmpresaColeta = 4
+            },
+            new Endereco()
+            {
+                Id = 5,
+                Bairro = "Sebastiana",
+                Rua = "Estrada Grande Rota",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+            new Endereco()
+            {
+                Id = 6,
+                Bairro = "Rosário",
+                Rua = "Rua Santo Antônio",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+            new Endereco()
+            {
+                Id = 7,
+                Bairro = "Rosário",
+                Rua = "Rua Primeiro de Maio",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+            new Endereco()
+            {
+                Id = 6,
+                Bairro = "Rosário",
+                Rua = "Rua Paraíba",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+            new Endereco()
+            {
+                Id = 6,
+                Bairro = "Rosário",
+                Rua = "Rua Santa Rita",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+            new Endereco()
+            {
+                Id = 6,
+                Bairro = "Rosário",
+                Rua = "Rua Mato Grosso",
+                Status = true,
+                Numero = "01",
+                Cep= "69874563",
+                Cidade = "São Tomé",
+                Complemento = "Casa 01",
+                Estado = "MG",
+                IdEmpresaColeta = 5
+            },
+
         };
 
     }

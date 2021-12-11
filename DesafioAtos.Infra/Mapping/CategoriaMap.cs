@@ -22,15 +22,22 @@ namespace DesafioAtos.Infra.Mapping
                 .HasColumnName("nome");
 
             entity.Property(e => e.Status).HasColumnName("status");
-            
+
             entity.HasData(Seed());
         }
 
         private List<Categoria> Seed() => new List<Categoria>()
         {
-            new Categoria() { Id = 1, Nome = "Categoria 1" },
-            new Categoria() { Id = 2, Nome = "Categoria 2" },
-            new Categoria() { Id = 3, Nome = "Categoria 3" }
+            new Categoria() { Id = 1, Nome = ECategoria.LixoNaoReciclavel.ToString() },
+            new Categoria() { Id = 2, Nome = ECategoria.LixoOrganico.ToString() },
+            new Categoria() { Id = 3, Nome = ECategoria.LixoRadioativo.ToString() },
+            new Categoria() { Id = 4, Nome = ECategoria.Madeira.ToString() },
+            new Categoria() { Id = 5, Nome = ECategoria.Metal.ToString() },
+            new Categoria() { Id = 6, Nome = ECategoria.PapelPapelao.ToString() },
+            new Categoria() { Id = 7, Nome = ECategoria.Plastico.ToString() },
+            new Categoria() { Id = 8, Nome = ECategoria.ResiduoHospitalar.ToString() },
+            new Categoria() { Id = 9, Nome = ECategoria.ResiduoPerigoso.ToString() },
+            new Categoria() { Id = 10, Nome = ECategoria.Vidro.ToString() },
         };
     }
 }
