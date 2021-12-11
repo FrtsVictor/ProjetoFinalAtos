@@ -1,4 +1,5 @@
 ﻿using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Entidades;
 
 namespace DesafioAtos.Service.Usuarios
 {
@@ -6,5 +7,6 @@ namespace DesafioAtos.Service.Usuarios
     {
         Task Atualizar(AtualizarUsuarioDto atualizarUsuarioDto);
         Task Remover(long id);
+        Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto);
     }
 }

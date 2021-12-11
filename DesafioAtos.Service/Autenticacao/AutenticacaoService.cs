@@ -29,31 +29,20 @@ namespace DesafioAtos.Service
             this._tokenService = tokenService;
         }
 
-        public async Task<TokenResponseDto> Logar(LogarUsuarioDto? loginDto)
+        public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto? loginDto)
         {            
-            Usuario usuario = await _unitOfWork.Users.ObterPorLogin(loginDto?.Login);
+            Usuario usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto?.Login);
             ValidarUsuario(usuario, loginDto);
-            var createTokenDto = _mapper.MapUsuarioToCreateUserDto(usuario);
+            var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);            
-        }
-
-        public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
-        {
-            var usuarioParaCriacao = _mapper.MapUsuarioDtoToUsuario(criarUsuarioDto);
-            var senhaCriptografada = _criptografo.Criptografar(_chaveParaCriptografia, usuarioParaCriacao.Senha);
-            usuarioParaCriacao.Senha = senhaCriptografada;
-
-            return await _unitOfWork.ExecutarAsync(async () =>
-            {
-                return await _unitOfWork.Users.CriarAsync(usuarioParaCriacao);
-            });
-        }
+        }      
 
         private void ValidarUsuario(Usuario usuario, LogarUsuarioDto? loginDto)
         {
-            var encryptedPassword = _criptografo.Criptografar(_chaveParaCriptografia, loginDto?.Senha);
+            var encryptedPassword = _criptografo.Criptografar(_chaveParaCriptografia, loginDto.Senha);
+            bool isUsuarioSenhaInvalido = usuario == null || !usuario.Senha.Equals(encryptedPassword);
 
-            if (usuario == null || !usuario.Senha.Equals(encryptedPassword))
+            if (isUsuarioSenhaInvalido)
             {
                 throw new BadRequestException("Usuario ou senha inválida!");
             }

@@ -8,7 +8,7 @@ namespace DesafioAtos.Domain.Mapper
 {
     public class Mapper : IMapper
     {
-        public CreateTokenDto MapUsuarioToCreateUserDto(Usuario usuario) => new CreateTokenDto()
+        public CreateTokenDto MapUsuarioToCreateTokenDto(Usuario usuario) => new CreateTokenDto()
         {
             Identificador = usuario.Login,
             Role = ERole.Usuario.ToString(),
@@ -16,21 +16,12 @@ namespace DesafioAtos.Domain.Mapper
         };
 
 
-        public Usuario MapUsuarioDtoToUsuario(CriarUsuarioDto criarUsuarioDto) => new Usuario()
+        public Usuario MapCriarUsuarioDtoToUsuario(CriarUsuarioDto criarUsuarioDto) => new Usuario()
         {
             Login = criarUsuarioDto.Login,
             Senha = criarUsuarioDto.Senha,
+            Nome = criarUsuarioDto.Nome
         };
-
-        public ERole ObterEnum(int valor)
-        {
-            if (!Enum.IsDefined(typeof(ERole), valor))
-            {
-                throw new InvalidEnumException("Role inv�lido!");
-            }
-
-            return (ERole)valor;
-        }
 
         public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
         {
