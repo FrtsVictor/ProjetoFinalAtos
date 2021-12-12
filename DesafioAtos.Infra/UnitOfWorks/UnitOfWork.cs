@@ -9,50 +9,9 @@ namespace DesafioAtos.Infra.UnitOfWorks
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private const string DefaultMessage = "Database Exception, please check inner exception for details";
-        private readonly DatabaseContext _context;
-        private readonly IDatabaseConstraintMapper _databaseConstraintMapper;
-        private readonly ILogger _logger;
-        private IEmpresaColetoraRepository _empresaColetoraRepository;
-        private IEnderecoRepository _enderecoRepository;
-        private IUsuarioRepository _userRepository;
-
-
-        public IEmpresaColetoraRepository EmpresaColetoraRepository
-        {
-            get
-            {
-                if (_empresaColetoraRepository == null)
-                    _empresaColetoraRepository = new EmpresaColetoraRepository(_context, _logger);
-                return _empresaColetoraRepository;
-            }
-            private set => _empresaColetoraRepository = value;
-        }
-
-
-        public IEnderecoRepository EnderecoRepository
-        {
-            get
-            {
-                if (_enderecoRepository == null)
-                    _enderecoRepository = new EnderecoRepository(_context, _logger);
-                return _enderecoRepository;
-            }
-            private set => _enderecoRepository = value;
-        }
-        public IUsuarioRepository Users
-        {
-            get
-            {
-                if (_userRepository == null)
-                    _userRepository = new UsuarioRepository(_context, _logger);
-
-                return _userRepository;
-            }
-            private set => _userRepository = value;
-        }        
-
-        public UnitOfWork(DatabaseContext context, ILoggerFactory loggerFactory,
+        public UnitOfWork(
+            DatabaseContext context,
+            ILoggerFactory loggerFactory,
             IDatabaseConstraintMapper databaseConstraintMapper)
         {
             _databaseConstraintMapper = databaseConstraintMapper;
@@ -60,31 +19,46 @@ namespace DesafioAtos.Infra.UnitOfWorks
             _logger = loggerFactory.CreateLogger("logs");
         }
 
+        private const string DefaultMessage = "Database Exception, please check inner exception for details";
+        private readonly DatabaseContext _context = null!;
+        private readonly IDatabaseConstraintMapper _databaseConstraintMapper = null!;
+        private readonly ILogger _logger = null!;
+
+
+        private IEmpresaColetoraRepository _empresaColetoraRepository = null!;
+        public IEmpresaColetoraRepository EmpresaColetoraRepository
+        {
+            get
+            {
+                InstanciarRepositoryIfNull(ETipoRepository.EmpresaColetaRepository);
+                return _empresaColetoraRepository;
+            }
+        }
+
+        private IEnderecoRepository _enderecoRepository = null!;
+        public IEnderecoRepository EnderecoRepository
+        {
+            get
+            {
+                InstanciarRepositoryIfNull(ETipoRepository.EnderecoRepository);
+                return _enderecoRepository;
+            }
+        }
+
+        private IUsuarioRepository _userRepository = null!;
+        public IUsuarioRepository Users
+        {
+            get
+            {
+                InstanciarRepositoryIfNull(ETipoRepository.UsuarioRepository);
+                return _userRepository;
+            }
+        }
+
         public async Task SalvarAsync()
         {
             await _context.SaveChangesAsync();
             DetachAllEntities();
-        }
-
-        public async Task VoidExecutarAsync<T>(Func<Task<T>> function)
-        {
-            await ExecutarAsync<T>(function);
-        }
-
-
-        public async Task<T> ExecutarAsync<T>(Func<Task<T>> callback)
-        {
-            try
-            {
-                var result = await callback();
-                await SalvarAsync();
-                return result;
-            }
-            catch (Exception e)
-            {
-                _databaseConstraintMapper.Map(e);
-                throw new DatabaseException(DefaultMessage, e);
-            }
         }
 
         public void Dispose()
@@ -103,24 +77,45 @@ namespace DesafioAtos.Infra.UnitOfWorks
                 entry.State = EntityState.Detached;
         }
 
+        public async Task VoidExecutarAsync<T>(Func<Task<T>> function)
+        {
+            await ExecutarAsync<T>(function);
+        }
 
+        public async Task<T> ExecutarAsync<T>(Func<Task<T>> callback)
+        {
+            try
+            {
+                var result = await callback();
+                await SalvarAsync();
+                return result;
+            }
+            catch (Exception e)
+            {
+                _databaseConstraintMapper.Map(e);
+                throw new DatabaseException(DefaultMessage, e);
+            }
+        }
 
-        // public async Task<T> ExecuteTransactionAsync<T>(Func<Task<T>> callback)
-        // {
-        //     try
-        //     {
-        //         using var transaction = await _context.Database.BeginTransactionAsync();
-        //         var result = await callback();
-        //         await _context.SaveChangesAsync();
-        //         await transaction.CommitAsync();
-        //         DetachAllEntities();
-        //         return result;
-        //     }
-        //     catch (Exception e)
-        //     {
-        //         _logger.LogError(e.InnerException?.Message ?? e.Message);
-        //         throw new DatabaseException();
-        //     }
-        // }
+        private void InstanciarRepositoryIfNull(ETipoRepository tipoRepository)
+        {
+            switch (tipoRepository)
+            {
+                case ETipoRepository.UsuarioRepository:
+                    if (_userRepository == null)
+                        _userRepository = new UsuarioRepository(_context, _logger);
+                    break;
+                case ETipoRepository.EnderecoRepository:
+                    if (_enderecoRepository == null)
+                        _enderecoRepository = new EnderecoRepository(_context, _logger);
+                    break;
+                case ETipoRepository.EmpresaColetaRepository:
+                    if (_empresaColetoraRepository == null)
+                        _empresaColetoraRepository = new EmpresaColetoraRepository(_context, _logger);
+                    break;
+                default:
+                    throw new DatabaseException("Repositorio inválido");
+            }
+        }
     }
 }

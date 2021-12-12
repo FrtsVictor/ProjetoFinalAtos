@@ -7,14 +7,14 @@ namespace DesafioAtos.Infra.Context
 {
     public class DatabaseContext : DbContext
     {
+        private readonly ILoggerFactory MyLoggerFactory = 
+            LoggerFactory.Create(builder => builder.AddConsole());
 
-        public DbSet<Usuario> Users { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
-
-
-        private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
+        public DbSet<Usuario> Users { get; set; } = null!;
+        public DbSet<Categoria> Categorias { get; set; } = null!;
+        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; } = null!;
+        public DbSet<Endereco> Enderecos { get; set; } = null!;
+        
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

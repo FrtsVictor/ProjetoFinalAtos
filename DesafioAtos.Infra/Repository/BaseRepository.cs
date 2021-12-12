@@ -4,7 +4,7 @@ using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
+public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase, new()
 {
     internal DatabaseContext _context;
     internal DbSet<T> dbSet;
@@ -38,7 +38,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
         }
     }
 
-    public virtual async Task<T> ObterPorIdAsync(long id)
+    public virtual async Task<T?> ObterPorIdAsync(long id)
     {
         return await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync();
     }
