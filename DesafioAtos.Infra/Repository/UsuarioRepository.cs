@@ -12,7 +12,7 @@ namespace DesafioAtos.Infra.Repository
 
         public async Task<Usuario?> ObterPorLoginAsync(string login)
         {
-                return await dbSet.FirstOrDefaultAsync(x => x.Login.ToLower() == login.ToLower());
+                return await dbSet.SingleOrDefaultAsync(x => x.Login.ToLower() == login.ToLower());
         }
     }
 }

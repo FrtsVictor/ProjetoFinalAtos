@@ -18,14 +18,13 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
         public EmpresaColetoraService(
             IUnitOfWork unitOfWork,
             IMapper mapper,
-            AppConfigEcoleta appConfigEcoleta,
-            ICriptografo criptografo
-           )
+            ICriptografo criptografo,
+            string chaveParaCriptografia)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
-            this._chaveParaCriptografia = appConfigEcoleta.PasswordKey();
+            this._chaveParaCriptografia = chaveParaCriptografia;
         }
 
         public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)

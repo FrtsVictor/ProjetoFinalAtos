@@ -40,7 +40,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase, new(
 
     public virtual async Task<T?> ObterPorIdAsync(long id)
     {
-        return await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync();
+        return await dbSet.Where(x => x.Id == id).SingleOrDefaultAsync();
     }
 
     public virtual async Task<List<T>> ObterTodosAsync()

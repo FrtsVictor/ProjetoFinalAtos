@@ -30,6 +30,8 @@ namespace DesafioAtos.Service.Fabrica.Services
             _logger = loggerFactory.CreateLogger("Log Service");
         }
 
+        public ITokenService TokenService { get => _tokenService; }
+
         private IAutenticacaoService _autenticacaoService = null!;
         public IAutenticacaoService AutenticacaoService
         {
@@ -51,17 +53,6 @@ namespace DesafioAtos.Service.Fabrica.Services
             }
         }
 
-        private ITokenService _tokenService = null!;
-        public ITokenService TokenService
-        {
-            get
-            {
-                InstanciarServiceIfNull(EFabricaService.TokenService);
-                return _tokenService;
-            }
-        }
-
-
         private IEmpresaColetoraService _empresaColetoraService = null!;
         public IEmpresaColetoraService EmpresaColetoraService
         {
@@ -79,21 +70,17 @@ namespace DesafioAtos.Service.Fabrica.Services
             {
                 case EFabricaService.UsuarioService:
                     if (_usuarioService == null)
-                        _usuarioService = new UsuarioService(_unitOfWork, _mapper, _appConfigEcoleta, _criptografo);
+                        _usuarioService = new UsuarioService(_unitOfWork, _mapper, _criptografo, _appConfigEcoleta.PasswordKey());
                     break;
                 case EFabricaService.EnderecoService:
                     break;
                 case EFabricaService.EmpresaColetoraService:
                     if (_empresaColetoraService == null)
-                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _autoMapper, _appConfigEcoleta, _criptografo);
+                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _autoMapper, _criptografo, _appConfigEcoleta.PasswordKey());
                     break;
                 case EFabricaService.AutenticacaoService:
                     if (_autenticacaoService == null)
-                        _autenticacaoService = new AutenticacaoService(_unitOfWork, _mapper, _appConfigEcoleta, _criptografo, TokenService);
-                    break;
-                case EFabricaService.TokenService:
-                    if (_tokenService == null)
-                        _tokenService = new TokenService(_appConfigEcoleta, _logger);
+                        _autenticacaoService = new AutenticacaoService(_unitOfWork, _mapper, _criptografo, _tokenService, _appConfigEcoleta.PasswordKey());
                     break;
                 default:
                     throw new Exception("Servico inválido");

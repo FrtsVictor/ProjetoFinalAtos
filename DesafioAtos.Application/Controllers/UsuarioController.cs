@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using DesafioAtos.Application.ActionFilters.ValidateModel;
 using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -13,12 +14,14 @@ namespace DesafioAtos.Application.Controllers
     [Authorize(Roles = "Usuario")]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioService _usuarioService;
+        private readonly IFabricaService _fabricaService;
         private readonly IFabricaResponse _fabricaResponse;
 
-        public UsuarioController(IUsuarioService usuarioService, IFabricaResponse fabricaResponse)
+        public UsuarioController(
+            IFabricaService fabricaService,
+            IFabricaResponse fabricaResponse)
         {
-            this._usuarioService = usuarioService;
+            this._fabricaService = fabricaService;
             this._fabricaResponse = fabricaResponse;
         }
 
@@ -26,7 +29,7 @@ namespace DesafioAtos.Application.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CreateAccount(CriarUsuarioDto userDto)
         {
-            var user = await _usuarioService.CriarConta(userDto);
+            var user = await _fabricaService.UsuarioService.CriarConta(userDto);
             return Ok(_fabricaResponse.Create(user.Id));
         }
 
@@ -34,7 +37,7 @@ namespace DesafioAtos.Application.Controllers
         public async Task<IActionResult> AtualizarUsuario(AtualizarUsuarioDto atualizarUsuarioDto)
         {
             atualizarUsuarioDto.Id = ObterIdUsuario();
-            await _usuarioService.Atualizar(atualizarUsuarioDto);
+            await _fabricaService.UsuarioService.Atualizar(atualizarUsuarioDto);
             return NoContent();
         }
 
@@ -42,7 +45,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpDelete]
         public async Task<IActionResult> RemoverUsuario()
         {
-            await _usuarioService.Remover(ObterIdUsuario());
+            await _fabricaService.UsuarioService.Remover(ObterIdUsuario());
             return NoContent();
         }
 

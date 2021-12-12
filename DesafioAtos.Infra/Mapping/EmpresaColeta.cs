@@ -25,6 +25,11 @@ namespace DesafioAtos.Infra.Mapping
 
             entity.Property(e => e.Role).HasColumnName("role");
 
+           entity.Property(e => e.Senha)
+                .HasMaxLength(30)
+                .IsUnicode(false)
+                .HasColumnName("senha");
+
             entity.Property(e => e.Cnpj)
                 .HasMaxLength(14)
                 .IsUnicode(false)
@@ -65,6 +70,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "reciclaMais@gmail.com",
                 Cnpj = "12345678912351",
                 Telefone = "21968645988",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -73,6 +79,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "e-colleta@gmail.com",
                 Cnpj = "23345678912351",
                 Telefone = "21968645223",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -81,6 +88,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "serra-plast@gmail.com",
                 Cnpj = "35454267891235",
                 Telefone = "21991478963",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -89,6 +97,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "atos.net@atos.com",
                 Cnpj = "33475567708295",
                 Telefone = "21984896849",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -97,6 +106,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "santos@gmail.com",
                 Cnpj = "19273546516573",
                 Telefone = "21928495826",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -105,6 +115,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "mega-reciclaveis@gmail.com",
                 Cnpj = "59677586910513",
                 Telefone = "21465567728",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -113,6 +124,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "new-reciclaveis@gmail.com",
                 Cnpj = "49576576819503",
                 Telefone = "21162547526",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -121,6 +133,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "super-collect@gmail.com",
                 Cnpj = "19273546516321",
                 Telefone = "21948192846",
+                Senha = "TesteSenha"
             },
             new EmpresaColetora()
             {
@@ -129,6 +142,7 @@ namespace DesafioAtos.Infra.Mapping
                 Email = "nice-collect@gmail.com",
                 Cnpj = "19273455678848",
                 Telefone = "21948596876",
+                Senha = "TesteSenha"
             }
         };
     }

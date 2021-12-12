@@ -1,4 +1,5 @@
 ﻿using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.EmpresaColetora;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,25 +11,24 @@ namespace DesafioAtos.Application.Controllers
     [ApiController]
     public class EmpresaColetoraController : ControllerBase
     {
-        private readonly IEmpresaColetoraService _service;
+        private readonly IFabricaService _fabricaService;
 
-        public EmpresaColetoraController(IEmpresaColetoraService service)
+        public EmpresaColetoraController(IFabricaService fabricaService)
         {
-            _service = service;
-
+            _fabricaService = fabricaService;
         }
 
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            var data = await _service.GetTodasEmpresaColetora();
+            var data = await _fabricaService.EmpresaColetoraService.GetTodasEmpresaColetora();
             return Ok(new List<EmpresaColetoraDto>());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
-            var data = await _service.GetEmpresaColetoraPorId(id);
+            var data = await _fabricaService.EmpresaColetoraService.GetEmpresaColetoraPorId(id);
             return Ok();
         }
 
@@ -36,7 +36,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(CriarEmpresaColetoraDto request)
         {
-            await _service.EmpresaColetoraPost(request);
+            await _fabricaService.EmpresaColetoraService.EmpresaColetoraPost(request);
             return Ok();
         }
 
@@ -44,14 +44,14 @@ namespace DesafioAtos.Application.Controllers
         public async Task<IActionResult> Put(EditarEmpresaColetoraDto request)
         {
 
-            await _service.EmpresaColetoraPut(request);
+            await _fabricaService.EmpresaColetoraService.EmpresaColetoraPut(request);
             return Ok();
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {
-            await _service.DeletaEmpresaColetora(id);
+            await _fabricaService.EmpresaColetoraService.DeletaEmpresaColetora(id);
             return Ok();
         }
     }

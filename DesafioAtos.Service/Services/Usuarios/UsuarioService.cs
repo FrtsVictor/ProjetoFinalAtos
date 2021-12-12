@@ -15,14 +15,18 @@ namespace DesafioAtos.Service.Usuarios
         private readonly string _chaveParaCriptografia;
         private readonly ICriptografo _criptografo;
 
-        public UsuarioService(IUnitOfWork unitOfWork, IMapper mapper, AppConfigEcoleta appConfigEcoleta, ICriptografo criptografo)
+        public UsuarioService(
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            ICriptografo criptografo,
+            string chaveParaCriptografia)
         {
-            this._chaveParaCriptografia = appConfigEcoleta.PasswordKey();
+            this._chaveParaCriptografia = chaveParaCriptografia;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
         }
-        
+
         public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
         {
             var usuarioParaCriacao = _mapper.MapCriarUsuarioDtoToUsuario(criarUsuarioDto);
@@ -62,8 +66,8 @@ namespace DesafioAtos.Service.Usuarios
         }
 
         private void ValidarUsuario(Usuario usuario)
-        {   
-            if(usuario == null)
+        {
+            if (usuario == null)
             {
                 throw new BadRequestException();
             }

@@ -10,13 +10,17 @@ namespace DesafioAtos.Infra.Context
         private readonly ILoggerFactory MyLoggerFactory = 
             LoggerFactory.Create(builder => builder.AddConsole());
 
-        public DbSet<Usuario> Users { get; set; } = null!;
+        public DbSet<Usuario> Usuarios { get; set; } = null!;
         public DbSet<Categoria> Categorias { get; set; } = null!;
         public DbSet<EmpresaColetora> EmpresasColetoras { get; set; } = null!;
         public DbSet<Endereco> Enderecos { get; set; } = null!;
         
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
+        public DatabaseContext()
+        {
+            
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UsuarioMap());

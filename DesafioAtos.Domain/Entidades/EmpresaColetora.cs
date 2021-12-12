@@ -9,7 +9,8 @@ namespace DesafioAtos.Domain.Entidades
             Enderecos = new HashSet<Endereco>();
             UsuarioEmpresaCategoria = new HashSet<UsuarioEmpresaCategoria>();
         }
-        
+
+        public string Senha { get; set; } = null!;
         public string Nome { get; set; } = null!;
         public string Cnpj { get; set; } = null!;
         public string Telefone { get; set; } = null!;

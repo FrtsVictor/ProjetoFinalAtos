@@ -6,5 +6,6 @@ namespace DesafioAtos.Service.Services.Autenticacao
     public interface IAutenticacaoService
     {
         Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto);
+        Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto);
     }
 }
