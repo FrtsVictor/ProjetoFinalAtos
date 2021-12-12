@@ -1,5 +1,5 @@
 ﻿using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Service.EmpresaColetora;
+using DesafioAtos.Service.Services.EmpresaColetora;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -18,7 +18,6 @@ namespace DesafioAtos.Application.Controllers
 
         }
 
-        // GET: api/<ColetaController>
         [HttpGet]
         public async Task<IActionResult> Get()
         {
@@ -26,7 +25,6 @@ namespace DesafioAtos.Application.Controllers
             return Ok(new List<EmpresaColetoraDto>());
         }
 
-        // GET api/<ColetaController>/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(long id)
         {
@@ -42,7 +40,6 @@ namespace DesafioAtos.Application.Controllers
             return Ok();
         }
 
-        // PUT api/<ColetaController>/5
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(EditarEmpresaColetoraDto request)
         {
@@ -51,7 +48,6 @@ namespace DesafioAtos.Application.Controllers
             return Ok();
         }
 
-        // DELETE api/<ColetaController>/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(long id)
         {

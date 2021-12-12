@@ -1,3 +1,4 @@
+using DesafioAtos.Infra.Repository;
 using DesafioAtos.Infra.Repository.Interfaces;
 
 namespace DesafioAtos.Infra.UnitOfWorks

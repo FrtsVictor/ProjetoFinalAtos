@@ -1,9 +1,9 @@
-﻿using DesafioAtos.Domain.Dtos;
+﻿using DesafioAtos.Domain.Core;
+using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service.Exceptions;
-using Microsoft.Extensions.Configuration;
 using Np.Cryptography;
 
 namespace DesafioAtos.Service.Usuarios
@@ -15,14 +15,14 @@ namespace DesafioAtos.Service.Usuarios
         private readonly string _chaveParaCriptografia;
         private readonly ICriptografo _criptografo;
 
-        public UsuarioService(IUnitOfWork unitOfWork, IMapper mapper, IConfiguration configuration, ICriptografo criptografo)
+        public UsuarioService(IUnitOfWork unitOfWork, IMapper mapper, AppConfigEcoleta appConfigEcoleta, ICriptografo criptografo)
         {
-            this._chaveParaCriptografia = configuration["cryptography:AppPasswordKey"];
+            this._chaveParaCriptografia = appConfigEcoleta.PasswordKey();
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
         }
-
+        
         public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
         {
             var usuarioParaCriacao = _mapper.MapCriarUsuarioDtoToUsuario(criarUsuarioDto);

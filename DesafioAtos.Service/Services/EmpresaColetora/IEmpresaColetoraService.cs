@@ -1,6 +1,7 @@
 ﻿using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Service.Fabrica.Services;
 
-namespace DesafioAtos.Service.EmpresaColetora
+namespace DesafioAtos.Service.Services.EmpresaColetora
 {
     public interface IEmpresaColetoraService
     {
