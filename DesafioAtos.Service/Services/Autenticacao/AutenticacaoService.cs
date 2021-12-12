@@ -1,5 +1,4 @@
-﻿
-using DesafioAtos.Domain.Core;
+﻿using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Domain.Entidades;
@@ -18,35 +17,41 @@ namespace DesafioAtos.Service.Services.Autenticacao
         private readonly ICriptografo _criptografo;
         private readonly string _passwordKey;
         private readonly ITokenService _tokenService;
-        private readonly AppConfigEcoleta appConfigEcoleta;
 
         public AutenticacaoService(
             IUnitOfWork unitOfWork,
-            IMapper mapper, 
-            AppConfigEcoleta appConfigEcoleta,
+            IMapper mapper,
             ICriptografo criptografo,
-            ITokenService tokenService)
+            ITokenService tokenService,
+            string passwordKey)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
-            this.appConfigEcoleta = appConfigEcoleta;
             this._criptografo = criptografo;
             this._tokenService = tokenService;
-            _passwordKey = appConfigEcoleta.PasswordKey();
+            _passwordKey = passwordKey;
         }
 
-        public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto? loginDto)
+        public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto)
         {
-            Usuario? usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto?.Login);
-            ValidarUsuario(usuario, loginDto);
+            var usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto.Login);
+            ValidarUsuario(usuario, loginDto.Senha);
             var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);
         }
 
-        private void ValidarUsuario(Usuario? usuario, LogarUsuarioDto loginDto) 
+        public async Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto)
         {
-            var encryptedPassword = _criptografo.Criptografar(_passwordKey, loginDto.Senha);
-            bool isUsuarioSenhaInvalido = usuario == null || !usuario.Senha.Equals(encryptedPassword);
+            var empresaColetora = await _unitOfWork.EmpresaColetoraRepository.ObterPorEmail(loginDto.Email);
+            ValidarUsuario(empresaColetora, loginDto.Senha);
+            var createTokenDto = _mapper.MapCriarEmpresaColetoraDtoToCreateTokenDto(empresaColetora);
+            return _tokenService.CriarToken(createTokenDto);
+        }
+
+        private void ValidarUsuario<T>(T usuario, string senha)
+        {
+            var encryptedPassword = _criptografo.Criptografar(_passwordKey, senha);
+            bool isUsuarioSenhaInvalido = usuario == null || !senha.Equals(encryptedPassword);
 
             if (isUsuarioSenhaInvalido)
             {

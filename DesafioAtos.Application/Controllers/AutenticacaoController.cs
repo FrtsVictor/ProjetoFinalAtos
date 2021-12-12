@@ -16,34 +16,26 @@ namespace DesafioAtos.Application.Controllers
     [ActionFilterValidacaoModelState]
     public class AutenticacaoController : ControllerBase
     {
-        private readonly IAutenticacaoService _authenticationService;
         private readonly IFabricaResponse _fabricaResponse;
         private readonly IFabricaService _fabricaServices;
         public AutenticacaoController(
-            IAutenticacaoService authenticationService,
-            IFabricaResponse fabricaResponse, 
+            IFabricaResponse fabricaResponse,
             IFabricaService fabricaServices)
         {
-            this._authenticationService = authenticationService;
             this._fabricaServices = fabricaServices;
             this._fabricaResponse = fabricaResponse;
         }
 
         [HttpPost("login-usuario")]
-        public  IActionResult LogarUsuario(LogarUsuarioDto loginDto)
-        {
-            var a =  _fabricaServices.AutenticacaoService;               
-            a.LogarUsuario(new CriarUsuarioDto());
-            
-        //    var tokenResponse = await _authenticationService.LogarUsuario(loginDto);
-           // return Ok(_fabricaResponse.Create<TokenResponseDto>(tokenResponse));
-           return null;
+        public async Task<IActionResult> LogarUsuario(LogarUsuarioDto loginDto)
+        {            
+            return Ok(await _fabricaServices.AutenticacaoService.LogarUsuario(loginDto));
         }
 
         [HttpPost("login-empresa")]
-        public async Task<IActionResult> LogarEmpresa(LogarUsuarioDto loginDto)
+        public async Task<IActionResult> LogarEmpresa(LogarEmpresaDto loginDto)
         {
-            var tokenResponse = await _authenticationService.LogarUsuario(loginDto);
+            var tokenResponse = await _fabricaServices.AutenticacaoService.LogarEmpresa(loginDto);
             return Ok(_fabricaResponse.Create<TokenResponseDto>(tokenResponse));
         }
 

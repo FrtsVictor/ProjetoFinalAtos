@@ -66,9 +66,6 @@ AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
 void InjetarDependencias(WebApplicationBuilder builder)
 {
     builder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
-    builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-    builder.Services.AddScoped<IAutenticacaoService, AutenticacaoService>();
-    builder.Services.AddScoped<IEmpresaColetoraService, EmpresaColetoraService>();
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
     builder.Services.AddScoped<IFabricaService, FabricaServices>();

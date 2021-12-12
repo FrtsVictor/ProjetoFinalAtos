@@ -9,6 +9,6 @@ namespace DesafioAtos.Domain.Mapper
         Usuario MapCriarUsuarioDtoToUsuario(CriarUsuarioDto userDto);
         EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto);
         CreateTokenDto MapUsuarioToCreateTokenDto(Usuario usuario);
-
+        CreateTokenDto MapCriarEmpresaColetoraDtoToCreateTokenDto(EmpresaColetora empresaColetora);
     }
 }

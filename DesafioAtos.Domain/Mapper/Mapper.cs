@@ -32,5 +32,12 @@ namespace DesafioAtos.Domain.Mapper
             Telefone = empresaColetoraDto.Telefone        
 
         };
+
+        public CreateTokenDto MapCriarEmpresaColetoraDtoToCreateTokenDto(EmpresaColetora empresaColetora) => new CreateTokenDto()
+        {
+            Identificador = empresaColetora.Email,
+            Role = ERole.EmpresaColetora.ToString(),
+            Id = empresaColetora.Id
+        };
     }
 }

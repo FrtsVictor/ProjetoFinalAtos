@@ -12,8 +12,10 @@ namespace DesafioAtos.Service.Services.Token
     public class TokenService : ITokenService
     {
         private readonly string _tokenKey;
-        private readonly ILogger _logger;
-        public TokenService(AppConfigEcoleta appConfigEcoleta, ILogger logger)
+        private readonly ILogger<TokenService> _logger;
+        public TokenService(
+            AppConfigEcoleta appConfigEcoleta,
+            ILogger<TokenService> logger)
         {
             this._tokenKey = appConfigEcoleta.JwtKey();
             this._logger = logger;

@@ -10,6 +10,11 @@ namespace DesafioAtos.Infra.Repository
     {
         public EmpresaColetoraRepository(DatabaseContext context, ILogger logger) : base(context, logger) {  }
 
+        public async Task<EmpresaColetora?> ObterPorEmail(string email)
+        {
+            return await dbSet.SingleOrDefaultAsync(x => x.Email.Equals(email));
+        }
+
         public async Task<EmpresaColetora?> ObterPorNome(string name)
         {
             return await dbSet.Where(x => x.Nome.ToLower().Contains(name.ToLower())).FirstOrDefaultAsync();
