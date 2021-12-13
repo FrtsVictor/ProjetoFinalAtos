@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text.Json;
 using DesafioAtos.Application.Controllers;
+using DesafioAtos.Domain.Exceptions;
 using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Service.Exceptions;
 
@@ -36,6 +37,7 @@ namespace DesafioAtos.Application.Core.Middlewares
                         break;
 
                     case DataBaseConstraintException:
+                    case InvalidEnumException:
                     case BadRequestException e:
                         response.StatusCode = (int)HttpStatusCode.BadRequest;
                         break;
