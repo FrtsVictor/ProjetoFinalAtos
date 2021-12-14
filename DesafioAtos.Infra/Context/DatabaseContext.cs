@@ -7,34 +7,45 @@ namespace DesafioAtos.Infra.Context
 {
     public class DatabaseContext : DbContext
     {
+        private readonly ILoggerFactory MyLoggerFactory =
+            LoggerFactory.Create(builder => builder.AddConsole());
 
-        public DbSet<Usuario> Users { get; set; }
-        public DbSet<Categoria> Categorias { get; set; }
-        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; }
-        public DbSet<Endereco> Enderecos { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; } = null!;
+        public DbSet<Categoria> Categorias { get; set; } = null!;
+        public DbSet<EmpresaColetora> EmpresasColetoras { get; set; } = null!;
+        public DbSet<Endereco> Enderecos { get; set; } = null!;
+        public DbSet<CategoriaUsuario> CategoriaUsuario { get; set; } = null!;
+        public DbSet<CategoriaEmpresa> CategoriaEmpresa { get; set; } = null!;
 
-
-        private readonly ILoggerFactory MyLoggerFactory = LoggerFactory.Create(builder => builder.AddConsole());
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options) { }
 
+        public DatabaseContext()
+        {
+
+        }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new UsuarioMap());
             modelBuilder.ApplyConfiguration(new EnderecoMap());
             modelBuilder.ApplyConfiguration(new EmpresaColetoraMap());
             modelBuilder.ApplyConfiguration(new CategoriaMap());
-            modelBuilder.ApplyConfiguration(new UsuarioEmpresaCategoriaMap());
+            modelBuilder.ApplyConfiguration(new CategoriaEmpresaMap());
+            modelBuilder.ApplyConfiguration(new CategoriaUsuarioMap());
+
+            //modelBuilder.ApplyConfiguration(new UsuarioEmpresaCategoriaMap());
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //Injetando log para queries SQL
-            optionsBuilder.UseLoggerFactory(MyLoggerFactory);
-            optionsBuilder.EnableSensitiveDataLogging();
+            optionsBuilder
+                .UseLoggerFactory(MyLoggerFactory)
+                .EnableSensitiveDataLogging()
+                .UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
+
 
             // HardCode por conta do bug com as migrations
             //optionsBuilder.UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Initial Catalog=DesafioAtos;Integrated Security=True;MultipleActiveResultSets=true");
-            optionsBuilder.UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
         }
     }
 }

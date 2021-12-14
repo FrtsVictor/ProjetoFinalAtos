@@ -1,10 +1,11 @@
 ﻿using AutoMapper;
+using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Infra.UnitOfWorks;
 using Microsoft.Extensions.Configuration;
 using Np.Cryptography;
 
-namespace DesafioAtos.Service.EmpresaColetora
+namespace DesafioAtos.Service.Services.EmpresaColetora
 {
     public class EmpresaColetoraService : IEmpresaColetoraService
     {
@@ -13,16 +14,17 @@ namespace DesafioAtos.Service.EmpresaColetora
         private readonly ICriptografo _criptografo;
         private readonly IConfiguration _configuration;
         private readonly string _chaveParaCriptografia;
-        private readonly ITokenService _tokenService;
 
-        public EmpresaColetoraService(IUnitOfWork unitOfWork, IMapper mapper, ICriptografo criptografo, IConfiguration configuration, ITokenService tokenService)
+        public EmpresaColetoraService(
+            IUnitOfWork unitOfWork,
+            IMapper mapper,
+            ICriptografo criptografo,
+            string chaveParaCriptografia)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
-            this._configuration = configuration;
-            this._chaveParaCriptografia = _configuration["cryptography:AppPasswordKey"];
-            this._tokenService = tokenService;
+            this._chaveParaCriptografia = chaveParaCriptografia;
         }
 
         public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
@@ -61,17 +63,17 @@ namespace DesafioAtos.Service.EmpresaColetora
             //});
 
 
-                var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
+            var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
 
-                var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
+            var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
 
-                empresaColetoraBanco.Telefone = request.Telefone;
-                empresaColetoraBanco.Email = request.Email;
-                empresaColetoraBanco.Cnpj = request.Cnpj;
-                empresaColetoraBanco.Nome = request.Nome;
+            empresaColetoraBanco.Telefone = request.Telefone;
+            empresaColetoraBanco.Email = request.Email;
+            empresaColetoraBanco.Cnpj = request.Cnpj;
+            empresaColetoraBanco.Nome = request.Nome;
 
 
-                _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
+            _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
 
 
         }

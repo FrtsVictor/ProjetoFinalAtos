@@ -8,6 +8,6 @@ namespace DesafioAtos.Infra.Repository.Interfaces
         void Atualizar(T entity);
         Task RemoverAsync(long id);
         Task<List<T>> ObterTodosAsync();
-        Task<T> ObterPorIdAsync(long id);
+        Task<T?> ObterPorIdAsync(long id);
     }
 }

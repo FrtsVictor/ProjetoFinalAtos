@@ -38,9 +38,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
         }
     }
 
-    public virtual async Task<T> ObterPorIdAsync(long id)
+    public virtual async Task<T?> ObterPorIdAsync(long id)
     {
-        return await dbSet.Where(x => x.Id == id).FirstOrDefaultAsync();
+        return await dbSet.Where(x => x.Id == id).SingleOrDefaultAsync();
     }
 
     public virtual async Task<List<T>> ObterTodosAsync()
