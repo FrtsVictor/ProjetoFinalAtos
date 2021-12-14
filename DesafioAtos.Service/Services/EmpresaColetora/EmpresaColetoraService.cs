@@ -2,6 +2,7 @@
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Service.Validacoes;
 using Microsoft.Extensions.Configuration;
 using Np.Cryptography;
 
@@ -29,52 +30,41 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
         public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
         {
-            //var empresaParaCriacao = _mapper.MapEmpresaColetoraDtoToEmpresaColetora(empresaColetoraDto);
-
-            //return await _unitOfWork.ExecutarAsync(async () =>
-            //{
-            //    return await _unitOfWork.Users.CriarAsync(empresaParaCriacao);
-            //});
-
-
+         
             var empresaColetora = _mapper.Map<EmpresaColetoraDto>(empresaColetoraDto);
+            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetora.Cnpj);
+            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetora.Email);
 
-            var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
+            if(verificaEmail is true && verificarCnpj is true)
             {
-                Cnpj = empresaColetoraDto.Cnpj,
-                Email = empresaColetoraDto.Email,
-                Nome = empresaColetoraDto.Nome,
-                Telefone = empresaColetoraDto.Telefone
+                var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
+                {
+                    Cnpj = empresaColetoraDto.Cnpj,
+                    Email = empresaColetoraDto.Email,
+                    Nome = empresaColetoraDto.Nome,
+                    Telefone = empresaColetoraDto.Telefone
 
-            };
-
-            //await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetoraOrigem);
-
-            //await _unitOfWork.SalvarAsync();
+                };
+            }
         }
 
         public async Task EmpresaColetoraPut(EditarEmpresaColetoraDto request)
         {
-            //await _unitOfWork.VoidExecutarAsync(async () =>
-            //{
-            //    var empresa = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(request.Id);
-            //    _unitOfWork.EmpresaColetoraRepository.Atualizar(empresa);
-            //    return empresa;
-            //});
-
-
             var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
-
             var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
 
-            empresaColetoraBanco.Telefone = request.Telefone;
-            empresaColetoraBanco.Email = request.Email;
-            empresaColetoraBanco.Cnpj = request.Cnpj;
-            empresaColetoraBanco.Nome = request.Nome;
+            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraBanco.Cnpj);
+            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetoraBanco.Email);
 
+            if (verificaEmail is true && verificarCnpj is true)
+            {
 
-            _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
-
+                empresaColetoraBanco.Telefone = request.Telefone;
+                empresaColetoraBanco.Email = request.Email;
+                empresaColetoraBanco.Cnpj = request.Cnpj;
+                empresaColetoraBanco.Nome = request.Nome;
+                _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
+            }
 
         }
 
