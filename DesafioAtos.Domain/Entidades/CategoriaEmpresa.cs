@@ -6,7 +6,7 @@ namespace DesafioAtos.Domain.Entidades
         public int IdCategoria { get; set; }
 
 
-        public virtual EmpresaColetora EmpresaColetora { get; set; } // Reference navigation property.
-        public virtual Categoria Categoria { get; set; } // Reference navigation property.
+        public virtual EmpresaColetora EmpresaColetora { get; set; } = null!;
+        public virtual Categoria Categoria { get; set; } = null!;
     }
 }

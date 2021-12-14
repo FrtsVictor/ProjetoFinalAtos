@@ -36,9 +36,7 @@ namespace DesafioAtos.Service.Usuarios
             usuarioParaCriacao.Senha = senhaCriptografada;
 
             return await _unitOfWork.ExecutarAsync(async () =>
-            {
-                return await _unitOfWork.Users.CriarAsync(usuarioParaCriacao);
-            });
+                 await _unitOfWork.Users.CriarAsync(usuarioParaCriacao));
         }
 
         public async Task Atualizar(AtualizarUsuarioDto atualizarUsuarioDto)
@@ -76,7 +74,7 @@ namespace DesafioAtos.Service.Usuarios
             var idCategoria = adicionarCategoriaDto.IdCategoria;
             var idUsuario = adicionarCategoriaDto.IdLigacao;
             ValidarCategoria(idCategoria);
-            var categoriaExistente = await _unitOfWork.CategoriaUsuario.ObterCategoriaExistente(idCategoria, idUsuario);
+            var categoriaExistente = await _unitOfWork.CategoriaUsuario.ObterCategoriaPorId(idCategoria, idUsuario);
             ValidarEntidade(categoriaExistente != null, "Categoria já cadastrada");
 
             var categoriaUsuario = new CategoriaUsuario() { IdCategoria = idCategoria, IdUsuario = idUsuario };
@@ -96,8 +94,8 @@ namespace DesafioAtos.Service.Usuarios
 
             await _unitOfWork.VoidExecutarAsync(async () =>
             {
-                var categoriaExistente = await _unitOfWork.CategoriaUsuario.ObterCategoriaExistente(idCategoria, idUsuario);
-                
+                var categoriaExistente = await _unitOfWork.CategoriaUsuario.ObterCategoriaPorId(idCategoria, idUsuario);
+
                 if (categoriaExistente != null)
                 {
                     await _unitOfWork.CategoriaUsuario.RemoverAsync(categoriaExistente.Id);
@@ -107,10 +105,23 @@ namespace DesafioAtos.Service.Usuarios
             });
         }
 
-        public async Task<List<string>> ObterCategorias(int idUsuario)
+        public async Task<IEnumerable<string>> ObterCategorias(int idUsuario)
         {
-            return await _unitOfWork.CategoriaUsuario.ObterTodosNomeCategoriaPorUsuario(idUsuario);
+            var categorias = await _unitOfWork.CategoriaUsuario.ObterTodasCategoriasPorUsuario(idUsuario);
+            return categorias?.Select(x => x.Nome);
         }
+
+
+        public async Task<IEnumerable<CategoriaEmpresa>> ObterEmpresasPorCategoriaUsuario(int idUsuario) => await _unitOfWork
+            .ExecutarAsync(async () =>
+            {
+                var categorias = await _unitOfWork.CategoriaUsuario.ObterTodasCategoriasPorUsuario(idUsuario);
+                var ids = categorias?.Select(x => x.Id);
+                var empresas = await _unitOfWork.CategoriaEmpresa.ObterEmpresasPorIdCategoria(ids);
+
+                return empresas.DistinctBy(x => x.IdEmpresaColetora);
+            });
+
 
         private void ValidarCategoria(int value)
         {

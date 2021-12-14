@@ -43,7 +43,6 @@ namespace DesafioAtos.Application.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(EditarEmpresaColetoraDto request)
         {
-
             await _fabricaService.EmpresaColetoraService.EmpresaColetoraPut(request);
             return Ok();
         }

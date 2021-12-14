@@ -10,9 +10,7 @@ namespace DesafioAtos.Infra.Repository
     {
         public UsuarioRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
-        public async Task<Usuario?> ObterPorLoginAsync(string login)
-        {
-                return await dbSet.SingleOrDefaultAsync(x => x.Login.ToLower() == login.ToLower());
-        }
+        public async Task<Usuario?> ObterPorLoginAsync(string login) => await dbSet
+            .SingleOrDefaultAsync(x => x.Login.ToLower() == login.ToLower());
     }
 }

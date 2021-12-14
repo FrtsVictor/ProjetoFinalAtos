@@ -24,7 +24,6 @@ namespace DesafioAtos.Infra.UnitOfWorks
         private readonly IDatabaseConstraintMapper _databaseConstraintMapper = null!;
         private readonly ILogger _logger = null!;
 
-
         private IEmpresaColetoraRepository _empresaColetoraRepository = null!;
         public IEmpresaColetoraRepository EmpresaColetoraRepository
         {
