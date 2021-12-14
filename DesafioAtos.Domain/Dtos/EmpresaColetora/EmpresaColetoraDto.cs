@@ -10,6 +10,7 @@ namespace DesafioAtos.Domain.Dtos
         public string Cnpj { get; set; } = null!;
         public string Telefone { get; set; } = null!;
         public string Email { get; set; } = null!;
+      
 
         public bool Status { get; set; }
         public DateTime CreatedAt { get; set; }
