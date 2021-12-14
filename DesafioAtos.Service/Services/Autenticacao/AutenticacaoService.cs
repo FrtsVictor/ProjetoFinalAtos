@@ -1,7 +1,5 @@
-﻿using DesafioAtos.Domain.Core;
-using DesafioAtos.Domain.Dtos;
+﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
-using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service.Exceptions;
@@ -35,7 +33,9 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto)
         {
             var usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto.Login);
-            ValidarUsuario(usuario, loginDto.Senha);
+            ValidarEntidade(usuario);
+            ValidarSenha(loginDto.Senha, usuario.Senha);
+
             var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);
         }
@@ -43,20 +43,26 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto)
         {
             var empresaColetora = await _unitOfWork.EmpresaColetoraRepository.ObterPorEmail(loginDto.Email);
-            ValidarUsuario(empresaColetora, loginDto.Senha);
+            ValidarEntidade(empresaColetora);
+            ValidarSenha(empresaColetora.Senha, loginDto.Senha);
+
             var createTokenDto = _mapper.MapCriarEmpresaColetoraDtoToCreateTokenDto(empresaColetora);
             return _tokenService.CriarToken(createTokenDto);
         }
 
-        private void ValidarUsuario<T>(T usuario, string senha)
+        private void ValidarSenha(string senhaLogin, string senhaSalvaNoBanco)
         {
-            var encryptedPassword = _criptografo.Criptografar(_passwordKey, senha);
-            bool isUsuarioSenhaInvalido = usuario == null || !senha.Equals(encryptedPassword);
+            var senhaLoginCriptografada = _criptografo.Criptografar(_passwordKey, senhaLogin);
+            bool isSenhaInvalida = !senhaSalvaNoBanco.Equals(senhaLoginCriptografada);
 
-            if (isUsuarioSenhaInvalido)
-            {
+            if (isSenhaInvalida)
                 throw new BadRequestException("Usuario ou senha inválida!");
-            }
+        }
+
+        private void ValidarEntidade<T>(T entity)
+        {
+            if (entity == null)
+                throw new BadRequestException("Usuario ou senha inválida!");
         }
     }
 }

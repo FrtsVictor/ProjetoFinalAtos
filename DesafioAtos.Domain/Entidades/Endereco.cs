@@ -11,7 +11,7 @@
         public string Bairro { get; set; } = null!;
         public int? IdEmpresaColeta { get; set; }
         public bool Status { get; set; } = true;
-         public DateTime? DataCriacao { get; set; } = DateTime.Now;
+        public DateTime? DataCriacao { get; set; } = DateTime.Now;
 
         public virtual EmpresaColetora? IdEmpresaColetaNavigation { get; set; }
     }

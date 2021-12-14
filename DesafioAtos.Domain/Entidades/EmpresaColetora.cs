@@ -7,7 +7,7 @@ namespace DesafioAtos.Domain.Entidades
         public EmpresaColetora()
         {
             Enderecos = new HashSet<Endereco>();
-            UsuarioEmpresaCategoria = new HashSet<UsuarioEmpresaCategoria>();
+            CategoriaEmpresa = new HashSet<CategoriaEmpresa>();
         }
 
         public string Senha { get; set; } = null!;
@@ -19,6 +19,6 @@ namespace DesafioAtos.Domain.Entidades
         public ERole Role { get; private set; } = ERole.EmpresaColetora;
 
         public virtual ICollection<Endereco> Enderecos { get; set; }
-        public virtual ICollection<UsuarioEmpresaCategoria> UsuarioEmpresaCategoria { get; set; }
+        public virtual ICollection<CategoriaEmpresa> CategoriaEmpresa { get; set; }
     }
 }

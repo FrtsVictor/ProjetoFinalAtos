@@ -4,7 +4,7 @@ using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase, new()
+public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
 {
     internal DatabaseContext _context;
     internal DbSet<T> dbSet;

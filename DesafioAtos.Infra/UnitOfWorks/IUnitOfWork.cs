@@ -8,6 +8,8 @@ namespace DesafioAtos.Infra.UnitOfWorks
         IEmpresaColetoraRepository EmpresaColetoraRepository { get; }
         IEnderecoRepository EnderecoRepository { get; }
         IUsuarioRepository Users { get; }
+        ICategoriaEmpresaRepository CategoriaEmpresa { get; }
+        ICategoriaUsuarioRepository CategoriaUsuario { get; }
         Task SalvarAsync();
         Task<T> ExecutarAsync<T>(Func<Task<T>> callback);
         Task VoidExecutarAsync<T>(Func<Task<T>> callback);

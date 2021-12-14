@@ -4,7 +4,9 @@ namespace DesafioAtos.Infra.UnitOfWorks
     {
         UsuarioRepository,
         EnderecoRepository,
-        EmpresaColetaRepository
+        EmpresaColetaRepository,
+        CategoriaEmpresaRepository,
+        CategoriaUsuarioRepository
 
     }
 }

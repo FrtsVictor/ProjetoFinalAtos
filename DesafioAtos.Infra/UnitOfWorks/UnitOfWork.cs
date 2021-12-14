@@ -55,6 +55,26 @@ namespace DesafioAtos.Infra.UnitOfWorks
             }
         }
 
+        private ICategoriaEmpresaRepository _categoriaEmpresaRepository = null!;
+        public ICategoriaEmpresaRepository CategoriaEmpresa
+        {
+            get
+            {
+                InstanciarRepositoryIfNull(ETipoRepository.CategoriaEmpresaRepository);
+                return _categoriaEmpresaRepository;
+            }
+        }
+
+        private ICategoriaUsuarioRepository _categoriaUsuarioRepository = null!;
+        public ICategoriaUsuarioRepository CategoriaUsuario
+        {
+            get
+            {
+                InstanciarRepositoryIfNull(ETipoRepository.CategoriaUsuarioRepository);
+                return _categoriaUsuarioRepository;
+            }
+        }
+
         public async Task SalvarAsync()
         {
             await _context.SaveChangesAsync();
@@ -112,6 +132,14 @@ namespace DesafioAtos.Infra.UnitOfWorks
                 case ETipoRepository.EmpresaColetaRepository:
                     if (_empresaColetoraRepository == null)
                         _empresaColetoraRepository = new EmpresaColetoraRepository(_context, _logger);
+                    break;
+                case ETipoRepository.CategoriaEmpresaRepository:
+                    if (_categoriaEmpresaRepository == null)
+                        _categoriaEmpresaRepository = new CategoriaEmpresaRepository(_context, _logger);
+                    break;
+                case ETipoRepository.CategoriaUsuarioRepository:
+                    if (_categoriaUsuarioRepository == null)
+                        _categoriaUsuarioRepository = new CategoriaUsuarioRepository(_context, _logger);
                     break;
                 default:
                     throw new DatabaseException("Repositorio inválido");
