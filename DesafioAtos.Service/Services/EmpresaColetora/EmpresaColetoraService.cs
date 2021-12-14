@@ -9,11 +9,11 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 {
     public class EmpresaColetoraService : IEmpresaColetoraService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly ICriptografo _criptografo;
-        private readonly IConfiguration _configuration;
-        private readonly string _chaveParaCriptografia;
+        private readonly IUnitOfWork _unitOfWork = null!;
+        private readonly IMapper _mapper = null!;
+        private readonly ICriptografo _criptografo = null!;
+        private readonly IConfiguration _configuration = null!;
+        private readonly string _chaveParaCriptografia = null!;
 
         public EmpresaColetoraService(
             IUnitOfWork unitOfWork,

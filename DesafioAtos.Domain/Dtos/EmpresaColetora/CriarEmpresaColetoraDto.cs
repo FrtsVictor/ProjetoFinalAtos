@@ -10,13 +10,12 @@ namespace DesafioAtos.Domain.Dtos
         public string Telefone { get; set; } = null!;
         public string Email { get; set; } = null!;
         public List<EnderecoDto> Endereco { get; set; }
-        //criar lista Enum
-        public List<Categoria> Categoria { get; set; }
+        public List<int> Categorias { get; set; }
 
         public CriarEmpresaColetoraDto()
         {
             this.Endereco = new List<EnderecoDto>();
-            this.Categoria = new List<Categoria>();
+            Categorias = new List<int>() { };
         }
     }
 }

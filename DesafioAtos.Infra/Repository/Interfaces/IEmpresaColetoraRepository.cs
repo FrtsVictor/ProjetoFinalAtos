@@ -4,6 +4,6 @@ namespace DesafioAtos.Infra.Repository.Interfaces
 {
     public interface IEmpresaColetoraRepository : IBaseRepository<EmpresaColetora>
     {
-        Task<EmpresaColetora?> ObterPorEmail(string email);
+        Task<EmpresaColetora> ObterPorEmail(string email);
     }
 }

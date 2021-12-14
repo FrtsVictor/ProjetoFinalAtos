@@ -2,7 +2,7 @@ using DesafioAtos.Application.Controllers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
-namespace DesafioAtos.Application.ActionFilters.ValidateModel
+namespace DesafioAtos.Application.Core.ActionFilters
 {
     public class ActionFilterValidacaoModelState : ActionFilterAttribute
     {
