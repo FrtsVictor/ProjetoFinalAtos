@@ -4,13 +4,11 @@ using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitOfWorks;
-using DesafioAtos.Service.Usuarios;
 using Microsoft.EntityFrameworkCore;
 using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
-using DesafioAtos.Service.Services.Autenticacao;
-using DesafioAtos.Service.Services.EmpresaColetora;
 using DesafioAtos.Service.Services.Token;
+using DesafioAtos.Domain.Entidades;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
@@ -23,7 +21,6 @@ WebApplication app = builder.Build();
 ConfigureExceptionMiddleware.ConfigureExceptionHandler(app);
 AplicarDependencias(app);
 app.Run();
-
 
 void AplicarDependencias(WebApplication app)
 {
@@ -75,7 +72,9 @@ void InjetarDependencias(WebApplicationBuilder builder)
     builder.Services.AddSingleton<IMapper, Mapper>();
     builder.Services.AddSingleton<ITokenService, TokenService>();
 
-    builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(appConfigEcoleta.ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
+    builder.Services.AddDbContext<DatabaseContext>(options => options
+        .UseSqlServer(appConfigEcoleta
+            .ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
     builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 }
 

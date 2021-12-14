@@ -4,11 +4,11 @@
     {
         public Categoria()
         {
-            UsuarioEmpresaCategoria = new HashSet<UsuarioEmpresaCategoria>();
+            //CategoriaUsuario = new HashSet<CategoriaUsuario>();
         }
      
         public string Nome { get; set; } = null!;
 
-        public virtual ICollection<UsuarioEmpresaCategoria> UsuarioEmpresaCategoria { get; set; }
+        //public virtual ICollection<CategoriaUsuario> CategoriaUsuario { get; set; }
     }
 }

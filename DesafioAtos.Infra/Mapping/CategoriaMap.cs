@@ -9,6 +9,8 @@ namespace DesafioAtos.Infra.Mapping
     {
         public void Configure(EntityTypeBuilder<Categoria> entity)
         {
+            entity.ToTable("Categoria");
+
             entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();           
 
             entity.Property(e => e.Nome)

@@ -6,7 +6,7 @@ namespace DesafioAtos.Domain.Entidades
     {
         public Usuario()
         {
-            UsuarioEmpresaCategoria = new HashSet<UsuarioEmpresaCategoria>();
+            CategoriaUsuarios = new HashSet<CategoriaUsuario>();
         }
       
         public string Login { get; set; } = null!;
@@ -15,6 +15,6 @@ namespace DesafioAtos.Domain.Entidades
         public ERole Role { get; private set; } = ERole.Usuario;
         public DateTime? DataCriacao { get; private set; } = DateTime.Now;
 
-        public virtual ICollection<UsuarioEmpresaCategoria> UsuarioEmpresaCategoria { get; set; }
+        public virtual ICollection<CategoriaUsuario> CategoriaUsuarios { get; set; }
     }
 }

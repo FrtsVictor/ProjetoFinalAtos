@@ -9,7 +9,7 @@ namespace DesafioAtos.Infra.Mapping
     {
         public void Configure(EntityTypeBuilder<EmpresaColetora> entity)
         {
-            entity.ToTable("Empresa_Coleta");
+            entity.ToTable("Empresa_Coletora");
 
             entity.HasIndex(e => e.Telefone, "UQ__Empresa___2A16D97FC2534CA0")
                 .IsUnique();
