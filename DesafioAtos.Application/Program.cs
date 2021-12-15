@@ -3,12 +3,11 @@ using DesafioAtos.Application.Core.Middlewares;
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
-using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Infra.UnitWork;
 using Microsoft.EntityFrameworkCore;
 using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
-using DesafioAtos.Domain.Entidades;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -57,7 +56,6 @@ AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
     var dbKey = webBuild.Configuration["cryptography:AppDbKey"];
     var passwordKey = webBuild.Configuration["cryptography:AppPasswordKey"];
     var tokenKey = webBuild.Configuration["jwtKey"];
-
     var connectionString = criptografo
         .Descriptografar(dbKey, webBuild.Configuration.GetConnectionString("AppDb"));
 
@@ -66,11 +64,11 @@ AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
 
 void InjetarDependencias(WebApplicationBuilder builder)
 {
-    builder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
     builder.Services.AddScoped<IFabricaService, FabricaServices>();
 
+    builder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
     builder.Services.AddSingleton<ICriptografo, Criptografo>();
     builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
     builder.Services.AddSingleton<IMapper, Mapper>();
@@ -83,5 +81,4 @@ void InjetarDependencias(WebApplicationBuilder builder)
 }
 
 
-
-
+public partial class Program { }
