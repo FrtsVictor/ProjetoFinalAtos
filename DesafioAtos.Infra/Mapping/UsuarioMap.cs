@@ -32,7 +32,7 @@ namespace DesafioAtos.Infra.Mapping
                 .HasColumnName("login");
 
             entity.Property(e => e.Senha)
-                .HasMaxLength(30)
+                .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("senha");
 
