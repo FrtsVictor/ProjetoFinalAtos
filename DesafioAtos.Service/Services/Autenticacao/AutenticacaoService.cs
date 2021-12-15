@@ -1,15 +1,16 @@
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Exceptions;
 using DesafioAtos.Service.Services.Token;
 using Np.Cryptography;
 
 namespace DesafioAtos.Service.Services.Autenticacao
 {
-    public class AutenticacaoService : IAutenticacaoService
+    public class AutenticacaoService : BaseService, IAutenticacaoService
     {
+        public const string USUARIO_SENHA_INVALIDOS = "Usuario ou senha invalidos.";
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ICriptografo _criptografo;
@@ -33,36 +34,29 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto)
         {
             var usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto.Login);
-            ValidarEntidade(usuario);
+            ValidarEntidade(usuario == null, USUARIO_SENHA_INVALIDOS);
             ValidarSenha(loginDto.Senha, usuario.Senha);
-
             var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);
         }
 
         public async Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto)
         {
-            var empresaColetora = await _unitOfWork.EmpresaColetoraRepository.ObterPorEmail(loginDto.Email);
-            ValidarEntidade(empresaColetora);
-            ValidarSenha(empresaColetora.Senha, loginDto.Senha);
+            var empresaColetora = await _unitOfWork.EmpresaColetora.ObterPorEmail(loginDto.Email);
+            ValidarEntidade(empresaColetora == null, USUARIO_SENHA_INVALIDOS);
+            ValidarSenha(loginDto.Senha, empresaColetora.Senha);
 
-            var createTokenDto = _mapper.MapCriarEmpresaColetoraDtoToCreateTokenDto(empresaColetora);
+            var createTokenDto = _mapper.MapCriarEmpresaToCreateTokenDto(empresaColetora);
             return _tokenService.CriarToken(createTokenDto);
         }
 
-        private void ValidarSenha(string senhaLogin, string senhaSalvaNoBanco)
+        private void ValidarSenha(string senhaLogin, string senhaSalvaNoBanco = null!)
         {
             var senhaLoginCriptografada = _criptografo.Criptografar(_passwordKey, senhaLogin);
             bool isSenhaInvalida = !senhaSalvaNoBanco.Equals(senhaLoginCriptografada);
 
             if (isSenhaInvalida)
-                throw new BadRequestException("Usuario ou senha inválida!");
-        }
-
-        private void ValidarEntidade<T>(T entity)
-        {
-            if (entity == null)
-                throw new BadRequestException("Usuario ou senha inválida!");
+                throw new BadRequestException(USUARIO_SENHA_INVALIDOS);
         }
     }
 }

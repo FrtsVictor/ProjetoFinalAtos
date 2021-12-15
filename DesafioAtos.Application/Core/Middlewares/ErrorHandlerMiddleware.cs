@@ -50,7 +50,7 @@ namespace DesafioAtos.Application.Core.Middlewares
                         break;
                 }
 
-                var responseModel = _responseFactory.Create(errorMessage);
+                var responseModel = _responseFactory.Criar(errorMessage);
                 var result = JsonSerializer.Serialize(responseModel);
                 await response.WriteAsync(result);
             }
