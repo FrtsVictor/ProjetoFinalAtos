@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace DesafioAtos.Service.Validacoes
+﻿namespace DesafioAtos.Service.Validacoes
 {
-	public static class ValidaCnpj
+    public static class ValidaCnpj
 	{
 		public static bool IsCnpj(string cnpj)
 		{

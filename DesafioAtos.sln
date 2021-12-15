@@ -11,9 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Infra", "Desafi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Service", "DesafioAtos.Service\DesafioAtos.Service.csproj", "{777A6326-BB5E-4B43-A40F-659347A88364}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Criptografia", "Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj", "{DA8B3C9C-7480-4E34-B18D-71753988A8F3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{BA224555-80C7-43C2-AE51-F51B852F7254}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BA224555-80C7-43C2-AE51-F51B852F7254}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Criptografia", "NP-Criptography\Cryptography\Np.Criptografia.csproj", "{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,14 +37,14 @@ Global
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{777A6326-BB5E-4B43-A40F-659347A88364}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DA8B3C9C-7480-4E34-B18D-71753988A8F3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{BA224555-80C7-43C2-AE51-F51B852F7254}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{BA224555-80C7-43C2-AE51-F51B852F7254}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA224555-80C7-43C2-AE51-F51B852F7254}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA224555-80C7-43C2-AE51-F51B852F7254}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

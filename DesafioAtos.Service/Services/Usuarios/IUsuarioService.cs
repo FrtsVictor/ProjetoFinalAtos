@@ -7,7 +7,7 @@ namespace DesafioAtos.Service.Usuarios
 {
     public interface IUsuarioService : IBaseService
     {
-        Task Atualizar(int idUsuario, EditarUsuarioDto atualizarUsuarioDto);
+        Task Editar(int idUsuario, EditarUsuarioDto atualizarUsuarioDto);
         Task Remover(int id);
         Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto);
         Task<ECategoria> AdicionarCategoria(CategoriaDto categoriaDto);

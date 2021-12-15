@@ -9,7 +9,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
-    <ProjectReference Include="..\Personal-Nuget-Packages\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
+    <ProjectReference Include="..\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
   </ItemGroup>
 
 </Project>

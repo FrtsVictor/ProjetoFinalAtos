@@ -107,5 +107,22 @@ namespace DesafioAtos.Domain.Mapper
             Nome = empresaColetora.Nome,
             Telefone = empresaColetora.Telefone
         };
+
+        public void MapEditarEnderecoToEndereco(EditarEnderecoDto editarEnderecoDto, Endereco endereco)
+        {
+            endereco.Bairro = editarEnderecoDto.Bairro ?? endereco.Bairro;
+            endereco.Cep = editarEnderecoDto.Cep ?? endereco.Cep;
+            endereco.Cidade = editarEnderecoDto.Cidade ?? endereco.Cidade;
+            endereco.Complemento = editarEnderecoDto.Complemento ?? endereco.Complemento;
+            endereco.Estado = editarEnderecoDto.Estado ?? endereco.Estado;
+            endereco.Rua = editarEnderecoDto.Rua ?? endereco.Rua;
+            endereco.Numero = editarEnderecoDto.Numero ?? endereco.Numero;
+        }
+
+        public CategoriaEmpresa CriarCategoriaEmpresa(int idEmpresa, int idCategoria) => new CategoriaEmpresa
+        {
+            IdCategoria = idCategoria,
+            IdEmpresaColetora = idEmpresa
+        };
     }
 }

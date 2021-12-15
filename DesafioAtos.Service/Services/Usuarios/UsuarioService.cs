@@ -2,9 +2,8 @@
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
-using DesafioAtos.Service.Validacoes;
 using Np.Cryptography;
+using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Services;
 
 namespace DesafioAtos.Service.Usuarios
@@ -34,7 +33,7 @@ namespace DesafioAtos.Service.Usuarios
                  await _unitOfWork.Users.CriarAsync(usuarioParaCriacao));
         }
 
-        public async Task Atualizar(int idUsusario, EditarUsuarioDto editarUsuarioDto)
+        public async Task Editar(int idUsusario, EditarUsuarioDto editarUsuarioDto)
         {
             var usuarioParaAtualizar = await _unitOfWork.Users.ObterPorIdAsync(idUsusario);
             ValidarEntidade(usuarioParaAtualizar == null, "Falha ao encontrar usuario, verificar token");

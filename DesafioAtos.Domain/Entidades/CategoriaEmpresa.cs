@@ -5,7 +5,6 @@ namespace DesafioAtos.Domain.Entidades
         public int IdEmpresaColetora { get; set; }
         public int IdCategoria { get; set; }
 
-
         public virtual EmpresaColetora EmpresaColetora { get; set; } = null!;
         public virtual Categoria Categoria { get; set; } = null!;
     }

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
 
 namespace DesafioAtos.Application.Core.Middlewares
@@ -24,7 +25,13 @@ namespace DesafioAtos.Application.Core.Middlewares
                     Url = new Uri("https://github.com/FrtsVictor/ProjetoFinalAtos")
                 }
 
+
             });
+
+            var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+            var applicationName = PlatformServices.Default.Application.ApplicationName;
+            var xmlDocumentPath = Path.Combine(applicationBasePath, $"{applicationName}.xml");
+
 
             s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
