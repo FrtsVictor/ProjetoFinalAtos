@@ -4,6 +4,7 @@ using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Infra.UnitOfWorks;
 using Microsoft.Extensions.Configuration;
 using Np.Cryptography;
+using DesafioAtos.Domain.Entidades;
 
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {
@@ -21,10 +22,10 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             ICriptografo criptografo,
             string chaveParaCriptografia)
         {
+            this._chaveParaCriptografia = chaveParaCriptografia;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
             this._criptografo = criptografo;
-            this._chaveParaCriptografia = chaveParaCriptografia;
         }
 
         public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
@@ -74,7 +75,6 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
 
             _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
-
 
         }
 

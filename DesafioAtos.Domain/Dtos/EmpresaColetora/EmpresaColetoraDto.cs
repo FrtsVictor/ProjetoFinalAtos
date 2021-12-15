@@ -12,7 +12,6 @@ namespace DesafioAtos.Domain.Dtos
         public string? Email { get; set; }
 
         public bool Status { get; set; }
-        public DateTime CreatedAt { get; set; }
 
 
         public List<EnderecoDto>? Endereco { get; set; }

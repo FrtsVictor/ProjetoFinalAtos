@@ -23,13 +23,15 @@ namespace DesafioAtos.Domain.Mapper
             Nome = criarUsuarioDto.Nome
         };
 
-        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
+        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
         {
+            
             Cnpj =  empresaColetoraDto.Cnpj,
-            DataCriacao = empresaColetoraDto.CreatedAt,
+            Senha = empresaColetoraDto.Senha,
             Email = empresaColetoraDto.Email,
             Nome = empresaColetoraDto.Nome,
-            Telefone = empresaColetoraDto.Telefone        
+            Telefone = empresaColetoraDto.Telefone 
+
 
         };
 
