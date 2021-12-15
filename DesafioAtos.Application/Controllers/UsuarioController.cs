@@ -11,17 +11,25 @@ namespace DesafioAtos.Application.Controllers
     [ApiController]
     [ActionFilterValidacaoModelState]
     [Authorize(Roles = "Usuario")]
-    public class UsuarioController : ControllerBase
+    public class UsuarioController : AppControllerBase
     {
-        private readonly IFabricaService _fabricaService;
-        private readonly IFabricaResponse _fabricaResponse;
-
-        public UsuarioController(
-            IFabricaService fabricaService,
-            IFabricaResponse fabricaResponse)
+        public UsuarioController(IFabricaService fabricaService, IFabricaResponse fabricaResponse)
+            : base(fabricaService, fabricaResponse)
         {
-            this._fabricaService = fabricaService;
-            this._fabricaResponse = fabricaResponse;
+        }
+
+        [HttpGet("categoria")]
+        public async Task<IActionResult?> ListarCategorias()
+        {
+            var categorias = await _fabricaService.UsuarioService.ObterCategorias(ObterIdDoToken());
+            return Ok(_fabricaResponse.Criar(categorias));
+        }
+
+        [HttpGet("empresas")]
+        public async Task<IActionResult?> ListarEmpresasPorCategoria()
+        {
+            var empresas = await _fabricaService.UsuarioService.ObterEmpresasPorCategoriaUsuario(ObterIdDoToken());
+            return Ok(_fabricaResponse.Criar(empresas));
         }
 
         [HttpPost]
@@ -29,14 +37,22 @@ namespace DesafioAtos.Application.Controllers
         public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
         {
             var user = await _fabricaService.UsuarioService.CriarConta(userDto);
-            return Ok(_fabricaResponse.Create(user.Id));
+            return Created("", _fabricaResponse.Criar(user.Id));
+        }
+
+        [HttpPost("categoria/{idCategoria:int}")]
+        public async Task<IActionResult> AdicionarCategoria(int idCategoria)
+        {
+            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
+            var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
+            string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
+            return Accepted(_fabricaResponse.Criar(response));
         }
 
         [HttpPut]
-        public async Task<IActionResult> AtualizarUsuario(AtualizarUsuarioDto atualizarUsuarioDto)
+        public async Task<IActionResult> AtualizarUsuario(EditarUsuarioDto atualizarUsuarioDto)
         {
-            atualizarUsuarioDto.Id = ObterIdUsuarioDoToken();
-            await _fabricaService.UsuarioService.Atualizar(atualizarUsuarioDto);
+            await _fabricaService.UsuarioService.Atualizar(ObterIdDoToken(), atualizarUsuarioDto);
             return NoContent();
         }
 
@@ -44,46 +60,16 @@ namespace DesafioAtos.Application.Controllers
         [HttpDelete]
         public async Task<IActionResult> RemoverUsuario()
         {
-            await _fabricaService.UsuarioService.Remover(ObterIdUsuarioDoToken());
+            await _fabricaService.UsuarioService.Remover(ObterIdDoToken());
             return NoContent();
         }
 
-
-        [HttpPost("/categoria/{idCategoria:int}")]
-        public async Task<IActionResult> AdicionarCategoria(int idCategoria)
-        {
-            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdUsuarioDoToken() };
-            var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
-            string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
-            return Ok(_fabricaResponse.Create(response));
-        }
-
-        [HttpDelete("/categoria/{idCategoria:int}")]
+        [HttpDelete("categoria/{idCategoria:int}")]
         public async Task<IActionResult> RemoverCategoria(int idCategoria)
         {
-            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdUsuarioDoToken() };
+            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
             await _fabricaService.UsuarioService.RemoverCategoria(categoriaDto);
             return NoContent();
-        }
-
-        [HttpGet("/categoria")]
-        public async Task<IActionResult?> ListarCategorias()
-        {
-            var categorias = await _fabricaService.UsuarioService.ObterCategorias(ObterIdUsuarioDoToken());
-            return Ok(_fabricaResponse.Create(categorias));
-        }
-
-        [HttpGet("/empresas")]
-        public async Task<IActionResult?> ListarEmpresasPorCategoria()
-        {
-            var empresas = await _fabricaService.UsuarioService.ObterEmpresasPorCategoriaUsuario(ObterIdUsuarioDoToken());
-            return Ok(_fabricaResponse.Create(empresas));
-        }
-
-        private int ObterIdUsuarioDoToken()
-        {
-            var claimsIdentity = this.User.Identity as ClaimsIdentity;
-            return Convert.ToInt32(claimsIdentity?.FindFirst("id")?.Value);
         }
     }
 }
