@@ -6,6 +6,7 @@ using DesafioAtos.Domain.Exceptions;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service.Exceptions;
+using DesafioAtos.Service.Validacoes;
 using Np.Cryptography;
 
 namespace DesafioAtos.Service.Usuarios
@@ -31,7 +32,14 @@ namespace DesafioAtos.Service.Usuarios
 
         public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
         {
+            var resultadoValidacao = new CriarUsuarioDtoValidacao().Validate(criarUsuarioDto);
+
+            if (!resultadoValidacao.IsValid)
+                throw new InvalidOperationException(string.Join("\n", resultadoValidacao.Errors.Select(s => s)));
+
             var usuarioParaCriacao = _mapper.MapCriarUsuarioDtoToUsuario(criarUsuarioDto);
+
+
             var senhaCriptografada = _criptografo.Criptografar(_chaveParaCriptografia, usuarioParaCriacao.Senha);
             usuarioParaCriacao.Senha = senhaCriptografada;
 

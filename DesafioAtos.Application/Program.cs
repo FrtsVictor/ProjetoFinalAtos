@@ -10,6 +10,7 @@ using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
 using DesafioAtos.Domain.Entidades;
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
@@ -70,6 +71,9 @@ void InjetarDependencias(WebApplicationBuilder builder)
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
     builder.Services.AddScoped<IFabricaService, FabricaServices>();
+
+    builder.Services.AddControllers()
+        .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
 
     builder.Services.AddSingleton<ICriptografo, Criptografo>();
     builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();

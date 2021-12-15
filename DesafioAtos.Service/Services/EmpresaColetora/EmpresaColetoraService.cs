@@ -1,6 +1,7 @@
-﻿using AutoMapper;
+﻿
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitOfWorks;
 using DesafioAtos.Service.Validacoes;
 using Microsoft.Extensions.Configuration;
@@ -28,85 +29,48 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             this._chaveParaCriptografia = chaveParaCriptografia;
         }
 
-        public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
+        public async Task Atualizar(EditarEmpresaColetoraDto atualizarEmpresaDto)
         {
-         
-            var empresaColetora = _mapper.Map<EmpresaColetoraDto>(empresaColetoraDto);
-            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetora.Cnpj);
-            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetora.Email);
-
-            if(verificaEmail is true && verificarCnpj is true)
+            await _unitOfWork.VoidExecutarAsync(async () =>
             {
-                var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
-                {
-                    Cnpj = empresaColetoraDto.Cnpj,
-                    Email = empresaColetoraDto.Email,
-                    Nome = empresaColetoraDto.Nome,
-                    Telefone = empresaColetoraDto.Telefone
+                var usuarioParaAtualizar = await _unitOfWork.Users.ObterPorIdAsync(atualizarEmpresaDto.Id);
+                ValidarEntidade(usuarioParaAtualizar == null, "Falha ao encontrar usuario, verificar token");
 
-                };
-            }
-        }
+                string senhaParaAtualizar = atualizarEmpresaDto.Cnpj;
 
-        public async Task EmpresaColetoraPut(EditarEmpresaColetoraDto request)
-        {
-            var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
-            var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
+                usuarioParaAtualizar.Login = atualizarUsuarioDto.Login ?? usuarioParaAtualizar.Login;
 
-            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraBanco.Cnpj);
-            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetoraBanco.Email);
+                usuarioParaAtualizar.Senha = string.IsNullOrEmpty(senhaParaAtualizar)
+                    ? usuarioParaAtualizar.Senha
+                    : _criptografo.Criptografar(_chaveParaCriptografia, senhaParaAtualizar);
 
-            if (verificaEmail is true && verificarCnpj is true)
-            {
+                usuarioParaAtualizar.Nome = atualizarUsuarioDto.Nome ?? usuarioParaAtualizar.Nome;
 
-                empresaColetoraBanco.Telefone = request.Telefone;
-                empresaColetoraBanco.Email = request.Email;
-                empresaColetoraBanco.Cnpj = request.Cnpj;
-                empresaColetoraBanco.Nome = request.Nome;
-                _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
-            }
-
-        }
-
-
-        public async Task<EmpresaColetoraDto> GetEmpresaColetoraPorId(long id)
-        {
-            try
-            {
-                var empresaColetoraOrigin = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(id);
-                var data = _mapper.Map<EmpresaColetoraDto>(empresaColetoraOrigin);
-                return data;
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task<List<EmpresaColetoraDto>> GetTodasEmpresaColetora()
-        {
-            try
-            {
-                var empresaColetoraOrigin = await _unitOfWork.EmpresaColetoraRepository.ObterTodosAsync();
-                var ordenarEmpresaColetora = empresaColetoraOrigin.OrderBy(n => n.Nome).ToList();
-                var data = _mapper.Map<List<EmpresaColetoraDto>>(ordenarEmpresaColetora);
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        public async Task DeletaEmpresaColetora(long id)
-        {
-            await _unitOfWork.ExecutarAsync(async () =>
-            {
-                await _unitOfWork.EmpresaColetoraRepository.RemoverAsync(id);
-                return id;
+                _unitOfWork.Users.Atualizar(usuarioParaAtualizar);
+                return usuarioParaAtualizar;
             });
+
+
         }
 
+        public Task<Domain.Entidades.EmpresaColetora> CriarEmpresaColetora(CriarEmpresaColetoraDto criarEmpresaDto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<string>> ObterEmpresaColetora()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<string>> ObterEmpresaColetoraId(long idEmpresa)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task RemoverEmpresaColetora(long id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
