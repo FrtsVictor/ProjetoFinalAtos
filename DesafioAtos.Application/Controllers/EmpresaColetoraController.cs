@@ -1,6 +1,7 @@
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.EmpresaColetora;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -9,46 +10,60 @@ namespace DesafioAtos.Application.Controllers
 {
     [Route("api/v1/[controller]")]
     [ApiController]
-    public class EmpresaColetoraController : ControllerBase
+    [Authorize(Roles = "EmpresaColetora")]
+    public class EmpresaColetoraController : AppControllerBase
     {
-        private readonly IFabricaService _fabricaService;
-
-        public EmpresaColetoraController(IFabricaService fabricaService)
+        public EmpresaColetoraController(IFabricaService fabricaService, IFabricaResponse fabricaResponse)
+            : base(fabricaService, fabricaResponse)
         {
-            _fabricaService = fabricaService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> Get()
+        [HttpGet("/categoria")]
+        public async Task<IActionResult> ObterCategorias()
         {
-            var data = await _fabricaService.EmpresaColetoraService.GetTodasEmpresaColetora();
-            return Ok(new List<EmpresaColetoraDto>());
+            var data = await _fabricaService.EmpresaColetoraService.ObterCategorias(ObterIdDoToken());
+            return Ok(data);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(long id)
+        [HttpGet("/endereco")]
+        public async Task<IActionResult> ObterEnderecos()
         {
-            var data = await _fabricaService.EmpresaColetoraService.GetEmpresaColetoraPorId(id);
-            return Ok();
+            var data = await _fabricaService.EmpresaColetoraService.ObterEnderecos(ObterIdDoToken());
+            return Ok(data);
         }
 
-        
+
         [HttpPost]
-        public async Task<IActionResult> Post(CriarEmpresaColetoraDto request)
+        [AllowAnonymous]
+        public async Task<IActionResult> Post(CriarEmpresaColetoraDto criarEmpresaColetoraDto)
         {
-            await _fabricaService.EmpresaColetoraService.EmpresaColetoraPost(request);
-            return Ok();
+            var data = await _fabricaService.EmpresaColetoraService.CriarEmpresaColetora(criarEmpresaColetoraDto);
+            return Created("", _fabricaResponse.Criar(data));
         }
 
-        [HttpPut("{id}")]
+        [HttpPost("/endereco")]
+        public async Task<IActionResult> AdicionarEndereco(CriarEnderecoDto criarEnderecoDto)
+        {
+            var data = await _fabricaService.EmpresaColetoraService.AdicionarEndereco(criarEnderecoDto, ObterIdDoToken());
+            return Created("", _fabricaResponse.Criar(data));
+        }
+
+        [HttpPut("/endereco")]
+        public async Task<IActionResult> AtualizarEndereco(CriarEnderecoDto criarEnderecoDto)
+        {
+            var data = await _fabricaService.EmpresaColetoraService.AdicionarEndereco(criarEnderecoDto, ObterIdDoToken());
+            return Created("", _fabricaResponse.Criar(data));
+        }
+
+        [HttpPut]
         public async Task<IActionResult> Put(EditarEmpresaColetoraDto request)
         {
-            await _fabricaService.EmpresaColetoraService.EmpresaColetoraPut(request);
+            await _fabricaService.EmpresaColetoraService.EditarEditarEmpresaColetora(ObterIdDoToken(), request);
             return Ok();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(long id)
+        public async Task<IActionResult> Delete(int id)
         {
             await _fabricaService.EmpresaColetoraService.DeletaEmpresaColetora(id);
             return Ok();
