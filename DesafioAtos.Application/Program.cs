@@ -9,6 +9,8 @@ using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
 using DesafioAtos.Domain.Entidades;
+using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
@@ -39,10 +41,13 @@ void AplicarDependencias(WebApplication app)
 
 void ConfigurarControllers(WebApplicationBuilder builder)
 {
-    builder.Services.AddControllers().ConfigureApiBehaviorOptions(options =>
-    {
-        options.SuppressModelStateInvalidFilter = true;
-    });
+    builder.Services.AddControllers()
+        .ConfigureApiBehaviorOptions(options =>
+        {
+            options.SuppressModelStateInvalidFilter = true;
+        })
+        .AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
     builder.Services.AddEndpointsApiExplorer();
 }
@@ -66,6 +71,9 @@ void InjetarDependencias(WebApplicationBuilder builder)
     builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
     builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
     builder.Services.AddScoped<IFabricaService, FabricaServices>();
+
+    builder.Services.AddControllers()
+        .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
 
     builder.Services.AddSingleton<ICriptografo, Criptografo>();
     builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();

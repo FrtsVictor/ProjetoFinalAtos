@@ -14,13 +14,12 @@ namespace DesafioAtos.Domain.Dtos
         public DateTime CreatedAt { get; set; }
 
         public List<EnderecoDto> Endereco { get; set; }
-        //criar lista Enum
-        public List<Categoria> Categoria { get; set; }
+        public List<int> Categorias { get; set; }
 
         public CriarEmpresaColetoraDto()
         {
             this.Endereco = new List<EnderecoDto>();
-            this.Categoria = new List<Categoria>();
+            Categorias = new List<int>() { };
         }
     }
 }

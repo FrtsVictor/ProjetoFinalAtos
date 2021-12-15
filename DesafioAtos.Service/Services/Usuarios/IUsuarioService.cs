@@ -11,6 +11,7 @@ namespace DesafioAtos.Service.Usuarios
         Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto);
         Task<ECategoria> AdicionarCategoria(CategoriaDto categoriaDto);
         Task RemoverCategoria(CategoriaDto categoriaDto);
-        Task<List<string>> ObterCategorias(int idUsuario);
+        Task<IEnumerable<string>> ObterCategorias(int idUsuario);
+        Task<IEnumerable<CategoriaEmpresa>> ObterEmpresasPorCategoriaUsuario(int idUsuario);
     }
 }

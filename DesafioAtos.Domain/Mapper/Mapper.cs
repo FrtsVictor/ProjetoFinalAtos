@@ -2,7 +2,6 @@ using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
-using DesafioAtos.Domain.Exceptions;
 
 namespace DesafioAtos.Domain.Mapper
 {
@@ -15,24 +14,11 @@ namespace DesafioAtos.Domain.Mapper
             Id = usuario.Id
         };
 
-
         public Usuario MapCriarUsuarioDtoToUsuario(CriarUsuarioDto criarUsuarioDto) => new Usuario()
         {
             Login = criarUsuarioDto.Login,
             Senha = criarUsuarioDto.Senha,
             Nome = criarUsuarioDto.Nome
-        };
-
-        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
-        {
-            
-            Cnpj =  empresaColetoraDto.Cnpj,
-            Senha = empresaColetoraDto.Senha,
-            Email = empresaColetoraDto.Email,
-            Nome = empresaColetoraDto.Nome,
-            Telefone = empresaColetoraDto.Telefone 
-
-
         };
 
         public CreateTokenDto MapCriarEmpresaColetoraDtoToCreateTokenDto(EmpresaColetora empresaColetora) => new CreateTokenDto()
@@ -41,5 +27,16 @@ namespace DesafioAtos.Domain.Mapper
             Role = ERole.EmpresaColetora.ToString(),
             Id = empresaColetora.Id
         };
+
+        public EmpresaColetora MapEmpresaColetoraDtoToEmpresaColetora(EmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
+        {
+            Cnpj = empresaColetoraDto.Cnpj,
+            Senha = empresaColetoraDto.Senha,
+            Email = empresaColetoraDto.Email,
+            Nome = empresaColetoraDto.Nome,
+            Telefone = empresaColetoraDto.Telefone
+        };
+
+
     }
 }

@@ -10,20 +10,14 @@ namespace DesafioAtos.Infra.Repository
     {
         public CategoriaUsuarioRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
-        public async Task<CategoriaUsuario?> ObterCategoriaExistente(int idCategoria, int idUsuario)
-        {
-            return await dbSet
-                .Where(x => x.IdCategoria == idCategoria && x.IdUsuario == idUsuario)
-                .FirstOrDefaultAsync();
-        }
+        public async Task<CategoriaUsuario?> ObterCategoriaPorId(int idCategoria, int idUsuario) => await dbSet
+            .Where(x => x.IdCategoria == idCategoria && x.IdUsuario == idUsuario)
+            .FirstOrDefaultAsync();
 
-        public async Task<List<string>> ObterTodosNomeCategoriaPorUsuario(int idUsuario)
-        {
-            return await dbSet
-                .Where(x => x.IdUsuario == idUsuario)
-                .Include(x => x.Categoria)
-                .Select(x => x.Categoria.Nome)
-                .ToListAsync();
-        }
+        public async Task<List<Categoria>?> ObterTodasCategoriasPorUsuario(int idUsuario) => await dbSet
+            .Where(x => x.IdUsuario == idUsuario)
+            .Include(x => x.Categoria)
+            .Select(x => x.Categoria)
+            .ToListAsync();
     }
 }
