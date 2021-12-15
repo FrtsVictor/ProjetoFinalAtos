@@ -1,7 +1,7 @@
 using DesafioAtos.Infra.Exceptions;
 using Microsoft.Extensions.Logging;
 
-namespace DesafioAtos.Infra.UnitOfWorks
+namespace DesafioAtos.Infra.UnitWork
 {
     public class DatabaseConstraintMapper : IDatabaseConstraintMapper
     {
@@ -13,8 +13,12 @@ namespace DesafioAtos.Infra.UnitOfWorks
 
         private static readonly Dictionary<string, string> ConstraintKeyAndErrorMessage = new Dictionary<string, string>()
         {
-            {"IX_Users_Username", "Username already in use! Try another username"},
-            {"'Username'. Truncated value:", "Please check maximum length of username"}
+            {"IX_Users_Username", "Usuario existente, tente outro login."},
+            {"'Username'. Truncated value:", "Verifique o login."},
+            {"'telefone'. Truncated value:", "Verifique o numero de telefone."},
+            {"UNIQUE KEY constraint 'UQ__Empresa___2A16D97F4BD0B9D7'", "Telefone ja cadastrado."},
+            {"'numero'. Truncated value:", "Verifique o numero do endereco."}
+
         };
 
         public void Map(Exception ex)

@@ -1,122 +1,78 @@
-﻿using AutoMapper;
-using DesafioAtos.Domain.Core;
-using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Infra.UnitOfWorks;
-using Microsoft.Extensions.Configuration;
-using Np.Cryptography;
+﻿using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Entidades;
+using DesafioAtos.Domain.Mapper;
+using DesafioAtos.Infra.UnitWork;
 
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {
-    public class EmpresaColetoraService : IEmpresaColetoraService
+    public class EmpresaColetoraService : BaseService, IEmpresaColetoraService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly ICriptografo _criptografo;
-        private readonly IConfiguration _configuration;
-        private readonly string _chaveParaCriptografia;
+        private readonly IUnitOfWork _unitOfWork = null!;
+        private readonly IMapper _mapper = null!;
 
         public EmpresaColetoraService(
             IUnitOfWork unitOfWork,
-            IMapper mapper,
-            ICriptografo criptografo,
-            string chaveParaCriptografia)
+            IMapper mapper)
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
-            this._criptografo = criptografo;
-            this._chaveParaCriptografia = chaveParaCriptografia;
         }
 
-        public async Task EmpresaColetoraPost(CriarEmpresaColetoraDto empresaColetoraDto)
+
+        public async Task<IEnumerable<string>?> ObterCategorias(int id)
         {
-            //var empresaParaCriacao = _mapper.MapEmpresaColetoraDtoToEmpresaColetora(empresaColetoraDto);
+            var categorias = await _unitOfWork.ExecutarAsync(
+                async () => await _unitOfWork.CategoriaEmpresa.ObterTodasCategoriasPorEmpresa(id));
 
-            //return await _unitOfWork.ExecutarAsync(async () =>
-            //{
-            //    return await _unitOfWork.Users.CriarAsync(empresaParaCriacao);
-            //});
-
-
-            var empresaColetora = _mapper.Map<EmpresaColetoraDto>(empresaColetoraDto);
-
-            var empresaColetoraOrigem = new DesafioAtos.Domain.Entidades.EmpresaColetora
-            {
-                Cnpj = empresaColetoraDto.Cnpj,
-                Email = empresaColetoraDto.Email,
-                Nome = empresaColetoraDto.Nome,
-                Telefone = empresaColetoraDto.Telefone
-
-            };
-
-            //await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetoraOrigem);
-
-            //await _unitOfWork.SalvarAsync();
+            return categorias?.Select(x => x.Nome);
         }
 
-        public async Task EmpresaColetoraPut(EditarEmpresaColetoraDto request)
+        public async Task<IEnumerable<EnderecoDto?>> ObterEnderecos (int idEmpresa)
         {
-            //await _unitOfWork.VoidExecutarAsync(async () =>
-            //{
-            //    var empresa = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(request.Id);
-            //    _unitOfWork.EmpresaColetoraRepository.Atualizar(empresa);
-            //    return empresa;
-            //});
-
-
-            var empresaColetoraOrigem = _mapper.Map<EmpresaColetoraDto>(request);
-
-            var empresaColetoraBanco = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(empresaColetoraOrigem.Id);
-
-            empresaColetoraBanco.Telefone = request.Telefone;
-            empresaColetoraBanco.Email = request.Email;
-            empresaColetoraBanco.Cnpj = request.Cnpj;
-            empresaColetoraBanco.Nome = request.Nome;
-
-
-            _unitOfWork.EmpresaColetoraRepository.Atualizar(empresaColetoraBanco);
-
-
+            var enderecos = await _unitOfWork.ExecutarAsync(async () => await _unitOfWork.Endereco.ObterTodosPorIdEmpresaAsync(idEmpresa));
+            return enderecos?.Select(_mapper.MapEnderecoToEnderecoDto);
         }
 
-
-        public async Task<EmpresaColetoraDto> GetEmpresaColetoraPorId(long id)
+        public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
         {
-            try
-            {
-                var empresaColetoraOrigin = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(id);
-                var data = _mapper.Map<EmpresaColetoraDto>(empresaColetoraOrigin);
-                return data;
-            }
+            empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
+            var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
 
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            await _unitOfWork.ExecutarTransacaoAsync(
+                async () => await _unitOfWork.EmpresaColetora.CriarAsync(empresaColetora),
+                async () =>
+                {
+                    var categorias = empresaColetoraDto.Categorias.Select(x =>
+                        new CategoriaEmpresa()
+                        {
+                            IdCategoria = x,
+                            IdEmpresaColetora = empresaColetora.Id
+                        });
+                    await _unitOfWork.CategoriaEmpresa.CriarVariosAsync(categorias);
+                }
+            );
+
+            return empresaColetora.Id;
         }
 
-        public async Task<List<EmpresaColetoraDto>> GetTodasEmpresaColetora()
+        public async Task EditarEditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
         {
-            try
-            {
-                var empresaColetoraOrigin = await _unitOfWork.EmpresaColetoraRepository.ObterTodosAsync();
-                var ordenarEmpresaColetora = empresaColetoraOrigin.OrderBy(n => n.Nome).ToList();
-                var data = _mapper.Map<List<EmpresaColetoraDto>>(ordenarEmpresaColetora);
-                return data;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+            var empresaColetora = await _unitOfWork.ExecutarAsync(
+                async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));
+            ValidarEntidade(empresaColetora == null, "Falha ao encontrar Empresa, verificar Token");
+            _mapper.MapEditarEmpresaDtoToEmpresaColetora(editarEmpresaDto, empresaColetora);
+            _unitOfWork.Executar(() => _unitOfWork.EmpresaColetora.Atualizar(empresaColetora));
         }
 
-        public async Task DeletaEmpresaColetora(long id)
+        public async Task DeletaEmpresaColetora(int id) =>
+            await _unitOfWork.EmpresaColetora.RemoverAsync(id);
+
+        public async Task<int> AdicionarEndereco(CriarEnderecoDto enderecoDto, int idEmpresa)
         {
-            await _unitOfWork.ExecutarAsync(async () =>
-            {
-                await _unitOfWork.EmpresaColetoraRepository.RemoverAsync(id);
-                return id;
-            });
+            var endereco = _mapper.MapCriarEnderecoDtoToEndereco(enderecoDto);
+            endereco.IdEmpresaColeta = idEmpresa;
+            await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.CriarAsync(endereco));
+            return endereco.Id;
         }
-
     }
 }

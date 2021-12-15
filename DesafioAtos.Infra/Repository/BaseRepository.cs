@@ -23,9 +23,16 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
         return entidade;
     }
 
-    public virtual void Atualizar(T entidade)
+    public virtual async Task<IEnumerable<T>> CriarVariosAsync(IEnumerable<T> entidades)
+    {
+        await dbSet.AddRangeAsync(entidades);
+        return entidades;
+    }
+
+    public virtual bool Atualizar(T entidade)
     {
         dbSet.Update(entidade);
+        return true;
     }
 
     public virtual async Task RemoverAsync(long id)
@@ -38,13 +45,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
         }
     }
 
-    public virtual async Task<T?> ObterPorIdAsync(long id)
-    {
-        return await dbSet.Where(x => x.Id == id).SingleOrDefaultAsync();
-    }
+    public virtual async Task<T?> ObterPorIdAsync(long id) => await dbSet
+        .Where(x => x.Id == id).SingleOrDefaultAsync();
 
-    public virtual async Task<List<T>> ObterTodosAsync()
-    {
-        return await dbSet.AsNoTracking().ToListAsync();
-    }
+    public virtual async Task<IEnumerable<T>> ObterTodosAsync() => await dbSet
+        .AsNoTracking().ToListAsync();
 }

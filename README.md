@@ -1,4 +1,4 @@
-# Projeto Final Atos #
+# Projeto Final Atos EColeta #
 
 * [Escopo](#escopo)
 * [Requisitos](#requisitos)
@@ -18,6 +18,20 @@ Swagger.
 Construir uma outra aplicação com a única finalidade de consumir eventos e
 expor consulta desses eventos deve ser construída para consumir os eventos gerados
 pela API principal escolhida e que irá registrar esses eventos em banco de dados.
+
+
+
+***Versionamento** = Git*
+
+**Persistenticia =** EnitityFramework **;** UnitOfWork;
+**Database = Sql Server**
+
+**Segurança =** JwtBearerToken com filtro para Roles. ; Criptografia;
+
+**Mapemanto Enditades** = AutoMapper
+
+**Arquitetura = DDD, RepositoryPatern, UnitOfWork**
+
 
 ## Requisitos
 
