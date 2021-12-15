@@ -1,4 +1,4 @@
-namespace DesafioAtos.Infra.UnitOfWorks
+namespace DesafioAtos.Infra.UnitWork
 {
     public interface IDatabaseConstraintMapper
     {

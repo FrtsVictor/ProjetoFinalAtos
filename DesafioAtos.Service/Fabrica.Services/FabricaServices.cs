@@ -1,7 +1,7 @@
 
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Services.Autenticacao;
 using DesafioAtos.Service.Services.EmpresaColetora;
 using DesafioAtos.Service.Services.Token;
@@ -74,13 +74,13 @@ namespace DesafioAtos.Service.Fabrica.Services
             {
                 case EFabricaService.UsuarioService:
                     if (_usuarioService == null)
-                        _usuarioService = new UsuarioService(_unitOfWork, _mapper, _criptografo, _appConfigEcoleta.PasswordKey());
+                        _usuarioService = new UsuarioService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.EnderecoService:
                     break;
                 case EFabricaService.EmpresaColetoraService:
                     if (_empresaColetoraService == null)
-                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, (IMapper)_autoMapper, _criptografo, _appConfigEcoleta.PasswordKey());
+                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.AutenticacaoService:
                     if (_autenticacaoService == null)

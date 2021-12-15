@@ -26,7 +26,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.Property(e => e.Role).HasColumnName("role");
 
            entity.Property(e => e.Senha)
-                .HasMaxLength(30)
+                .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("senha");
 

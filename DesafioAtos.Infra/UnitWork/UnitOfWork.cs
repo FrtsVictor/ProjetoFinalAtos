@@ -5,7 +5,7 @@ using DesafioAtos.Infra.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DesafioAtos.Infra.UnitOfWorks
+namespace DesafioAtos.Infra.UnitWork
 {
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
@@ -25,7 +25,7 @@ namespace DesafioAtos.Infra.UnitOfWorks
         private readonly ILogger _logger = null!;
 
         private IEmpresaColetoraRepository _empresaColetoraRepository = null!;
-        public IEmpresaColetoraRepository EmpresaColetoraRepository
+        public IEmpresaColetoraRepository EmpresaColetora
         {
             get
             {
@@ -35,7 +35,7 @@ namespace DesafioAtos.Infra.UnitOfWorks
         }
 
         private IEnderecoRepository _enderecoRepository = null!;
-        public IEnderecoRepository EnderecoRepository
+        public IEnderecoRepository Endereco
         {
             get
             {
@@ -96,10 +96,56 @@ namespace DesafioAtos.Infra.UnitOfWorks
                 entry.State = EntityState.Detached;
         }
 
-        public async Task VoidExecutarAsync<T>(Func<Task<T>> function)
+        public void Executar<Task>(Func<Task> callback)
         {
-            await ExecutarAsync<T>(function);
+            try
+            {
+                callback();
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                _databaseConstraintMapper.Map(e);
+                throw new DatabaseException(DefaultMessage, e);
+            }
         }
+
+        public async Task VoidExecutarAsync(Func<Task> callback)
+        {
+            try
+            {
+                await callback();
+                await SalvarAsync();
+            }
+            catch (Exception e)
+            {
+                _databaseConstraintMapper.Map(e);
+                throw new DatabaseException(DefaultMessage, e);
+            }
+        }
+
+        public async Task ExecutarTransacaoAsync(params Func<Task>[] @callbacks)
+        {
+            var transaction = await _context.Database.BeginTransactionAsync();
+
+            try
+            {
+                foreach (var cb in @callbacks)
+                {
+                    await cb();
+                    await SalvarAsync();
+                }
+
+                await transaction.CommitAsync();
+            }
+            catch (Exception e)
+            {
+                await transaction.RollbackAsync();
+                _databaseConstraintMapper.Map(e);
+                throw new DatabaseException(DefaultMessage, e);
+            }
+        }
+
 
         public async Task<T> ExecutarAsync<T>(Func<Task<T>> callback)
         {

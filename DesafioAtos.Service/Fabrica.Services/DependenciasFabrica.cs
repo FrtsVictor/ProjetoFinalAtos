@@ -1,6 +1,6 @@
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Services.Token;
 using Microsoft.Extensions.Logging;
 using Np.Cryptography;
