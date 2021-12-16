@@ -1,3 +1,4 @@
+
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitWork;
@@ -18,7 +19,7 @@ namespace DesafioAtos.Service.Fabrica.Services
             ICriptografo criptografo,
             ITokenService tokenService,
             AppConfigEcoleta appConfigEcoleta,
-            AutoMapper.IMapper autoMapper,
+            IMapper autoMapper,
             ILoggerFactory loggerFactory)
         {
             _unitOfWork = unitOfWork;
@@ -26,7 +27,7 @@ namespace DesafioAtos.Service.Fabrica.Services
             _criptografo = criptografo;
             _tokenService = tokenService;
             _appConfigEcoleta = appConfigEcoleta;
-            _autoMapper = autoMapper;
+            _autoMapper = (AutoMapper.IMapper)autoMapper;
             _logger = loggerFactory.CreateLogger("Log Service");
         }
 
@@ -63,6 +64,9 @@ namespace DesafioAtos.Service.Fabrica.Services
             }
         }
 
+        IUsuarioService IFabricaService.UsuarioService => throw new NotImplementedException();
+
+        IEmpresaColetoraService IFabricaService.EmpresaColetoraService => throw new NotImplementedException();
 
         private void InstanciarServiceIfNull(EFabricaService tipoRepository)
         {
