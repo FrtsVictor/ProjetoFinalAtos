@@ -80,7 +80,7 @@ namespace DesafioAtos.Application.Controllers
         }
 
         [HttpPut("/endereco/{idEndereco:int}")]
-        public async Task<IActionResult> EditarEndereco(int idEndereco, EditarEnderecoDto editarEmpresa)
+        public async Task<IActionResult> EditarEndereco([FromRoute] int idEndereco, [FromBody]EditarEnderecoDto editarEmpresa)
         {
             await _fabricaService.EmpresaColetoraService.EditarEndereco(idEndereco, editarEmpresa);
             return NoContent();

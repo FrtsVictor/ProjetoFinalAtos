@@ -117,7 +117,7 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
                 if (categoriaExistente != null)
                 {
-                    await _unitOfWork.CategoriaUsuario.RemoverAsync(categoriaExistente.Id);
+                    await _unitOfWork.CategoriaEmpresa.RemoverAsync(categoriaExistente.Id);
                 }
             });
         }
