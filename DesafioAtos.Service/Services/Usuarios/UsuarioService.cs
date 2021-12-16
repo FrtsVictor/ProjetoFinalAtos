@@ -27,7 +27,7 @@ namespace DesafioAtos.Service.Usuarios
                  await _unitOfWork.Users.CriarAsync(usuarioParaCriacao));
         }
 
-        public async Task Atualizar(int idUsusario, EditarUsuarioDto editarUsuarioDto)
+        public async Task Editar(int idUsusario, EditarUsuarioDto editarUsuarioDto)
         {
             var usuarioParaAtualizar = await _unitOfWork.Users.ObterPorIdAsync(idUsusario);
             ValidarEntidade(usuarioParaAtualizar == null, "Falha ao encontrar usuario, verificar token");

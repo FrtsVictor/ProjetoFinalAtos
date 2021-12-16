@@ -15,8 +15,9 @@ namespace DesafioAtos.Domain.Mapper
         void MapEditarUsuarioDtoToUsuario(EditarUsuarioDto usuarioDto, Usuario usuario = null!);
         EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora);
         EnderecoDto MapEnderecoToEnderecoDto(Endereco? endereco);
+        void MapEditarEnderecoToEndereco(EditarEnderecoDto editarEnderecoDto, Endereco endereco);
 
-
+        CategoriaEmpresa CriarCategoriaEmpresa(int idEmpresa, int idCategoria);
         CategoriaUsuario CriarCategoriaUsuario(int idUsuario, int idCategoria);
 
 

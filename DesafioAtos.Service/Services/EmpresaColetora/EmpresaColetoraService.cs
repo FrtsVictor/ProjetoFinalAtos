@@ -1,5 +1,6 @@
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entidades;
+using DesafioAtos.Domain.Enums;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.UnitWork;
 
@@ -27,10 +28,23 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             return categorias?.Select(x => x.Nome);
         }
 
-        public async Task<IEnumerable<EnderecoDto?>> ObterEnderecos (int idEmpresa)
+        public async Task<IEnumerable<EnderecoDto?>> ObterEnderecos(int idEmpresa)
         {
             var enderecos = await _unitOfWork.ExecutarAsync(async () => await _unitOfWork.Endereco.ObterTodosPorIdEmpresaAsync(idEmpresa));
             return enderecos?.Select(_mapper.MapEnderecoToEnderecoDto);
+        }
+
+        public async Task EditarEndereco(int idEndereco, EditarEnderecoDto editarEndereco)
+        {
+            var endereco = await _unitOfWork.Endereco.ObterPorIdAsync(idEndereco);
+            ValidarEntidade(endereco == null, "Id Endereco invalido");
+            _mapper.MapEditarEnderecoToEndereco(editarEndereco, endereco);
+            _unitOfWork.Executar(() => _unitOfWork.Endereco.Atualizar(endereco));
+        }
+
+        public async Task RemoverEndereco(int idEndereco)
+        {
+            await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.RemoverAsync(idEndereco));
         }
 
         public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
@@ -73,6 +87,39 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             endereco.IdEmpresaColeta = idEmpresa;
             await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.CriarAsync(endereco));
             return endereco.Id;
+        }
+
+        public async Task<ECategoria> AdicionarCategoria(CategoriaDto adicionarCategoriaDto)
+        {
+            var idCategoria = adicionarCategoriaDto.IdCategoria;
+            ValidarCategoria(idCategoria);
+            var idEmpresa = adicionarCategoriaDto.IdLigacao;
+            var categoriaExistente = await _unitOfWork.CategoriaEmpresa.ObterCategoriaPorId(idCategoria, idEmpresa);
+            ValidarEntidade(categoriaExistente != null, "Categoria já cadastrada");
+            var categoriaEmpresa = _mapper.CriarCategoriaEmpresa(idEmpresa, idCategoria);
+
+            return await _unitOfWork.ExecutarAsync(async () =>
+            {
+                await _unitOfWork.CategoriaEmpresa.CriarAsync(categoriaEmpresa);
+                return (ECategoria)idCategoria;
+            });
+        }
+
+        public async Task RemoverCategoria(CategoriaDto categoriaDto)
+        {
+            var idCategoria = categoriaDto.IdCategoria;
+            ValidarCategoria(idCategoria);
+            var idEmpresa = categoriaDto.IdLigacao;
+
+            await _unitOfWork.VoidExecutarAsync(async () =>
+            {
+                var categoriaExistente = await _unitOfWork.CategoriaEmpresa.ObterCategoriaPorId(idCategoria, idEmpresa);
+
+                if (categoriaExistente != null)
+                {
+                    await _unitOfWork.CategoriaUsuario.RemoverAsync(categoriaExistente.Id);
+                }
+            });
         }
     }
 }
