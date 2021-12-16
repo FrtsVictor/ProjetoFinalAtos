@@ -64,7 +64,11 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
             empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
             var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
+
             empresaColetora.Cnpj = RegexUtilities.RemoveSpecialCharacters(empresaColetora.Cnpj);
+            empresaColetora.Telefone = RegexUtilities.RemoveSpecialCharacters(empresaColetora.Telefone);
+
+
 
             await _unitOfWork.ExecutarTransacaoAsync(
                 async () => await _unitOfWork.EmpresaColetora.CriarAsync(empresaColetora),
