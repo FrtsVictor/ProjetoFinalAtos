@@ -64,6 +64,7 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
             empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
             var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
+            empresaColetora.Cnpj = RegexUtilities.RemoveSpecialCharacters(empresaColetora.Cnpj);
 
             await _unitOfWork.ExecutarTransacaoAsync(
                 async () => await _unitOfWork.EmpresaColetora.CriarAsync(empresaColetora),
@@ -82,13 +83,14 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             return empresaColetora.Id;
         }
 
-        public async Task EditarEditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
+        public async Task EditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
         {
             var verificarCnpj = ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
             ValidarEntidade(verificarCnpj == false, CNPJ_INVALIDO);
 
             var verificaEmail = RegexUtilities.ValidaEmail(editarEmpresaDto.Email);
             ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+            editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj);
 
             var empresaColetora = await _unitOfWork.ExecutarAsync(
                 async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));
@@ -140,5 +142,6 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
                 }
             });
         }
+
     }
 }

@@ -6,59 +6,59 @@ namespace DesafioAtos.Infra.Mapping
 {
     public class EmpresaColetoraMap : IEntityTypeConfiguration<EmpresaColetora>
     {
-        public void Configure(EntityTypeBuilder<EmpresaColetora> entity)
-        {
-            entity.ToTable("Empresa_Coletora");
+        //public void Configure(EntityTypeBuilder<EmpresaColetora> entity)
+        //{
+        //    entity.ToTable("Empresa_Coletora");
 
-            entity.HasIndex(e => e.Telefone, "UQ__Empresa___2A16D97FC2534CA0")
-                .IsUnique();
+        //    entity.HasIndex(e => e.Telefone, "UQ__Empresa___2A16D97FC2534CA0")
+        //        .IsUnique();
 
-            entity.HasIndex(e => e.Cnpj, "UQ__Empresa___35BD3E48E3203960")
-                .IsUnique();
+        //    entity.HasIndex(e => e.Cnpj, "UQ__Empresa___35BD3E48E3203960")
+        //        .IsUnique();
 
-            entity.HasIndex(e => e.Email, "UQ__Empresa___AB6E616494A6D2F6")
-                .IsUnique();
+        //    entity.HasIndex(e => e.Email, "UQ__Empresa___AB6E616494A6D2F6")
+        //        .IsUnique();
 
-            entity.Property(e => e.Id).HasColumnName("id")
-                .ValueGeneratedOnAdd();
+        //    entity.Property(e => e.Id).HasColumnName("id")
+        //    .ValueGeneratedOnAdd();
 
-            entity.Property(e => e.Role).HasColumnName("role");
+        //    entity.Property(e => e.Role).HasColumnName("role");
 
-           entity.Property(e => e.Senha)
-                .HasMaxLength(200)
-                .IsUnicode(false)
-                .HasColumnName("senha");
+        //   entity.Property(e => e.Senha)
+        //        .HasMaxLength(200)
+        //        .IsUnicode(false)
+        //        .HasColumnName("senha");
 
-            entity.Property(e => e.Cnpj)
-                .HasMaxLength(14)
-                .IsUnicode(false)
-                .HasColumnName("cnpj")
-                .IsFixedLength();
+        //    entity.Property(e => e.Cnpj)
+        //        .HasMaxLength(14)
+        //        .IsUnicode(false)
+        //        .HasColumnName("cnpj")
+        //        .IsFixedLength();
 
-            entity.Property(e => e.DataCriacao)
-                .HasColumnType("smalldatetime")
-                .HasColumnName("data_criacao")
-                .HasDefaultValueSql("(getdate())");
+        //    entity.Property(e => e.DataCriacao)
+        //        .HasColumnType("smalldatetime")
+        //        .HasColumnName("data_criacao")
+        //        .HasDefaultValueSql("(getdate())");
 
-            entity.Property(e => e.Email)
-                .HasMaxLength(80)
-                .IsUnicode(false)
-                .HasColumnName("email");
+        //    entity.Property(e => e.Email)
+        //        .HasMaxLength(80)
+        //        .IsUnicode(false)
+        //        .HasColumnName("email");
 
-            entity.Property(e => e.Nome)
-                .HasMaxLength(80)
-                .IsUnicode(false)
-                .HasColumnName("nome");
+        //    entity.Property(e => e.Nome)
+        //        .HasMaxLength(80)
+        //        .IsUnicode(false)
+        //        .HasColumnName("nome");           
 
-            entity.Property(e => e.Telefone)
-                .HasMaxLength(11)
-                .IsUnicode(false)
-                .HasColumnName("telefone")
-                .IsFixedLength();
+        //    entity.Property(e => e.Telefone)
+        //        .HasMaxLength(11)
+        //        .IsUnicode(false)
+        //        .HasColumnName("telefone")
+        //        .IsFixedLength();
 
 
-            entity.HasData(Seed());
-        }
+        //    entity.HasData(Seed());
+        //}
 
         private List<EmpresaColetora> Seed() => new List<EmpresaColetora>()
         {
