@@ -1,3 +1,11 @@
+﻿
+using DesafioAtos.Domain.Core;
+using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Mapper;
+using DesafioAtos.Infra.UnitOfWorks;
+using DesafioAtos.Service.Validacoes;
+using Microsoft.Extensions.Configuration;
+using Np.Cryptography;
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
@@ -18,7 +26,6 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
         }
-
 
         public async Task<IEnumerable<string>?> ObterCategorias(int id)
         {

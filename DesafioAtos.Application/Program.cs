@@ -9,6 +9,7 @@ using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
 using System.Text.Json.Serialization;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
