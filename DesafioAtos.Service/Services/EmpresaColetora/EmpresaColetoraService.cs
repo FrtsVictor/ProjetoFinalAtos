@@ -94,7 +94,9 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
             var verificaEmail = RegexUtilities.ValidaEmail(editarEmpresaDto.Email);
             ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+
             editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj);
+            editarEmpresaDto.Telefone = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Telefone);
 
             var empresaColetora = await _unitOfWork.ExecutarAsync(
                 async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));
