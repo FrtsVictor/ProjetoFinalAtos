@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using System.Reflection;
 
 namespace DesafioAtos.Application.Core.Middlewares
 {
@@ -26,6 +27,9 @@ namespace DesafioAtos.Application.Core.Middlewares
 
             });
 
+            var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+            s.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFilename));
+
             s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
             {
                 Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer 12345abcdef')",
@@ -49,6 +53,7 @@ namespace DesafioAtos.Application.Core.Middlewares
                     Array.Empty<string>()
                 }
             });
+
 
         });
         }

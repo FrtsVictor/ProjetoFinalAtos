@@ -23,16 +23,16 @@ namespace DesafioAtos.Infra.Mapping
 
         private List<Categoria> Seed() => new List<Categoria>()
         {
-            new Categoria() { Id = 1, Nome = ECategoria.LixoNaoReciclavel.ToString() },
-            new Categoria() { Id = 2, Nome = ECategoria.LixoOrganico.ToString() },
-            new Categoria() { Id = 3, Nome = ECategoria.LixoRadioativo.ToString() },
-            new Categoria() { Id = 4, Nome = ECategoria.Madeira.ToString() },
-            new Categoria() { Id = 5, Nome = ECategoria.Metal.ToString() },
-            new Categoria() { Id = 6, Nome = ECategoria.PapelPapelao.ToString() },
-            new Categoria() { Id = 7, Nome = ECategoria.Plastico.ToString() },
+            new Categoria() { Id = 1, Nome = ECategoria.Metal.ToString() },
+            new Categoria() { Id = 2, Nome = ECategoria.PapelPapelao.ToString() },
+            new Categoria() { Id = 3, Nome = ECategoria.Plastico.ToString() },
+            new Categoria() { Id = 4, Nome = ECategoria.Vidro.ToString() },
+            new Categoria() { Id = 5, Nome = ECategoria.Madeira.ToString() },
+            new Categoria() { Id = 6, Nome = ECategoria.LixoOrganico.ToString() },
+            new Categoria() { Id = 7, Nome = ECategoria.ResiduoPerigoso.ToString() },
             new Categoria() { Id = 8, Nome = ECategoria.ResiduoHospitalar.ToString() },
-            new Categoria() { Id = 9, Nome = ECategoria.ResiduoPerigoso.ToString() },
-            new Categoria() { Id = 10, Nome = ECategoria.Vidro.ToString() },
+            new Categoria() { Id = 9, Nome = ECategoria.LixoRadioativo.ToString() },
+            new Categoria() { Id = 10, Nome = ECategoria.LixoNaoReciclavel.ToString() },
         };
     }
 }

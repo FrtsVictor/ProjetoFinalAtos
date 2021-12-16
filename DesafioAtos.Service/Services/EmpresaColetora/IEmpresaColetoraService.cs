@@ -1,16 +1,20 @@
 ﻿using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Domain.Enums;
 
 
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {
-    public interface IEmpresaColetoraService
+    public interface IEmpresaColetoraService : IBaseService
     {
-
-        Task<DesafioAtos.Domain.Entidades.EmpresaColetora> CriarEmpresaColetora(CriarEmpresaColetoraDto criarEmpresaColetoraDto);
-        Task AtualizarEmpresaColetora(EditarEmpresaColetoraDto atualizarEmpresaColetoraDto);
-        Task Remover(long id);
-        Task<IEnumerable<string>> ObterEmpresaColetaPorId(long idEmpresa);
-        Task<IEnumerable<string>> ObterEmpresaColeta();
-        
+        Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto request);
+        Task EditarEditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto request);
+        Task DeletaEmpresaColetora(int id);
+        Task<IEnumerable<string>?> ObterCategorias(int id);
+        Task<int> AdicionarEndereco(CriarEnderecoDto enderecoDto, int idEmpresa);
+        Task<IEnumerable<EnderecoDto>> ObterEnderecos(int idEmpresa);
+        Task EditarEndereco(int idEmpresa, EditarEnderecoDto editarEnderecoDto);
+        Task RemoverEndereco(int idEndereco);
+        Task<ECategoria> AdicionarCategoria(CategoriaDto adicionarCategoriaDto);
+        Task RemoverCategoria(CategoriaDto categoriaDto);
     }
 }

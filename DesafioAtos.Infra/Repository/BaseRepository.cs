@@ -23,9 +23,16 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
         return entidade;
     }
 
-    public virtual void Atualizar(T entidade)
+    public virtual async Task<IEnumerable<T>> CriarVariosAsync(IEnumerable<T> entidades)
+    {
+        await dbSet.AddRangeAsync(entidades);
+        return entidades;
+    }
+
+    public virtual bool Atualizar(T entidade)
     {
         dbSet.Update(entidade);
+        return true;
     }
 
     public virtual async Task RemoverAsync(long id)

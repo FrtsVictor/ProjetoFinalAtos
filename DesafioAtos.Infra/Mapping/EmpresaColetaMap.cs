@@ -26,7 +26,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.Property(e => e.Role).HasColumnName("role");
 
            entity.Property(e => e.Senha)
-                .HasMaxLength(30)
+                .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("senha");
 
@@ -61,89 +61,89 @@ namespace DesafioAtos.Infra.Mapping
             entity.HasData(Seed());
         }
 
-//        private List<EmpresaColetora> Seed() => new List<EmpresaColetora>()
-//        {
-//            new EmpresaColetora()
-//            {
-//                Id = 1,
-//                Nome = "Recicla Mais",
-//                Email = "reciclaMais@gmail.com",
-//                Cnpj = "12345678912351",
-//                Telefone = "21968645988",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 2,
-//                Nome = "E-Colleta",
-//                Email = "e-colleta@gmail.com",
-//                Cnpj = "23345678912351",
-//                Telefone = "21968645223",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 3,
-//                Nome = "Serra-Plast",
-//                Email = "serra-plast@gmail.com",
-//                Cnpj = "35454267891235",
-//                Telefone = "21991478963",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 4,
-//                Nome = "Atos",
-//                Email = "atos.net@atos.com",
-//                Cnpj = "33475567708295",
-//                Telefone = "21984896849",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 6,
-//                Nome = "Santos Reciclaveis",
-//                Email = "santos@gmail.com",
-//                Cnpj = "19273546516573",
-//                Telefone = "21928495826",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 7,
-//                Nome = "Mega Reciclaveis",
-//                Email = "mega-reciclaveis@gmail.com",
-//                Cnpj = "59677586910513",
-//                Telefone = "21465567728",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 8,
-//                Nome = "New Reciclaveis",
-//                Email = "new-reciclaveis@gmail.com",
-//                Cnpj = "49576576819503",
-//                Telefone = "21162547526",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 9,
-//                Nome = "SuperCollect",
-//                Email = "super-collect@gmail.com",
-//                Cnpj = "19273546516321",
-//                Telefone = "21948192846",
-//                Senha = "TesteSenha"
-//            },
-//            new EmpresaColetora()
-//            {
-//                Id = 10,
-//                Nome = "NiceCollect",
-//                Email = "nice-collect@gmail.com",
-//                Cnpj = "19273455678848",
-//                Telefone = "21948596876",
-//                Senha = "TesteSenha"
-//            }
-//        };
+        private List<EmpresaColetora> Seed() => new List<EmpresaColetora>()
+        {
+            new EmpresaColetora()
+            {
+                Id = 1,
+                Nome = "Recicla Mais",
+                Email = "reciclaMais@gmail.com",
+                Cnpj = "12345678912351",
+                Telefone = "21968645988",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 2,
+                Nome = "E-Colleta",
+                Email = "e-colleta@gmail.com",
+                Cnpj = "23345678912351",
+                Telefone = "21968645223",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 3,
+                Nome = "Serra-Plast",
+                Email = "serra-plast@gmail.com",
+                Cnpj = "35454267891235",
+                Telefone = "21991478963",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 4,
+                Nome = "Atos",
+                Email = "atos.net@atos.com",
+                Cnpj = "33475567708295",
+                Telefone = "21984896849",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 6,
+                Nome = "Santos Reciclaveis",
+                Email = "santos@gmail.com",
+                Cnpj = "19273546516573",
+                Telefone = "21928495826",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 7,
+                Nome = "Mega Reciclaveis",
+                Email = "mega-reciclaveis@gmail.com",
+                Cnpj = "59677586910513",
+                Telefone = "21465567728",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 8,
+                Nome = "New Reciclaveis",
+                Email = "new-reciclaveis@gmail.com",
+                Cnpj = "49576576819503",
+                Telefone = "21162547526",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 9,
+                Nome = "SuperCollect",
+                Email = "super-collect@gmail.com",
+                Cnpj = "19273546516321",
+                Telefone = "21948192846",
+                Senha = "TesteSenha"
+            },
+            new EmpresaColetora()
+            {
+                Id = 10,
+                Nome = "NiceCollect",
+                Email = "nice-collect@gmail.com",
+                Cnpj = "19273455678848",
+                Telefone = "21948596876",
+                Senha = "TesteSenha"
+            }
+        };
     }
 }

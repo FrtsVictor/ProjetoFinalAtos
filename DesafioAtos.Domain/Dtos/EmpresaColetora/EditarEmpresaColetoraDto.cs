@@ -1,18 +1,30 @@
-﻿using DesafioAtos.Domain.Entidades;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
 {
     public class EditarEmpresaColetoraDto
     {
-        public long Id { get; set; }
-        public string Nome { get; set; } = null!;
-        public string Cnpj { get; set; } = null!;
-        public string Telefone { get; set; } = null!;
-        public string Email { get; set; } = null!;
-        public string Senha { get; set; } = null!;
-        public bool Status { get; set; }
+        [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
+        [StringLength(maximumLength: 200, MinimumLength = 4, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+        public string? Nome { get; set; }
 
-        public List<EnderecoDto>? Endereco { get; set; }
-        public List<Categoria>? Categoria { get; set; }
+        [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
+        [StringLength(maximumLength: 18, MinimumLength = 14, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+        public string? Cnpj { get; set; }
+
+        [Required]
+        [Phone]
+        [StringLength(maximumLength: 14, MinimumLength = 9, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+        public string? Telefone { get; set; }
+
+
+        [Required(ErrorMessage = "Informe o seu email")]
+        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido...")]
+        public string? Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Password)]
+        [StringLength(200, MinimumLength = 5)]
+        public string? Senha { get; set; }
     }
 }

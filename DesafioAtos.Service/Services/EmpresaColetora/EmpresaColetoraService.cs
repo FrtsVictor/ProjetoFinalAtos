@@ -1,100 +1,144 @@
-﻿
-using DesafioAtos.Domain.Core;
-using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
-using DesafioAtos.Service.Validacoes;
-using Microsoft.Extensions.Configuration;
-using Np.Cryptography;
+﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Entidades;
+using DesafioAtos.Domain.Enums;
+using DesafioAtos.Domain.Mapper;
+using DesafioAtos.Infra.UnitWork;
+using DesafioAtos.Service.Validacoes;
 
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {
-    public class EmpresaColetoraService : IEmpresaColetoraService
+    public class EmpresaColetoraService : BaseService, IEmpresaColetoraService
     {
-        private readonly IUnitOfWork _unitOfWork;
-        private readonly IMapper _mapper;
-        private readonly string _chaveParaCriptografia;
-        private readonly ICriptografo _criptografo;
+        public const string ENDERECO_INVALIDO = "Id Endereco invalido";
+        public const string CNPJ_INVALIDO = "CNPJ inválido";
+        public const string EMAIL_INVALIDO = "Email inválido";
+        public const string FALHA_EMPRESA = "Falha ao encontrar Empresa, verificar Token";
+        public const string CATEGORIA_CADASTRADA = "Categoria já cadastrada";
+
+        private readonly IUnitOfWork _unitOfWork = null!;
+        private readonly IMapper _mapper = null!;
 
         public EmpresaColetoraService(
             IUnitOfWork unitOfWork,
-            IMapper mapper,
-            ICriptografo criptografo,
-            string chaveParaCriptografia)
+            IMapper mapper)
         {
-            this._chaveParaCriptografia = chaveParaCriptografia;
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
-            this._criptografo = criptografo;
         }
 
-        public async Task<DesafioAtos.Domain.Entidades.EmpresaColetora> CriarEmpresaColetora(CriarEmpresaColetoraDto criarEmpresaColetoraDto)
+        public async Task<IEnumerable<string>?> ObterCategorias(int id)
         {
-            var resultadoValidacao = new CriarEmpresaColetoraDtoValidacao().Validate(criarEmpresaColetoraDto);
-            if (!resultadoValidacao.IsValid)
-                throw new InvalidOperationException(string.Join("\n", resultadoValidacao.Errors.Select(s => s)));
+            var categorias = await _unitOfWork.ExecutarAsync(
+                async () => await _unitOfWork.CategoriaEmpresa.ObterTodasCategoriasPorEmpresa(id));
 
+            return categorias?.Select(x => x.Nome);
+        }
 
-            var empresaColetora = _mapper.MapEmpresaColetoraDtoToEmpresaColetora(criarEmpresaColetoraDto);
-            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetora.Cnpj);
-            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetora.Email);
+        public async Task<IEnumerable<EnderecoDto?>> ObterEnderecos(int idEmpresa)
+        {
+            var enderecos = await _unitOfWork.ExecutarAsync(async () => await _unitOfWork.Endereco.ObterTodosPorIdEmpresaAsync(idEmpresa));
+            return enderecos?.Select(_mapper.MapEnderecoToEnderecoDto);
+        }
 
+        public async Task EditarEndereco(int idEndereco, EditarEnderecoDto editarEndereco)
+        {
+
+            var endereco = await _unitOfWork.Endereco.ObterPorIdAsync(idEndereco);
+            ValidarEntidade(endereco == null, "ENDERECO_INVALIDO");
+            _mapper.MapEditarEnderecoToEndereco(editarEndereco, endereco);
+            _unitOfWork.Executar(() => _unitOfWork.Endereco.Atualizar(endereco));
+        }
+
+        public async Task RemoverEndereco(int idEndereco)
+        {
+            await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.RemoverAsync(idEndereco));
+        }
+
+        public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
+        {
+            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraDto.Cnpj);
+            ValidarEntidade(verificarCnpj == false, CNPJ_INVALIDO);
+
+            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetoraDto.Email);
+            ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+
+            empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
+            var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
+
+            await _unitOfWork.ExecutarTransacaoAsync(
+                async () => await _unitOfWork.EmpresaColetora.CriarAsync(empresaColetora),
+                async () =>
+                {
+                    var categorias = empresaColetoraDto.Categorias.Select(x =>
+                        new CategoriaEmpresa()
+                        {
+                            IdCategoria = x,
+                            IdEmpresaColetora = empresaColetora.Id
+                        });
+                    await _unitOfWork.CategoriaEmpresa.CriarVariosAsync(categorias);
+                }
+            );
+
+            return empresaColetora.Id;
+        }
+
+        public async Task EditarEditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
+        {
+            var verificarCnpj = ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
+            ValidarEntidade(verificarCnpj == false, CNPJ_INVALIDO);
+
+            var verificaEmail = RegexUtilities.ValidaEmail(editarEmpresaDto.Email);
+            ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+
+            var empresaColetora = await _unitOfWork.ExecutarAsync(
+                async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));
+            ValidarEntidade(empresaColetora == null, FALHA_EMPRESA);
+            _mapper.MapEditarEmpresaDtoToEmpresaColetora(editarEmpresaDto, empresaColetora);
+            _unitOfWork.Executar(() => _unitOfWork.EmpresaColetora.Atualizar(empresaColetora));
+        }
+
+        public async Task DeletaEmpresaColetora(int id) =>
+            await _unitOfWork.EmpresaColetora.RemoverAsync(id);
+
+        public async Task<int> AdicionarEndereco(CriarEnderecoDto enderecoDto, int idEmpresa)
+        {
+            var endereco = _mapper.MapCriarEnderecoDtoToEndereco(enderecoDto);
+            endereco.IdEmpresaColeta = idEmpresa;
+            await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.CriarAsync(endereco));
+            return endereco.Id;
+        }
+
+        public async Task<ECategoria> AdicionarCategoria(CategoriaDto adicionarCategoriaDto)
+        {
+            var idCategoria = adicionarCategoriaDto.IdCategoria;
+            ValidarCategoria(idCategoria);
+            var idEmpresa = adicionarCategoriaDto.IdLigacao;
+            var categoriaExistente = await _unitOfWork.CategoriaEmpresa.ObterCategoriaPorId(idCategoria, idEmpresa);
+            ValidarEntidade(categoriaExistente != null, CATEGORIA_CADASTRADA);
+            var categoriaEmpresa = _mapper.CriarCategoriaEmpresa(idEmpresa, idCategoria);
 
             return await _unitOfWork.ExecutarAsync(async () =>
-             await _unitOfWork.EmpresaColetoraRepository.CriarAsync(empresaColetora));
-
+            {
+                await _unitOfWork.CategoriaEmpresa.CriarAsync(categoriaEmpresa);
+                return (ECategoria)idCategoria;
+            });
         }
 
-        public async Task AtualizarEmpresaColetora(EditarEmpresaColetoraDto atualizarEmpresaColetoraDto)
+        public async Task RemoverCategoria(CategoriaDto categoriaDto)
         {
-            var resultadoEmpresa = new EditarEmpresaColetoraDtoValidacao().Validate(atualizarEmpresaColetoraDto);
-            if (resultadoEmpresa != null)
-
-                throw new InvalidOperationException(string.Join("\n", resultadoEmpresa.Errors.Select(s => s)));
+            var idCategoria = categoriaDto.IdCategoria;
+            ValidarCategoria(idCategoria);
+            var idEmpresa = categoriaDto.IdLigacao;
 
             await _unitOfWork.VoidExecutarAsync(async () =>
             {
-                var empresaColetoraParaAtualizar = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(atualizarEmpresaColetoraDto.Id);
-                string senhaParaAtualizar = atualizarEmpresaColetoraDto.Senha;
-                empresaColetoraParaAtualizar.Cnpj = atualizarEmpresaColetoraDto.Cnpj;
+                var categoriaExistente = await _unitOfWork.CategoriaEmpresa.ObterCategoriaPorId(idCategoria, idEmpresa);
 
-                empresaColetoraParaAtualizar.Senha = string.IsNullOrEmpty(senhaParaAtualizar)
-                    ? empresaColetoraParaAtualizar.Senha
-                    : _criptografo.Criptografar(_chaveParaCriptografia, senhaParaAtualizar);
-
-                empresaColetoraParaAtualizar.Telefone = atualizarEmpresaColetoraDto.Telefone;
-
-                empresaColetoraParaAtualizar.Nome = atualizarEmpresaColetoraDto.Nome;
-                empresaColetoraParaAtualizar.Email = atualizarEmpresaColetoraDto.Email;
-                empresaColetoraParaAtualizar.Telefone = atualizarEmpresaColetoraDto.Telefone;
-
-            });
-
-        }
-
-        public async Task Remover(long id)
-        {
-            await _unitOfWork.ExecutarAsync(async () =>
-            {
-                await _unitOfWork.EmpresaColetoraRepository.RemoverAsync(id);
-                return id;
+                if (categoriaExistente != null)
+                {
+                    await _unitOfWork.CategoriaUsuario.RemoverAsync(categoriaExistente.Id);
+                }
             });
         }
-
-        public async Task<IEnumerable<string>> ObterEmpresaColetaPorId(long idEmpresa)
-        {
-            var empresa = await _unitOfWork.EmpresaColetoraRepository.ObterPorIdAsync(idEmpresa);
-            return empresa;
-        }
-
-        public async Task<IEnumerable<string>> ObterEmpresaColeta()
-        {
-            var empresa = await _unitOfWork.EmpresaColetoraRepository.ObterTodosAsync();
-            var orderedEmpresaColetaOrigem = empresa.OrderBy(o => o.Nome).ToList();
-            
-            return orderedEmpresaColetaOrigem;
-        }
-
     }
 }
