@@ -2,16 +2,11 @@
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
 using DesafioAtos.Domain.Mapper;
-<<<<<<< HEAD
-using Np.Cryptography;
-using DesafioAtos.Infra.UnitWork;
-=======
 using DesafioAtos.Service.Exceptions;
 using DesafioAtos.Service.Validacoes;
 using Np.Cryptography;
 using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Services;
->>>>>>> a4c0c85 (datanotation)
 
 namespace DesafioAtos.Service.Services.Usuarios
 {
@@ -44,13 +39,8 @@ namespace DesafioAtos.Service.Services.Usuarios
         {
             var usuarioParaAtualizar = await _unitOfWork.Users.ObterPorIdAsync(idUsusario);
             ValidarEntidade(usuarioParaAtualizar == null, "Falha ao encontrar usuario, verificar token");
-<<<<<<< HEAD
-            _mapper.MapEditarUsuarioDtoToUsuario(editarUsuarioDto, usuarioParaAtualizar!);
-            _unitOfWork.Executar(() => _unitOfWork.Users.Atualizar(usuarioParaAtualizar!));
-=======
             _mapper.MapEditarUsuarioDtoToUsuario(editarUsuarioDto, usuarioParaAtualizar);
             _unitOfWork.Executar(() => _unitOfWork.Users.Atualizar(usuarioParaAtualizar));
->>>>>>> a4c0c85 (datanotation)
         }
 
         public async Task Remover(int id) => await _unitOfWork.VoidExecutarAsync(
@@ -96,18 +86,6 @@ namespace DesafioAtos.Service.Services.Usuarios
         }
 
 
-<<<<<<< HEAD
-        public async Task<IEnumerable<EmpresaColetoraDto>?> ObterEmpresasPorCategoriaUsuario(int idUsuario) =>
-            await _unitOfWork
-                .ExecutarAsync(async () =>
-                {
-                    var categorias = await _unitOfWork.CategoriaUsuario.ObterTodasCategoriasPorUsuario(idUsuario);
-                    var ids = categorias?.Select(x => x.Id);
-                    var empresas = await _unitOfWork.CategoriaEmpresa.ObterEmpresasPorIdCategoria(ids);
-                    empresas = empresas?.DistinctBy(x => x.IdEmpresaColetora);
-                    return empresas?.Select(x => _mapper.MapEmpresaColetoraToEmpresaColetoraDto(x.EmpresaColetora));
-                });
-=======
         public async Task<IEnumerable<EmpresaColetoraDto>?> ObterEmpresasPorCategoriaUsuario(int idUsuario) => await _unitOfWork
             .ExecutarAsync(async () =>
             {
@@ -117,6 +95,5 @@ namespace DesafioAtos.Service.Services.Usuarios
                 empresas = empresas?.DistinctBy(x => x.IdEmpresaColetora);
                 return empresas?.Select(x => _mapper.MapEmpresaColetoraToEmpresaColetoraDto(x.EmpresaColetora));
             });
->>>>>>> a4c0c85 (datanotation)
     }
 }

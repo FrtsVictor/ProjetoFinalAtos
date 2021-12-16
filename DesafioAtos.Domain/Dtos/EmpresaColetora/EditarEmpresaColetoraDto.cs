@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-﻿namespace DesafioAtos.Domain.Dtos
-{
-    public class EditarEmpresaColetoraDto
-    {
-        public string? Nome { get; set; }
-        public string? Cnpj { get; set; }
-        public string? Telefone { get; set; }
-        public string? Email { get; set; }
-=======
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
@@ -35,7 +25,6 @@ namespace DesafioAtos.Domain.Dtos
         [Required]
         [DataType(DataType.Password)]
         [StringLength(200, MinimumLength = 5)]
->>>>>>> a4c0c85 (datanotation)
         public string? Senha { get; set; }
     }
 }

@@ -10,11 +10,7 @@ namespace DesafioAtos.Service.Services.Autenticacao
 {
     public class AutenticacaoService : BaseService, IAutenticacaoService
     {
-<<<<<<< HEAD
-        public const string UsuarioSenhaInvalidos = "Usuario ou senha invalidos.";
-=======
         public const string USUARIO_SENHA_INVALIDOS = "Usuario ou senha invalidos.";
->>>>>>> a4c0c85 (datanotation)
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ICriptografo _criptografo;
@@ -38,13 +34,8 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto)
         {
             var usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto.Login);
-<<<<<<< HEAD
-            ValidarEntidade(usuario == null, UsuarioSenhaInvalidos);
-            ValidarSenha(loginDto.Senha, usuario!.Senha);
-=======
             ValidarEntidade(usuario == null, USUARIO_SENHA_INVALIDOS);
             ValidarSenha(loginDto.Senha, usuario.Senha);
->>>>>>> a4c0c85 (datanotation)
             var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);
         }
@@ -52,13 +43,8 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto)
         {
             var empresaColetora = await _unitOfWork.EmpresaColetora.ObterPorEmail(loginDto.Email);
-<<<<<<< HEAD
-            ValidarEntidade(empresaColetora == null, UsuarioSenhaInvalidos);
-            ValidarSenha(loginDto.Senha, empresaColetora!.Senha);
-=======
             ValidarEntidade(empresaColetora == null, USUARIO_SENHA_INVALIDOS);
             ValidarSenha(loginDto.Senha, empresaColetora.Senha);
->>>>>>> a4c0c85 (datanotation)
 
             var createTokenDto = _mapper.MapCriarEmpresaToCreateTokenDto(empresaColetora);
             return _tokenService.CriarToken(createTokenDto);
@@ -70,11 +56,7 @@ namespace DesafioAtos.Service.Services.Autenticacao
             var isSenhaInvalida = !senhaSalvaNoBanco.Equals(senhaLoginCriptografada);
 
             if (isSenhaInvalida)
-<<<<<<< HEAD
-                throw new BadRequestException(UsuarioSenhaInvalidos);
-=======
                 throw new BadRequestException(USUARIO_SENHA_INVALIDOS);
->>>>>>> a4c0c85 (datanotation)
         }
     }
 }

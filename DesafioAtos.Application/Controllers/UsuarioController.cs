@@ -37,11 +37,7 @@ namespace DesafioAtos.Application.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
         {
-<<<<<<< HEAD
-            var user = await _fabricaService.UsuarioService.CriarUsuario(userDto);
-=======
             var user = await _fabricaService.UsuarioService.CriarConta(userDto);
->>>>>>> a4c0c85 (datanotation)
             return Created("", _fabricaResponse.Criar(user.Id));
         }
 
@@ -80,14 +76,10 @@ namespace DesafioAtos.Application.Controllers
             return NoContent();
         }
 
-<<<<<<< HEAD
-
-=======
         /// <summary>
         /// Listar todas as categorias
         /// </summary>
         /// <returns></returns>
->>>>>>> a4c0c85 (datanotation)
         [HttpGet("categoria")]
         public async Task<IActionResult?> ListarCategorias()
         {
@@ -95,12 +87,6 @@ namespace DesafioAtos.Application.Controllers
             return Ok(_fabricaResponse.Criar(categorias));
         }
 
-<<<<<<< HEAD
-        [HttpPost("categoria/{idCategoria:int}")]
-        public async Task<IActionResult> AdicionarCategoria(int idCategoria)
-        {
-            var adicionarCategoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
-=======
         /// <summary>
         /// Adicionar Categoria
         /// </summary>
@@ -110,18 +96,11 @@ namespace DesafioAtos.Application.Controllers
         public async Task<IActionResult> AdicionarCategoria(int idCategoria)
         {
             var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
->>>>>>> a4c0c85 (datanotation)
             var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
             string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
             return Accepted(_fabricaResponse.Criar(response));
         }
 
-<<<<<<< HEAD
-        [HttpDelete("categoria/{idCategoria:int}")]
-        public async Task<IActionResult> RemoverCategoria(int idCategoria)
-        {
-            var categoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
-=======
         /// <summary>
         /// Deletar categoria
         /// </summary>
@@ -131,18 +110,14 @@ namespace DesafioAtos.Application.Controllers
         public async Task<IActionResult> RemoverCategoria(int idCategoria)
         {
             var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
->>>>>>> a4c0c85 (datanotation)
             await _fabricaService.UsuarioService.RemoverCategoria(categoriaDto);
             return NoContent();
         }
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Listar empresa por categoria
         /// </summary>
         /// <returns></returns>
->>>>>>> a4c0c85 (datanotation)
         [HttpGet("empresas")]
         public async Task<IActionResult?> ListarEmpresasPorCategoria()
         {

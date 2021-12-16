@@ -4,15 +4,6 @@ namespace DesafioAtos.Domain.Dtos
 {
     public class EditarEnderecoDto
     {
-<<<<<<< HEAD
-        public string? Numero { get; set; }
-        public string? Complemento { get; set; }
-        public string? Rua { get; set; }
-        public string? Cep { get; set; }
-        public string? Cidade { get; set; }
-        public string? Estado { get; set; }
-        public string? Bairro { get; set; }
-=======
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 200, MinimumLength = 4, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Numero { get; set; } = null!;
@@ -39,6 +30,5 @@ namespace DesafioAtos.Domain.Dtos
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 20, MinimumLength = 2, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Bairro { get; set; } = null!;
->>>>>>> a4c0c85 (datanotation)
     }
 }

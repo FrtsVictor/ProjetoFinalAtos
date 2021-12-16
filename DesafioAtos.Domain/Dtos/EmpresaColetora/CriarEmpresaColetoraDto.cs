@@ -5,21 +5,13 @@ namespace DesafioAtos.Domain.Dtos
 {
     public class CriarEmpresaColetoraDto
     {
-<<<<<<< HEAD
-=======
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 200, MinimumLength = 4, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
->>>>>>> a4c0c85 (datanotation)
         public string Nome { get; set; } = null!;
 
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 18, MinimumLength = 14, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Cnpj { get; set; } = null!;
-<<<<<<< HEAD
-        public string Email { get; set; } = null!;
-        public string Senha { get; set; } = null!;
-        public string Telefone { get; set; } = null!;
-=======
 
         [Required(ErrorMessage = "Informe o seu email")]
         [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido...")]
@@ -38,7 +30,6 @@ namespace DesafioAtos.Domain.Dtos
         
         
         
->>>>>>> a4c0c85 (datanotation)
         public List<CriarEnderecoDto> Enderecos { get; set; }
         public List<int> Categorias { get; set; }
 

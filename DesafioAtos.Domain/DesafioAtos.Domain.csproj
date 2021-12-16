@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-<<<<<<< HEAD
-    <ProjectReference Include="..\NP-Criptography\Criptografo\Criptografo.csproj" />
-=======
     <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <ProjectReference Include="..\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
->>>>>>> a4c0c85 (datanotation)
   </ItemGroup>
 
 </Project>

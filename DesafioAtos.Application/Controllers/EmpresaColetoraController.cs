@@ -1,8 +1,5 @@
 ﻿using DesafioAtos.Domain.Dtos;
-<<<<<<< HEAD
-=======
 using DesafioAtos.Service.Fabrica.Services;
->>>>>>> a4c0c85 (datanotation)
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,8 +15,6 @@ namespace DesafioAtos.Application.Controllers
         {
         }
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Atualizar Empresa.
         /// </summary>
@@ -40,30 +35,22 @@ namespace DesafioAtos.Application.Controllers
         /// </remarks>
         /// <response code="201">Retorna atualização ok</response>
         /// <response code="400">Se o request for nulo</response>
->>>>>>> a4c0c85 (datanotation)
         [HttpPut]
         public async Task<IActionResult> AtualizarEmpresa(EditarEmpresaColetoraDto request)
         {
             await _fabricaService.EmpresaColetoraService.EditarEditarEmpresaColetora(ObterIdDoToken(), request);
             return Ok();
         }
-<<<<<<< HEAD
-
-=======
         /// <summary>
         /// Remover empresas
         /// </summary>
         /// <returns></returns>
->>>>>>> a4c0c85 (datanotation)
         [HttpDelete()]
         public async Task<IActionResult> RemoverEmpresa()
         {
             await _fabricaService.EmpresaColetoraService.DeletaEmpresaColetora(ObterIdDoToken());
             return Ok();
         }
-<<<<<<< HEAD
-
-=======
         /// <summary>
         /// Criar Empresa.
         /// </summary>
@@ -97,7 +84,6 @@ namespace DesafioAtos.Application.Controllers
         /// </remarks>
         /// <response code="201">Retorna criação ok</response>
         /// <response code="400">Se o request for nulo</response>
->>>>>>> a4c0c85 (datanotation)
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CriarEmpresa(CriarEmpresaColetoraDto criarEmpresaColetoraDto)
@@ -107,59 +93,15 @@ namespace DesafioAtos.Application.Controllers
         }
 
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Obter todas as categorias
         /// </summary>
         /// <returns></returns>
->>>>>>> a4c0c85 (datanotation)
         [HttpGet("/categoria")]
         public async Task<IActionResult> ObterCategorias()
         {
             var data = await _fabricaService.EmpresaColetoraService.ObterCategorias(ObterIdDoToken());
             return Ok(data);
-<<<<<<< HEAD
-        }
-
-        [HttpDelete("/categoria/{idCategoria:int}")]
-        public async Task<IActionResult> RemoverCategoria(int idCategoria)
-        {
-            var categoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
-            await _fabricaService.EmpresaColetoraService.RemoverCategoria(categoriaDto);
-            return NoContent();
-        }
-
-        [HttpPost("/categoria/{idCategoria:int}")]
-        public async Task<IActionResult> AdicionarCategoria(int idCategoria)
-        {
-            var adicionarCategoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
-            var categoria = await _fabricaService.EmpresaColetoraService.AdicionarCategoria(adicionarCategoriaDto);
-            var response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
-            return Accepted(_fabricaResponse.Criar(response));
-        }
-
-
-        [HttpGet("/endereco")]
-        public async Task<IActionResult> ObterEnderecos()
-        {
-            var data = await _fabricaService.EmpresaColetoraService.ObterEnderecos(ObterIdDoToken());
-            return Ok(data);
-        }
-
-        [HttpPost("/endereco")]
-        public async Task<IActionResult> AdicionarEndereco(CriarEnderecoDto criarEnderecoDto)
-        {
-            var data = await _fabricaService.EmpresaColetoraService.AdicionarEndereco(criarEnderecoDto,
-                ObterIdDoToken());
-            return Created("", _fabricaResponse.Criar(data));
-        }
-
-        [HttpPut("/endereco/{idEndereco:int}")]
-        public async Task<IActionResult> EditarEndereco([FromRoute] int idEndereco,
-            [FromBody] EditarEnderecoDto editarEmpresa)
-        {
-=======
         }
         /// <summary>
         /// Deleta a categoria por Id
@@ -240,19 +182,15 @@ namespace DesafioAtos.Application.Controllers
         {
 
 
->>>>>>> a4c0c85 (datanotation)
             await _fabricaService.EmpresaColetoraService.EditarEndereco(idEndereco, editarEmpresa);
             return NoContent();
         }
 
-<<<<<<< HEAD
-=======
         /// <summary>
         /// Deletar Endereço
         /// </summary>
         /// <param name="idEndereco"></param>
         /// <returns></returns>
->>>>>>> a4c0c85 (datanotation)
         [HttpDelete("/endereco/{idEndereco:int}")]
         public async Task<IActionResult> RemoverEndereco(int idEndereco)
         {
