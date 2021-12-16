@@ -1,20 +1,29 @@
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Test
 {
     public class TestSettings
     {
-        public static IConfiguration Configuration = null!;
+        private IConfiguration _config;
 
-        static void Appsettings()
+        public TestSettings()
         {
-            Configuration = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
+            IServiceCollection services = new ServiceCollection();
+
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
-        public static string Get(string config)
+        public IConfiguration Configuration
         {
-            return Configuration[config];
+            get
+            {
+                if (_config != null) return _config;
+                var builder = new ConfigurationBuilder().AddJsonFile($"testsettings.json", optional: false);
+                _config = builder.Build();
+
+                return _config;
+            }
         }
     }
 }

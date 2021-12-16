@@ -8,14 +8,12 @@ namespace DesafioAtos.Application.Core.ActionFilters
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!context.ModelState.IsValid)
-            {
-                List<string> listaDeErros = context.ModelState.SelectMany(sm => sm.Value?.Errors!)
-                     .Select(s => s.ErrorMessage).ToList();
+            if (context.ModelState.IsValid) return;
+            var listaDeErros = context.ModelState.SelectMany(sm => sm.Value?.Errors!)
+                .Select(s => s.ErrorMessage).ToList();
 
-                context.Result = new BadRequestObjectResult(new FabricaResponse()
-                    .Criar("Um ou mais campos invalidos!", listaDeErros));
-            }
+            context.Result = new BadRequestObjectResult(new FabricaResponse()
+                .Criar("Um ou mais campos invalidos!", listaDeErros));
         }
     }
 }

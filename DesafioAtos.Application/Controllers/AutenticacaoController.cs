@@ -10,7 +10,7 @@ namespace DesafioAtos.Application.Controllers
     [ActionFilterValidacaoModelState]
     public class AutenticacaoController : AppControllerBase
     {
-        public AutenticacaoController(IFabricaService fabricaService, IFabricaResponse fabricaResponse) 
+        public AutenticacaoController(IFabricaService fabricaService, IFabricaResponse fabricaResponse)
             : base(fabricaService, fabricaResponse)
         {
         }
@@ -20,8 +20,7 @@ namespace DesafioAtos.Application.Controllers
             Ok(await _fabricaService.AutenticacaoService.LogarUsuario(loginDto));
 
         [HttpPost("empresa")]
-        public async Task<IActionResult> LogarEmpresa(LogarEmpresaDto loginDto) => 
+        public async Task<IActionResult> LogarEmpresa(LogarEmpresaDto loginDto) =>
             Ok(_fabricaResponse.Criar(await _fabricaService.AutenticacaoService.LogarEmpresa(loginDto)));
-
     }
 }

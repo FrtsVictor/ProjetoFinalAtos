@@ -64,7 +64,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.HasData(Seed());
         }
 
-        private List<Endereco> Seed() => new List<Endereco>()
+        private IEnumerable<Endereco> Seed() => new List<Endereco>()
         {
             new Endereco()
             {
@@ -73,7 +73,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Rua das palmeiras",
                 Status = true,
                 Numero = "135",
-                Cep= "25964369",
+                Cep = "25964369",
                 Cidade = "Teresópolis",
                 Complemento = "Casa",
                 Estado = "RJ",
@@ -86,7 +86,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Av Rio Branco",
                 Status = true,
                 Numero = "2698",
-                Cep= "69864598",
+                Cep = "69864598",
                 Cidade = "Rio de janeiro",
                 Complemento = "Apt 101",
                 Estado = "RJ",
@@ -99,7 +99,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Rua Tupinambás",
                 Status = true,
                 Numero = "280",
-                Cep= "29684598",
+                Cep = "29684598",
                 Cidade = "São Paulo",
                 Complemento = "Casa",
                 Estado = "SP",
@@ -112,7 +112,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Estrada das Rosas",
                 Status = true,
                 Numero = "980",
-                Cep= "69875364",
+                Cep = "69875364",
                 Cidade = "Teresópolis",
                 Complemento = "Apt 101",
                 Estado = "RJ",
@@ -125,7 +125,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Estrada Grande Rota",
                 Status = true,
                 Numero = "6262",
-                Cep= "69874563",
+                Cep = "69874563",
                 Cidade = "São Tomé",
                 Complemento = "Casa 15",
                 Estado = "MG",
@@ -138,7 +138,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Rua Santo Antônio",
                 Status = true,
                 Numero = "21",
-                Cep= "89634563",
+                Cep = "89634563",
                 Cidade = "São Tomé",
                 Complemento = "Apt 100",
                 Estado = "RS",
@@ -151,7 +151,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Rua Primeiro de Maio",
                 Status = true,
                 Numero = "05",
-                Cep= "79879501",
+                Cep = "79879501",
                 Cidade = "Santana de Parnaíba",
                 Complemento = "Casa 04",
                 Estado = "GO",
@@ -164,7 +164,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Avenia Rio Ribeiro",
                 Status = true,
                 Numero = "200",
-                Cep= "36874869",
+                Cep = "36874869",
                 Cidade = "Av Rotariana",
                 Complemento = "Apt 500",
                 Estado = "BA",
@@ -177,7 +177,7 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Av Santa Rosa",
                 Status = true,
                 Numero = "90",
-                Cep= "79879593",
+                Cep = "79879593",
                 Cidade = "Petropolis",
                 Complemento = "Casa 04",
                 Estado = "RJ",
@@ -190,13 +190,12 @@ namespace DesafioAtos.Infra.Mapping
                 Rua = "Rua Mato Grosso",
                 Status = true,
                 Numero = "09",
-                Cep= "19274553",
+                Cep = "19274553",
                 Cidade = "Itaipava",
                 Complemento = "Casa 06",
                 Estado = "RJ",
                 IdEmpresaColeta = 10
             }
         };
-
     }
 }

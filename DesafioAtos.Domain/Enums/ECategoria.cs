@@ -12,6 +12,5 @@
         ResiduoHospitalar = 8,
         LixoRadioativo = 9,
         LixoNaoReciclavel = 10
-
     }
 }

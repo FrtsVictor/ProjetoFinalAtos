@@ -13,6 +13,7 @@ namespace DesafioAtos.Service.Services.Token
     {
         private readonly string _tokenKey;
         private readonly ILogger<TokenService> _logger;
+
         public TokenService(AppConfigEcoleta appConfigEcoleta, ILogger<TokenService> logger)
         {
             this._tokenKey = appConfigEcoleta.JwtKey();
@@ -30,27 +31,27 @@ namespace DesafioAtos.Service.Services.Token
                 {
                     Subject = new ClaimsIdentity(new Claim[]
                     {
-                    new Claim(ClaimTypes.Name, criacaoTokenDto.Identificador),
-                    new Claim("id", criacaoTokenDto.Id.ToString()),
-                    new Claim(ClaimTypes.Role, criacaoTokenDto.Role)
+                        new Claim(ClaimTypes.Name, criacaoTokenDto.Identificador),
+                        new Claim("id", criacaoTokenDto.Id.ToString()),
+                        new Claim(ClaimTypes.Role, criacaoTokenDto.Role)
                     }),
 
                     Expires = DateTime.UtcNow.AddHours(1),
 
-                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), algorithm: SecurityAlgorithms.HmacSha256Signature)
+                    SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key),
+                        algorithm: SecurityAlgorithms.HmacSha256Signature)
                 };
 
                 var token = tokenHandler.CreateToken(tokenDescriptor);
-                string userToken = tokenHandler.WriteToken(token);
+                var userToken = tokenHandler.WriteToken(token);
 
-                return new TokenResponseDto() { Token = userToken };
+                return new TokenResponseDto() {Token = userToken};
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex.Message);
                 throw new TokenGenerationException("Error creating token", ex);
             }
-
         }
     }
 }

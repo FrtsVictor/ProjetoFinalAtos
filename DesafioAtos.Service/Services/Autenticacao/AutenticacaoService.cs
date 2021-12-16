@@ -10,7 +10,7 @@ namespace DesafioAtos.Service.Services.Autenticacao
 {
     public class AutenticacaoService : BaseService, IAutenticacaoService
     {
-        public const string USUARIO_SENHA_INVALIDOS = "Usuario ou senha invalidos.";
+        public const string UsuarioSenhaInvalidos = "Usuario ou senha invalidos.";
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         private readonly ICriptografo _criptografo;
@@ -34,8 +34,8 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto)
         {
             var usuario = await _unitOfWork.Users.ObterPorLoginAsync(loginDto.Login);
-            ValidarEntidade(usuario == null, USUARIO_SENHA_INVALIDOS);
-            ValidarSenha(loginDto.Senha, usuario.Senha);
+            ValidarEntidade(usuario == null, UsuarioSenhaInvalidos);
+            ValidarSenha(loginDto.Senha, usuario!.Senha);
             var createTokenDto = _mapper.MapUsuarioToCreateTokenDto(usuario);
             return _tokenService.CriarToken(createTokenDto);
         }
@@ -43,8 +43,8 @@ namespace DesafioAtos.Service.Services.Autenticacao
         public async Task<TokenResponseDto> LogarEmpresa(LogarEmpresaDto loginDto)
         {
             var empresaColetora = await _unitOfWork.EmpresaColetora.ObterPorEmail(loginDto.Email);
-            ValidarEntidade(empresaColetora == null, USUARIO_SENHA_INVALIDOS);
-            ValidarSenha(loginDto.Senha, empresaColetora.Senha);
+            ValidarEntidade(empresaColetora == null, UsuarioSenhaInvalidos);
+            ValidarSenha(loginDto.Senha, empresaColetora!.Senha);
 
             var createTokenDto = _mapper.MapCriarEmpresaToCreateTokenDto(empresaColetora);
             return _tokenService.CriarToken(createTokenDto);
@@ -53,10 +53,10 @@ namespace DesafioAtos.Service.Services.Autenticacao
         private void ValidarSenha(string senhaLogin, string senhaSalvaNoBanco = null!)
         {
             var senhaLoginCriptografada = _criptografo.Criptografar(_passwordKey, senhaLogin);
-            bool isSenhaInvalida = !senhaSalvaNoBanco.Equals(senhaLoginCriptografada);
+            var isSenhaInvalida = !senhaSalvaNoBanco.Equals(senhaLoginCriptografada);
 
             if (isSenhaInvalida)
-                throw new BadRequestException(USUARIO_SENHA_INVALIDOS);
+                throw new BadRequestException(UsuarioSenhaInvalidos);
         }
     }
 }

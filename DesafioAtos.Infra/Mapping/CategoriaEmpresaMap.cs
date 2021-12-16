@@ -8,11 +8,11 @@ namespace DesafioAtos.Infra.Mapping
     {
         public void Configure(EntityTypeBuilder<CategoriaEmpresa> entity)
         {
-            entity.ToTable("Categoria_Empresa");            
+            entity.ToTable("Categoria_Empresa");
             entity.HasKey(e => e.Id);
 
             entity.Property(e => e.IdCategoria)
-                .HasColumnName("id_categoria");            
+                .HasColumnName("id_categoria");
 
             entity.Property(e => e.IdEmpresaColetora)
                 .HasColumnName("id_empresa_coletora");
@@ -29,7 +29,7 @@ namespace DesafioAtos.Infra.Mapping
                 .OnDelete(DeleteBehavior.SetNull)
                 .HasConstraintName("FK__Usuario_E__id_em__625A9A57");
 
-            
+
             //entity.HasData(Seed());
         }
     }

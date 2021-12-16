@@ -11,17 +11,13 @@ namespace Test
     public static class UtilitarioTest
     {
         public static WebApplicationFactory<Program> ObterWebApplication() =>
-             new WebApplicationFactory<Program>()
-                .WithWebHostBuilder(builder =>
-                {
-                    builder.ConfigureServices(services =>
-                    {
-                    });
-                });
+            new WebApplicationFactory<Program>()
+                .WithWebHostBuilder(builder => { builder.ConfigureServices(services => { }); });
 
         public static HttpClient CriarHttpClient() => ObterWebApplication().CreateClient();
-        
-        public static async Task<HttpResponseMessage> HttpPostAsync<Entrada>(Entrada dadosEnvio, string uri, HttpStatusCode statusCodeEsperado)
+
+        public static async Task<HttpResponseMessage> HttpPostAsync<Entrada>(Entrada dadosEnvio, string uri,
+            HttpStatusCode statusCodeEsperado)
         {
             var _Client = CriarHttpClient();
             var jsonCorpo = JsonConvert.SerializeObject(dadosEnvio);

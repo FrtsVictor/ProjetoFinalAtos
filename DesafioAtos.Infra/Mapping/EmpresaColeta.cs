@@ -1,5 +1,4 @@
 using DesafioAtos.Domain.Entidades;
-using DesafioAtos.Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -21,11 +20,11 @@ namespace DesafioAtos.Infra.Mapping
                 .IsUnique();
 
             entity.Property(e => e.Id).HasColumnName("id")
-            .ValueGeneratedOnAdd();
+                .ValueGeneratedOnAdd();
 
             entity.Property(e => e.Role).HasColumnName("role");
 
-           entity.Property(e => e.Senha)
+            entity.Property(e => e.Senha)
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("senha");
@@ -49,7 +48,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.Property(e => e.Nome)
                 .HasMaxLength(80)
                 .IsUnicode(false)
-                .HasColumnName("nome");           
+                .HasColumnName("nome");
 
             entity.Property(e => e.Telefone)
                 .HasMaxLength(11)
@@ -61,7 +60,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.HasData(Seed());
         }
 
-        private List<EmpresaColetora> Seed() => new List<EmpresaColetora>()
+        private IEnumerable<EmpresaColetora> Seed() => new List<EmpresaColetora>()
         {
             new EmpresaColetora()
             {

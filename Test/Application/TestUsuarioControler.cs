@@ -18,21 +18,16 @@ namespace Test.Application
         [TestCategory("Usuario")]
         public async Task Deve_Retornar_BadRequest_Para_Usuario_Com_Login_Incorreto()
         {
-            try            {
-
-                var config = UtilitarioTest.ObterWebApplication().Server.Services.GetService<IConfiguration>();
-                var asd = TestSettings.Configuration["cryptography:AppDbKey"];
-
-                ILogger<TokenService> logger = (ILogger<TokenService>)new LoggerFactory().CreateLogger("logs");
-
-
-                var asdad = "Sadsd";
+            try
+            {
+                var config = new TestSettings().Configuration;
+                var a = config["cryptography:AppPasswordKey"];
+                var b = ".";
             }
             catch (Exception e)
             {
                 Console.Write(e);
             }
-
         }
     }
 }

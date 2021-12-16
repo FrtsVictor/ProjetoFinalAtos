@@ -10,8 +10,5 @@ namespace DesafioAtos.Domain.Dtos
         public string? Observacao { get; set; }
         public ECategoria Categoria { get; set; }
         public long EmpresaColetaId { get; set; }
-
-
     }
 }
-

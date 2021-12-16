@@ -39,14 +39,13 @@ namespace DesafioAtos.Infra.Mapping
             entity.HasData(Seed());
         }
 
-        private List<Usuario> Seed() => new List<Usuario>()
+        private IEnumerable<Usuario> Seed() => new List<Usuario>()
         {
-            new Usuario(){Id = 1, Nome = "Joao",Login = "JoaoUsername 1", Senha = "asudasu"},
-            new Usuario(){Id = 2, Nome = "Pedro",Login = "PedroUsername 2", Senha = "asudasu"},
-            new Usuario(){Id = 3, Nome = "Maria",Login = "MariaUsername 3", Senha = "asudasu"},
-            new Usuario(){Id = 4, Nome = "Cecília",Login = "CecíliaUsername 4", Senha = "asudasu"},
-            new Usuario(){Id = 5, Nome = "Eva",Login = "EvaUsername 5", Senha = "asudasu"}
+            new Usuario() {Id = 1, Nome = "Joao", Login = "JoaoUsername 1", Senha = "asudasu"},
+            new Usuario() {Id = 2, Nome = "Pedro", Login = "PedroUsername 2", Senha = "asudasu"},
+            new Usuario() {Id = 3, Nome = "Maria", Login = "MariaUsername 3", Senha = "asudasu"},
+            new Usuario() {Id = 4, Nome = "Cecília", Login = "CecíliaUsername 4", Senha = "asudasu"},
+            new Usuario() {Id = 5, Nome = "Eva", Login = "EvaUsername 5", Senha = "asudasu"}
         };
     }
-
 }

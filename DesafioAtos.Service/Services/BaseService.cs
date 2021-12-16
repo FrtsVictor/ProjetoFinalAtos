@@ -15,9 +15,7 @@ namespace DesafioAtos.Service.Services
         public void ValidarEntidade(bool isTrue, string mensagemErro)
         {
             if (isTrue)
-            {
                 throw new BadRequestException(mensagemErro);
-            }
         }
     }
 }

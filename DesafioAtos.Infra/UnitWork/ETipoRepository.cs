@@ -7,6 +7,5 @@ namespace DesafioAtos.Infra.UnitWork
         EmpresaColetaRepository,
         CategoriaEmpresaRepository,
         CategoriaUsuarioRepository
-
     }
 }

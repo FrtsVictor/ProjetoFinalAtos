@@ -8,7 +8,7 @@ namespace DesafioAtos.Application.Core.Middlewares
     {
         public static void ConfigurarAutenticacao(IServiceCollection app, string tokenKey)
         {
-            byte[] tokenBytearr = Encoding.ASCII.GetBytes(tokenKey);
+            var tokenBytearr = Encoding.ASCII.GetBytes(tokenKey);
 
             app.AddAuthentication(x =>
             {

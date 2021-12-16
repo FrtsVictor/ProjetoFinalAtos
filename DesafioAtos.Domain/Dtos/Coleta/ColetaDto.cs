@@ -9,6 +9,5 @@
         public bool Status { get; set; }
         public string? EmpresaColetaId { get; set; }
         public string? Categoria { get; set; }
-
     }
 }
