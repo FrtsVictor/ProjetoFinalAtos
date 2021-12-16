@@ -6,6 +6,6 @@ namespace DesafioAtos.Service.Fabrica.Services
         EmpresaColetoraService,
         EnderecoService,
         TokenService,
-        AutenticacaoService   
+        AutenticacaoService
     }
 }

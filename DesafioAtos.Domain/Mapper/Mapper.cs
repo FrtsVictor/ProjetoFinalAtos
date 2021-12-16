@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
@@ -11,6 +12,7 @@ namespace DesafioAtos.Domain.Mapper
     {
         private readonly ICriptografo _criptografo;
         private readonly string _passKey;
+
         public Mapper(ICriptografo criptografo, AppConfigEcoleta appConfigEcoleta)
         {
             this._passKey = appConfigEcoleta.PasswordKey();
@@ -32,15 +34,16 @@ namespace DesafioAtos.Domain.Mapper
             Nome = criarUsuarioDto.Nome
         };
 
-        public EmpresaColetora MapCriarEmpresaDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
-        {
-            Cnpj = empresaColetoraDto.Cnpj,
-            Email = empresaColetoraDto.Email,
-            Nome = empresaColetoraDto.Nome,
-            Telefone = empresaColetoraDto.Telefone,
-            Senha = _criptografo.Criptografar(_passKey, empresaColetoraDto.Senha),
-            Enderecos = empresaColetoraDto.Enderecos.Select(MapCriarEnderecoDtoToEndereco).ToList()
-        };
+        public EmpresaColetora MapCriarEmpresaDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) =>
+            new EmpresaColetora()
+            {
+                Cnpj = empresaColetoraDto.Cnpj,
+                Email = empresaColetoraDto.Email,
+                Nome = empresaColetoraDto.Nome,
+                Telefone = empresaColetoraDto.Telefone,
+                Senha = _criptografo.Criptografar(_passKey, empresaColetoraDto.Senha),
+                Enderecos = empresaColetoraDto.Enderecos.Select(MapCriarEnderecoDtoToEndereco).ToList()
+            };
 
         public Endereco MapCriarEnderecoDtoToEndereco(CriarEnderecoDto criarEnderecoDto) => new Endereco()
         {
@@ -62,7 +65,7 @@ namespace DesafioAtos.Domain.Mapper
         };
 
         public void MapEditarEmpresaDtoToEmpresaColetora(EditarEmpresaColetoraDto editarEmpresaDto,
-             EmpresaColetora empresaColetora)
+            EmpresaColetora empresaColetora)
         {
             empresaColetora.Email = editarEmpresaDto.Email ?? empresaColetora.Email;
             empresaColetora.Cnpj = editarEmpresaDto.Cnpj ?? empresaColetora.Cnpj;
@@ -88,25 +91,31 @@ namespace DesafioAtos.Domain.Mapper
             IdCategoria = idCategoria
         };
 
-        public EnderecoDto MapEnderecoToEnderecoDto(Endereco endereco) => new EnderecoDto
+        public EnderecoDto MapEnderecoToEnderecoDto(Endereco? endereco)
         {
-            Id = endereco.Id,
-            Bairro = endereco.Bairro,
-            Cep = endereco.Cep,
-            Cidade = endereco.Cidade,
-            Complemento = endereco.Complemento,
-            Estado = endereco.Estado,
-            Numero = endereco.Numero,
-            Rua = endereco.Rua
-        };
+            Debug.Assert(endereco != null, nameof(endereco) + " != null");
+            return new EnderecoDto
+            {
+                Id = endereco.Id,
+                Bairro = endereco.Bairro,
+                Cep = endereco.Cep,
+                Cidade = endereco.Cidade,
+                Complemento = endereco.Complemento,
+                Estado = endereco.Estado,
+                Numero = endereco.Numero,
+                Rua = endereco.Rua
+            };
+        }
 
-        public EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora) => new EmpresaColetoraDto
-        {
-            Email = empresaColetora.Email,
-            Enderecos = empresaColetora.Enderecos.Select(MapEnderecoToEnderecoDto).ToList(),
-            Nome = empresaColetora.Nome,
-            Telefone = empresaColetora.Telefone
-        };
+        public EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora) =>
+            new EmpresaColetoraDto
+            {
+                Id = empresaColetora.Id,
+                Email = empresaColetora.Email,
+                Enderecos = empresaColetora.Enderecos.Select(MapEnderecoToEnderecoDto).ToList(),
+                Nome = empresaColetora.Nome,
+                Telefone = empresaColetora.Telefone
+            };
 
         public void MapEditarEnderecoToEndereco(EditarEnderecoDto editarEnderecoDto, Endereco endereco)
         {

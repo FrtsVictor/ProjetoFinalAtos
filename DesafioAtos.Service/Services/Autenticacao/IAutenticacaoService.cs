@@ -2,7 +2,7 @@
 using DesafioAtos.Domain.Dtos.Token;
 
 namespace DesafioAtos.Service.Services.Autenticacao
-{ 
+{
     public interface IAutenticacaoService : IBaseService
     {
         Task<TokenResponseDto> LogarUsuario(LogarUsuarioDto loginDto);

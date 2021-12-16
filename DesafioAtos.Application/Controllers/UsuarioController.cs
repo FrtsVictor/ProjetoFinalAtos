@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using DesafioAtos.Application.Core.ActionFilters;
+﻿using DesafioAtos.Application.Core.ActionFilters;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Service.Fabrica.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -22,7 +21,7 @@ namespace DesafioAtos.Application.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
         {
-            var user = await _fabricaService.UsuarioService.CriarConta(userDto);
+            var user = await _fabricaService.UsuarioService.CriarUsuario(userDto);
             return Created("", _fabricaResponse.Criar(user.Id));
         }
 
@@ -52,7 +51,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpPost("categoria/{idCategoria:int}")]
         public async Task<IActionResult> AdicionarCategoria(int idCategoria)
         {
-            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
+            var adicionarCategoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
             var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
             string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
             return Accepted(_fabricaResponse.Criar(response));
@@ -61,7 +60,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpDelete("categoria/{idCategoria:int}")]
         public async Task<IActionResult> RemoverCategoria(int idCategoria)
         {
-            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
+            var categoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
             await _fabricaService.UsuarioService.RemoverCategoria(categoriaDto);
             return NoContent();
         }

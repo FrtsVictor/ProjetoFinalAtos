@@ -38,7 +38,6 @@ namespace DesafioAtos.Application.Controllers
         }
 
 
-
         [HttpGet("/categoria")]
         public async Task<IActionResult> ObterCategorias()
         {
@@ -49,7 +48,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpDelete("/categoria/{idCategoria:int}")]
         public async Task<IActionResult> RemoverCategoria(int idCategoria)
         {
-            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
+            var categoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
             await _fabricaService.EmpresaColetoraService.RemoverCategoria(categoriaDto);
             return NoContent();
         }
@@ -57,12 +56,11 @@ namespace DesafioAtos.Application.Controllers
         [HttpPost("/categoria/{idCategoria:int}")]
         public async Task<IActionResult> AdicionarCategoria(int idCategoria)
         {
-            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
+            var adicionarCategoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
             var categoria = await _fabricaService.EmpresaColetoraService.AdicionarCategoria(adicionarCategoriaDto);
-            string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
+            var response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
             return Accepted(_fabricaResponse.Criar(response));
         }
-
 
 
         [HttpGet("/endereco")]
@@ -75,12 +73,14 @@ namespace DesafioAtos.Application.Controllers
         [HttpPost("/endereco")]
         public async Task<IActionResult> AdicionarEndereco(CriarEnderecoDto criarEnderecoDto)
         {
-            var data = await _fabricaService.EmpresaColetoraService.AdicionarEndereco(criarEnderecoDto, ObterIdDoToken());
+            var data = await _fabricaService.EmpresaColetoraService.AdicionarEndereco(criarEnderecoDto,
+                ObterIdDoToken());
             return Created("", _fabricaResponse.Criar(data));
         }
 
         [HttpPut("/endereco/{idEndereco:int}")]
-        public async Task<IActionResult> EditarEndereco(int idEndereco, EditarEnderecoDto editarEmpresa)
+        public async Task<IActionResult> EditarEndereco([FromRoute] int idEndereco,
+            [FromBody] EditarEnderecoDto editarEmpresa)
         {
             await _fabricaService.EmpresaColetoraService.EditarEndereco(idEndereco, editarEmpresa);
             return NoContent();

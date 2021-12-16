@@ -9,7 +9,7 @@ namespace DesafioAtos.Application.Controllers
         protected readonly IFabricaService _fabricaService;
         protected readonly IFabricaResponse _fabricaResponse;
 
-        public AppControllerBase(
+        protected AppControllerBase(
             IFabricaService fabricaService,
             IFabricaResponse fabricaResponse)
         {

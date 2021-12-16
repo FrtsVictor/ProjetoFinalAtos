@@ -1,5 +1,4 @@
 using DesafioAtos.Domain.Dtos.Token;
-using DesafioAtos.Service.Fabrica.Services;
 
 namespace DesafioAtos.Service.Services.Token
 {
@@ -8,4 +7,3 @@ namespace DesafioAtos.Service.Services.Token
         TokenResponseDto CriarToken(CreateTokenDto createTokenDto);
     }
 }
-

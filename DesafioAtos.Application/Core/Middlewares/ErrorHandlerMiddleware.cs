@@ -9,15 +9,17 @@ namespace DesafioAtos.Application.Core.Middlewares
 {
     public class ErrorHandlerMiddleware
     {
-        private const string defaultErrorMessage = "Internal server error!!!";
+        private const string DEFAULT_ERROR_MESSAGE = "Internal server error!!!";
 
         private readonly RequestDelegate _next;
         private readonly IFabricaResponse _responseFactory;
+
         public ErrorHandlerMiddleware(RequestDelegate next, IFabricaResponse responseFactory)
         {
             _responseFactory = responseFactory;
             _next = next;
         }
+
         public async Task Invoke(HttpContext context)
         {
             try
@@ -32,21 +34,20 @@ namespace DesafioAtos.Application.Core.Middlewares
 
                 switch (error)
                 {
-                    case KeyNotFoundException e:
-                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                    case KeyNotFoundException:
+                        response.StatusCode = (int) HttpStatusCode.NotFound;
                         break;
 
                     case DataBaseConstraintException:
                     case InvalidEnumException:
-                    case BadRequestException e:
-                        response.StatusCode = (int)HttpStatusCode.BadRequest;
+                    case BadRequestException:
+                        response.StatusCode = (int) HttpStatusCode.BadRequest;
                         break;
 
                     case DatabaseException:
-                    case Exception e:
-                    default:
+                    case { }:
                         response.StatusCode = 500;
-                        errorMessage = defaultErrorMessage;
+                        errorMessage = DEFAULT_ERROR_MESSAGE;
                         break;
                 }
 

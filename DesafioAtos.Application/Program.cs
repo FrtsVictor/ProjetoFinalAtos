@@ -15,40 +15,37 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
 ConfigurarControllers(builder);
 InjetarDependencias(builder);
-SwaggerMiddlaware.ConfiguarSwagger(builder.Services);
+SwaggerMiddleware.ConfigurarSwagger(builder.Services);
 AuthenticationMiddlaware.ConfigurarAutenticacao(builder.Services, appConfigEcoleta.JwtKey());
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 ConfigureExceptionMiddleware.ConfigureExceptionHandler(app);
 AplicarDependencias(app);
 app.Run();
 
-void AplicarDependencias(WebApplication app)
+void AplicarDependencias(WebApplication appSettings)
 {
-    if (app.Environment.IsDevelopment())
+    if (appSettings.Environment.IsDevelopment())
     {
-        app.UseSwagger();
-        app.UseSwaggerUI();
+        appSettings.UseSwagger();
+        appSettings.UseSwaggerUI();
     }
 
-    app.UseHttpsRedirection();
-    app.UseAuthentication();
-    app.UseAuthorization();
+    appSettings.UseHttpsRedirection();
+    appSettings.UseAuthentication();
+    appSettings.UseAuthorization();
 
-    app.MapControllers();
+    appSettings.MapControllers();
 }
 
-void ConfigurarControllers(WebApplicationBuilder builder)
+void ConfigurarControllers(WebApplicationBuilder appBuilder)
 {
-    builder.Services.AddControllers()
-        .ConfigureApiBehaviorOptions(options =>
-        {
-            options.SuppressModelStateInvalidFilter = true;
-        })
+    appBuilder.Services.AddControllers()
+        .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; })
         .AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
-    builder.Services.AddEndpointsApiExplorer();
+    appBuilder.Services.AddEndpointsApiExplorer();
 }
 
 AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
@@ -63,25 +60,24 @@ AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
     return new AppConfigEcoleta(connectionString, tokenKey, passwordKey);
 }
 
-void InjetarDependencias(WebApplicationBuilder builder)
+void InjetarDependencias(WebApplicationBuilder appBuilder)
 {
-    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-    builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
-    builder.Services.AddScoped<IFabricaService, FabricaServices>();
+    appBuilder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+    appBuilder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
+    appBuilder.Services.AddScoped<IFabricaService, FabricaServices>();
 
-    builder.Services.AddControllers()
-        .AddFluentValidation(x => x.RegisterValidatorsFromAssemblyContaining<Program>());
+    appBuilder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
+    appBuilder.Services.AddSingleton<ICriptografo, Criptografo>();
+    appBuilder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
+    appBuilder.Services.AddSingleton<IMapper, Mapper>();
+    appBuilder.Services.AddSingleton<ITokenService, TokenService>();
 
-    builder.Services.AddSingleton<ICriptografo, Criptografo>();
-    builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
-    builder.Services.AddSingleton<IMapper, Mapper>();
-    builder.Services.AddSingleton<ITokenService, TokenService>();
-
-    builder.Services.AddDbContext<DatabaseContext>(options => options
+    appBuilder.Services.AddDbContext<DatabaseContext>(opt => opt
         .UseSqlServer(appConfigEcoleta
             .ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
-    builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 }
 
 
-public partial class Program { }
+public partial class Program
+{
+}

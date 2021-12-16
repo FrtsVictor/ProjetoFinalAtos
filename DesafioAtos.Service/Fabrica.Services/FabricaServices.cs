@@ -4,7 +4,7 @@ using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Service.Services.Autenticacao;
 using DesafioAtos.Service.Services.EmpresaColetora;
 using DesafioAtos.Service.Services.Token;
-using DesafioAtos.Service.Usuarios;
+using DesafioAtos.Service.Services.Usuarios;
 using Microsoft.Extensions.Logging;
 using Np.Cryptography;
 
@@ -28,9 +28,10 @@ namespace DesafioAtos.Service.Fabrica.Services
             _logger = loggerFactory.CreateLogger("Log Service");
         }
 
-        public ITokenService TokenService { get => _tokenService; }
+        public ITokenService TokenService => _tokenService;
 
         private IAutenticacaoService _autenticacaoService = null!;
+
         public IAutenticacaoService AutenticacaoService
         {
             get
@@ -42,6 +43,7 @@ namespace DesafioAtos.Service.Fabrica.Services
 
 
         private IUsuarioService _usuarioService = null!;
+
         public IUsuarioService UsuarioService
         {
             get
@@ -52,6 +54,7 @@ namespace DesafioAtos.Service.Fabrica.Services
         }
 
         private IEmpresaColetoraService _empresaColetoraService = null!;
+
         public IEmpresaColetoraService EmpresaColetoraService
         {
             get
@@ -70,18 +73,17 @@ namespace DesafioAtos.Service.Fabrica.Services
             switch (tipoRepository)
             {
                 case EFabricaService.UsuarioService:
-                    if (_usuarioService == null)
-                        _usuarioService = new UsuarioService(_unitOfWork, _mapper);
+                    _usuarioService ??= new UsuarioService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.EnderecoService:
                     break;
                 case EFabricaService.EmpresaColetoraService:
-                    if (_empresaColetoraService == null)
-                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _mapper);
+                    _empresaColetoraService ??= new EmpresaColetoraService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.AutenticacaoService:
-                    if (_autenticacaoService == null)
-                        _autenticacaoService = new AutenticacaoService(_unitOfWork, _mapper, _criptografo, _tokenService, _appConfigEcoleta.PasswordKey());
+                    _autenticacaoService ??=
+                        new AutenticacaoService(_unitOfWork, _mapper, _criptografo, _tokenService,
+                            _appConfigEcoleta.PasswordKey());
                     break;
                 default:
                     throw new Exception("Servico inválido");

@@ -1,7 +1,7 @@
 using DesafioAtos.Service.Services.Autenticacao;
 using DesafioAtos.Service.Services.EmpresaColetora;
 using DesafioAtos.Service.Services.Token;
-using DesafioAtos.Service.Usuarios;
+using DesafioAtos.Service.Services.Usuarios;
 
 namespace DesafioAtos.Service.Fabrica.Services
 {
