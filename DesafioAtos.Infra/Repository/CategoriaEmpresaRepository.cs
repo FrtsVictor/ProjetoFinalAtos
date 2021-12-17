@@ -8,15 +8,14 @@ namespace DesafioAtos.Infra.Repository
 {
     public class CategoriaEmpresaRepository : BaseRepository<CategoriaEmpresa>, ICategoriaEmpresaRepository
     {
-        public CategoriaEmpresaRepository(DatabaseContext context, ILogger logger) : base(context, logger)
-        {
-        }
+        public CategoriaEmpresaRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
         public async Task<CategoriaEmpresa?> ObterCategoriaPorId(int idCategoria, int idEmpresa) => await dbSet
             .Where(x => x.IdCategoria == idCategoria && x.IdEmpresaColetora == idEmpresa)
             .FirstOrDefaultAsync();
 
         public async Task<IEnumerable<Categoria>?> ObterTodasCategoriasPorEmpresa(int idEmpresaColetora) => await dbSet
+<<<<<<< HEAD
             .Where(x => x.IdEmpresaColetora == idEmpresaColetora)
             .Include(x => x.Categoria)
             .Select(x => x.Categoria)
@@ -28,5 +27,17 @@ namespace DesafioAtos.Infra.Repository
                 .Include(x => x.EmpresaColetora)
                 .ThenInclude(x => x.Enderecos)
                 .ToListAsync();
+=======
+                .Where(x => x.IdEmpresaColetora == idEmpresaColetora)
+                .Include(x => x.Categoria)
+                .Select(x => x.Categoria)
+                .ToListAsync();
+
+        public async Task<IEnumerable<CategoriaEmpresa>>? ObterEmpresasPorIdCategoria(IEnumerable<int> ids) => await dbSet
+            .Where(x => ids.Contains(x.IdCategoria))
+            .Include(x => x.EmpresaColetora)
+            .ThenInclude(x => x.Enderecos)
+            .ToListAsync();        
+>>>>>>> a4c0c85 (datanotation)
     }
 }

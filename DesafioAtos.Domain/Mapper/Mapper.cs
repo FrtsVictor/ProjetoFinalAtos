@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 using System.Diagnostics;
+=======
+>>>>>>> a4c0c85 (datanotation)
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
@@ -12,7 +15,10 @@ namespace DesafioAtos.Domain.Mapper
     {
         private readonly ICriptografo _criptografo;
         private readonly string _passKey;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public Mapper(ICriptografo criptografo, AppConfigEcoleta appConfigEcoleta)
         {
             this._passKey = appConfigEcoleta.PasswordKey();
@@ -34,6 +40,7 @@ namespace DesafioAtos.Domain.Mapper
             Nome = criarUsuarioDto.Nome
         };
 
+<<<<<<< HEAD
         public EmpresaColetora MapCriarEmpresaDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) =>
             new EmpresaColetora()
             {
@@ -44,6 +51,17 @@ namespace DesafioAtos.Domain.Mapper
                 Senha = _criptografo.Criptografar(_passKey, empresaColetoraDto.Senha),
                 Enderecos = empresaColetoraDto.Enderecos.Select(MapCriarEnderecoDtoToEndereco).ToList()
             };
+=======
+        public EmpresaColetora MapCriarEmpresaDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) => new EmpresaColetora()
+        {
+            Cnpj = empresaColetoraDto.Cnpj,
+            Email = empresaColetoraDto.Email,
+            Nome = empresaColetoraDto.Nome,
+            Telefone = empresaColetoraDto.Telefone,
+            Senha = _criptografo.Criptografar(_passKey, empresaColetoraDto.Senha),
+            Enderecos = empresaColetoraDto.Enderecos.Select(MapCriarEnderecoDtoToEndereco).ToList()
+        };
+>>>>>>> a4c0c85 (datanotation)
 
         public Endereco MapCriarEnderecoDtoToEndereco(CriarEnderecoDto criarEnderecoDto) => new Endereco()
         {
@@ -65,7 +83,11 @@ namespace DesafioAtos.Domain.Mapper
         };
 
         public void MapEditarEmpresaDtoToEmpresaColetora(EditarEmpresaColetoraDto editarEmpresaDto,
+<<<<<<< HEAD
             EmpresaColetora empresaColetora)
+=======
+             EmpresaColetora empresaColetora)
+>>>>>>> a4c0c85 (datanotation)
         {
             empresaColetora.Email = editarEmpresaDto.Email ?? empresaColetora.Email;
             empresaColetora.Cnpj = editarEmpresaDto.Cnpj ?? empresaColetora.Cnpj;
@@ -91,6 +113,7 @@ namespace DesafioAtos.Domain.Mapper
             IdCategoria = idCategoria
         };
 
+<<<<<<< HEAD
         public EnderecoDto MapEnderecoToEnderecoDto(Endereco? endereco)
         {
             Debug.Assert(endereco != null, nameof(endereco) + " != null");
@@ -116,6 +139,27 @@ namespace DesafioAtos.Domain.Mapper
                 Nome = empresaColetora.Nome,
                 Telefone = empresaColetora.Telefone
             };
+=======
+        public EnderecoDto MapEnderecoToEnderecoDto(Endereco endereco) => new EnderecoDto
+        {
+            Id = endereco.Id,
+            Bairro = endereco.Bairro,
+            Cep = endereco.Cep,
+            Cidade = endereco.Cidade,
+            Complemento = endereco.Complemento,
+            Estado = endereco.Estado,
+            Numero = endereco.Numero,
+            Rua = endereco.Rua
+        };
+
+        public EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora) => new EmpresaColetoraDto
+        {
+            Email = empresaColetora.Email,
+            Enderecos = empresaColetora.Enderecos.Select(MapEnderecoToEnderecoDto).ToList(),
+            Nome = empresaColetora.Nome,
+            Telefone = empresaColetora.Telefone
+        };
+>>>>>>> a4c0c85 (datanotation)
 
         public void MapEditarEnderecoToEndereco(EditarEnderecoDto editarEnderecoDto, Endereco endereco)
         {

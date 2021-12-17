@@ -1,6 +1,6 @@
 using System;
-using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -8,44 +8,30 @@ using Newtonsoft.Json;
 
 namespace Test.Utils
 {
-    public static class UtilitarioTest
+    public static class UtilitarioHttp
     {
-        private static WebApplicationFactory<Program> ObterWebApplication() =>
+        private static HttpClient CriarHttpClient() =>
             new WebApplicationFactory<Program>()
-                .WithWebHostBuilder(builder => { builder.ConfigureServices(services => { }); });
+                .WithWebHostBuilder(builder => { builder.ConfigureServices(services => { }); }).CreateClient();
 
-        private static HttpClient CriarHttpClient() => ObterWebApplication().CreateClient();
-        
-
-        public static async Task<HttpResponseMessage> HttpPostAsync<TEntrada>(TEntrada dadosEnvio, string uri)
+        public static async Task<HttpResponseMessage> HttpPostAsync<T>(T requestBody, string uri, string? token = null)
         {
             var client = CriarHttpClient();
-            var jsonCorpo = JsonConvert.SerializeObject(dadosEnvio);
-
+            var requestBodyJson = JsonConvert.SerializeObject(requestBody);
+            
             var request = new HttpRequestMessage
             {
                 Method = HttpMethod.Post,
                 RequestUri = new Uri(uri),
-                Content = new StringContent(jsonCorpo, Encoding.UTF8, "application/json"),
+                Content = new StringContent(requestBodyJson, Encoding.UTF8, "application/json"),
             };
 
+            if (token != null)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            }
+
             return await client.SendAsync(request);
-
-
-            //_Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "Your Oauth token");
-
-
-            //response.EnsureSuccessStatusCode(); //
-
-            //var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
-
-            // if (response.StatusCode != statusCodeEsperado)
-            // {
-            //     Assert.Fail();
-            // }
-
-
-            // return responseBody;
         }
     }
 }

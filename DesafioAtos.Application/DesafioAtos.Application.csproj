@@ -4,7 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+<<<<<<< HEAD
     <DocumentationFile>bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+=======
+    <BaseIntermediateOutputPath />
+	  <DocumentationFile> bin\$(Configuration)\$(AssemblyName).xml</DocumentationFile>
+>>>>>>> a4c0c85 (datanotation)
   </PropertyGroup>
 
   <ItemGroup>
@@ -19,7 +24,11 @@
     <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />
     <ProjectReference Include="..\DesafioAtos.Service\DesafioAtos.Service.csproj" />
     <ProjectReference Include="..\DesafioAtos.Infra\DesafioAtos.Infra.csproj" />
+<<<<<<< HEAD
     <ProjectReference Include="..\NP-Criptography\Criptografo\Criptografo.csproj" />
+=======
+    <ProjectReference Include="..\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
+>>>>>>> a4c0c85 (datanotation)
   </ItemGroup>
 
 </Project>

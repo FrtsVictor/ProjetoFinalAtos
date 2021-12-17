@@ -25,7 +25,10 @@ namespace DesafioAtos.Infra.UnitWork
         private readonly ILogger _logger = null!;
 
         private IEmpresaColetoraRepository _empresaColetoraRepository = null!;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public IEmpresaColetoraRepository EmpresaColetora
         {
             get
@@ -36,7 +39,10 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private IEnderecoRepository _enderecoRepository = null!;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public IEnderecoRepository Endereco
         {
             get
@@ -47,7 +53,10 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private IUsuarioRepository _userRepository = null!;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public IUsuarioRepository Users
         {
             get
@@ -58,7 +67,10 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private ICategoriaEmpresaRepository _categoriaEmpresaRepository = null!;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public ICategoriaEmpresaRepository CategoriaEmpresa
         {
             get
@@ -69,7 +81,10 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private ICategoriaUsuarioRepository _categoriaUsuarioRepository = null!;
+<<<<<<< HEAD
 
+=======
+>>>>>>> a4c0c85 (datanotation)
         public ICategoriaUsuarioRepository CategoriaUsuario
         {
             get
@@ -87,7 +102,11 @@ namespace DesafioAtos.Infra.UnitWork
 
         public void Dispose()
         {
+<<<<<<< HEAD
             _logger.LogWarning("Disposing database contex");
+=======
+            _logger.LogWarning("Disposing database contex.");
+>>>>>>> a4c0c85 (datanotation)
             _context.Dispose();
         }
 
@@ -172,6 +191,7 @@ namespace DesafioAtos.Infra.UnitWork
             switch (tipoRepository)
             {
                 case ETipoRepository.UsuarioRepository:
+<<<<<<< HEAD
                     _userRepository ??= new UsuarioRepository(_context, _logger);
                     break;
                 case ETipoRepository.EnderecoRepository:
@@ -185,6 +205,26 @@ namespace DesafioAtos.Infra.UnitWork
                     break;
                 case ETipoRepository.CategoriaUsuarioRepository:
                     _categoriaUsuarioRepository ??= new CategoriaUsuarioRepository(_context, _logger);
+=======
+                    if (_userRepository == null)
+                        _userRepository = new UsuarioRepository(_context, _logger);
+                    break;
+                case ETipoRepository.EnderecoRepository:
+                    if (_enderecoRepository == null)
+                        _enderecoRepository = new EnderecoRepository(_context, _logger);
+                    break;
+                case ETipoRepository.EmpresaColetaRepository:
+                    if (_empresaColetoraRepository == null)
+                        _empresaColetoraRepository = new EmpresaColetoraRepository(_context, _logger);
+                    break;
+                case ETipoRepository.CategoriaEmpresaRepository:
+                    if (_categoriaEmpresaRepository == null)
+                        _categoriaEmpresaRepository = new CategoriaEmpresaRepository(_context, _logger);
+                    break;
+                case ETipoRepository.CategoriaUsuarioRepository:
+                    if (_categoriaUsuarioRepository == null)
+                        _categoriaUsuarioRepository = new CategoriaUsuarioRepository(_context, _logger);
+>>>>>>> a4c0c85 (datanotation)
                     break;
                 default:
                     throw new DatabaseException("Repositorio inválido");

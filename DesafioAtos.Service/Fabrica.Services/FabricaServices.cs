@@ -1,6 +1,10 @@
 
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
+<<<<<<< HEAD
+=======
+using DesafioAtos.Infra.UnitWork;
+>>>>>>> a4c0c85 (datanotation)
 using DesafioAtos.Service.Services.Autenticacao;
 using DesafioAtos.Service.Services.EmpresaColetora;
 using DesafioAtos.Service.Services.Token;
@@ -73,12 +77,22 @@ namespace DesafioAtos.Service.Fabrica.Services
             switch (tipoRepository)
             {
                 case EFabricaService.UsuarioService:
+<<<<<<< HEAD
                     _usuarioService ??= new UsuarioService(_unitOfWork, _mapper);
+=======
+                    if (_usuarioService == null)
+                        _usuarioService = new UsuarioService(_unitOfWork, _mapper);
+>>>>>>> a4c0c85 (datanotation)
                     break;
                 case EFabricaService.EnderecoService:
                     break;
                 case EFabricaService.EmpresaColetoraService:
+<<<<<<< HEAD
                     _empresaColetoraService ??= new EmpresaColetoraService(_unitOfWork, _mapper);
+=======
+                    if (_empresaColetoraService == null)
+                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _mapper);
+>>>>>>> a4c0c85 (datanotation)
                     break;
                 case EFabricaService.AutenticacaoService:
                     _autenticacaoService ??=

@@ -14,7 +14,6 @@ namespace DesafioAtos.Service.Fabrica.Services
         protected ICriptografo _criptografo = null!;
         protected ITokenService _tokenService = null!;
         protected AppConfigEcoleta _appConfigEcoleta = null!;
-        protected AutoMapper.IMapper _autoMapper = null!;
         protected ILogger _logger = null!;
     }
 }

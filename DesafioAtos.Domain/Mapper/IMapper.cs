@@ -11,10 +11,14 @@ namespace DesafioAtos.Domain.Mapper
         CreateTokenDto MapUsuarioToCreateTokenDto(Usuario usuario = null!);
         CreateTokenDto MapCriarEmpresaToCreateTokenDto(EmpresaColetora empresaColetora = null!);
         Endereco MapCriarEnderecoDtoToEndereco(CriarEnderecoDto criarEnderecoDto = null!);
+<<<<<<< HEAD
 
         void MapEditarEmpresaDtoToEmpresaColetora(EditarEmpresaColetoraDto empresaColetoraDto,
             EmpresaColetora empresaColetora = null!);
 
+=======
+        void MapEditarEmpresaDtoToEmpresaColetora(EditarEmpresaColetoraDto empresaColetoraDto, EmpresaColetora empresaColetora = null!);
+>>>>>>> a4c0c85 (datanotation)
         void MapEditarUsuarioDtoToUsuario(EditarUsuarioDto usuarioDto, Usuario usuario = null!);
         EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora);
         EnderecoDto MapEnderecoToEnderecoDto(Endereco? endereco);
@@ -22,5 +26,10 @@ namespace DesafioAtos.Domain.Mapper
 
         CategoriaEmpresa CriarCategoriaEmpresa(int idEmpresa, int idCategoria);
         CategoriaUsuario CriarCategoriaUsuario(int idUsuario, int idCategoria);
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> a4c0c85 (datanotation)
     }
 }

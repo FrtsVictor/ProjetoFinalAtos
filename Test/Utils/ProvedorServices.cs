@@ -1,47 +1,104 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using DesafioAtos.Application.Controllers;
+using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos.Token;
+using DesafioAtos.Domain.Enums;
 using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Fabrica.Services;
-using Microsoft.AspNetCore.Mvc.Testing;
-using Microsoft.Extensions.DependencyInjection;
+using DesafioAtos.Service.Services.Token;
+using Microsoft.Extensions.Configuration;
+using Np.Cryptography;
 
 namespace Test.Utils;
 
-public class ServiceProvider
+public class ProvedorServices : InicializadorServicos
 {
-    private static IFabricaService _fabricaService = null!;
-    private static IFabricaResponse _fabricaResponse = null!;
-    private static IUnitOfWork _unitOfWork = null!;
-
-    public async Task<string> ObterToken()
+    public AppConfigEcoleta AppConfigEcoleta
     {
-        var usuario = await _unitOfWork.Users.ObterPorLoginAsync("Test__");
-        Debug.Assert(usuario != null, nameof(usuario) + " != null");
-        var createTOken = new CreateTokenDto()
-            {Id = usuario.Id, Identificador = usuario.Login, Role = usuario.Role.ToString()};
-
-        return _fabricaService.TokenService.CriarToken(createTOken).Token ?? throw new InvalidOperationException();
+        get
+        {
+            var configuration = Configuration;
+            var criptografo = Criptografo;
+            ObterAppConfigEcoleta(configuration, criptografo);
+            return _appConfigEcolta;
+        }
     }
 
-    public static IFabricaService FabricaService
+
+    public Criptografo Criptografo
     {
-        get { return _fabricaService ??= ObterWebApplication().Services.GetService<IFabricaService>()!; }
+        get
+        {
+            ObterCriptogafo();
+            return _criptografo;
+        }
     }
 
-    public static IFabricaResponse FabricaResponse
+
+    public IConfiguration Configuration
     {
-        get { return _fabricaResponse ??= ObterWebApplication().Services.GetService<IFabricaResponse>()!; }
+        get
+        {
+            ObterIConfiguration();
+            return _configuration;
+        }
     }
 
-    public static IUnitOfWork UnitOfWork
+
+    public IFabricaService FabricaService
     {
-        get { return _unitOfWork ??= ObterWebApplication().Services.GetService<IUnitOfWork>()!; }
+        get
+        {
+            var token = TokenService;
+            var config = AppConfigEcoleta;
+            var uniOfWork = UnitOfWork;
+            var criptofrafo = Criptografo;
+
+            ObterFabricaService(config, uniOfWork, token, criptofrafo);
+            return _fabricaService;
+        }
     }
 
-    private static WebApplicationFactory<Program> ObterWebApplication() =>
-        new WebApplicationFactory<Program>()
-            .WithWebHostBuilder(builder => { builder.ConfigureServices(services => { }); });
+
+    public IFabricaResponse FabricaResponse
+    {
+        get
+        {
+            if (_fabricaResponse != null) return _fabricaResponse;
+            _fabricaResponse = new FabricaResponse();
+            return _fabricaResponse;
+        }
+    }
+
+
+    public UnitOfWork UnitOfWork
+    {
+        get
+        {
+            ObterUnitOfWork();
+            return _unitOfWork;
+        }
+    }
+
+    public TokenService TokenService
+    {
+        get
+        {
+            var appConfigEcoleta = AppConfigEcoleta;
+            ObterTokenService(appConfigEcoleta);
+            return _tokenService;
+        }
+    }
+
+
+    public async Task<string> ObterToken(string login = "Test__")
+    {
+        var usuario = await UnitOfWork.Users.ObterPorLoginAsync(login);
+        var createToken = new CreateTokenDto()
+            {Id = usuario.Id, Identificador = usuario.Login, Role = ERole.Usuario.ToString()};
+
+        var response = FabricaService.TokenService.CriarToken(createToken);
+        return response.Token ?? throw new InvalidOperationException();
+    }
 }

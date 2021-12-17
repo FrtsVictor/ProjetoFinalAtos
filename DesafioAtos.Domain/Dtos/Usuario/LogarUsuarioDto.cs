@@ -5,6 +5,7 @@ namespace DesafioAtos.Domain.Dtos
     public class LogarUsuarioDto
     {
         [Required(ErrorMessage = "Propriedade {0} � obrigat�ria.")]
+<<<<<<< HEAD
         [StringLength(maximumLength: 20, MinimumLength = 4,
             ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Login { get; set; } = null!;
@@ -12,6 +13,13 @@ namespace DesafioAtos.Domain.Dtos
         [Required(ErrorMessage = "Propriedade {0} � obrigat�ria.")]
         [StringLength(maximumLength: 30, MinimumLength = 5,
             ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+=======
+        [StringLength(maximumLength: 20, MinimumLength = 4, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+        public string Login { get; set; } = null!;
+
+        [Required(ErrorMessage = "Propriedade {0} � obrigat�ria.")]
+        [StringLength(maximumLength: 30, MinimumLength = 5, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+>>>>>>> a4c0c85 (datanotation)
         public string Senha { get; set; } = null!;
     }
 }

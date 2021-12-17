@@ -10,7 +10,11 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
         Task DeletaEmpresaColetora(int id);
         Task<IEnumerable<string>?> ObterCategorias(int id);
         Task<int> AdicionarEndereco(CriarEnderecoDto enderecoDto, int idEmpresa);
+<<<<<<< HEAD
         Task<IEnumerable<EnderecoDto>?> ObterEnderecos(int idEmpresa);
+=======
+        Task<IEnumerable<EnderecoDto>> ObterEnderecos(int idEmpresa);
+>>>>>>> a4c0c85 (datanotation)
         Task EditarEndereco(int idEmpresa, EditarEnderecoDto editarEnderecoDto);
         Task RemoverEndereco(int idEndereco);
         Task<ECategoria> AdicionarCategoria(CategoriaDto adicionarCategoriaDto);

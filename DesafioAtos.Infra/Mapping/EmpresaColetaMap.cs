@@ -24,7 +24,11 @@ namespace DesafioAtos.Infra.Mapping
 
             entity.Property(e => e.Role).HasColumnName("role");
 
+<<<<<<< HEAD
             entity.Property(e => e.Senha)
+=======
+           entity.Property(e => e.Senha)
+>>>>>>> a4c0c85 (datanotation)
                 .HasMaxLength(200)
                 .IsUnicode(false)
                 .HasColumnName("senha");
@@ -60,7 +64,7 @@ namespace DesafioAtos.Infra.Mapping
             entity.HasData(Seed());
         }
 
-        private IEnumerable<EmpresaColetora> Seed() => new List<EmpresaColetora>()
+        private List<EmpresaColetora> Seed() => new List<EmpresaColetora>()
         {
             new EmpresaColetora()
             {

@@ -14,5 +14,9 @@ namespace DesafioAtos.Infra.Repository
 
         public async Task<IEnumerable<Endereco?>> ObterTodosPorIdEmpresaAsync(int idEmpresa) =>
             await dbSet.Where(x => x.IdEmpresaColeta == idEmpresa).ToListAsync();
+<<<<<<< HEAD
+=======
+
+>>>>>>> a4c0c85 (datanotation)
     }
 }
