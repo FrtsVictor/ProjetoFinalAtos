@@ -57,7 +57,7 @@ namespace DesafioAtos.Infra.Mapping
                 .IsFixedLength();
 
 
-            entity.HasData(Seed());
+            //entity.HasData(Seed());
         }
 
         private IEnumerable<EmpresaColetora> Seed() => new List<EmpresaColetora>()

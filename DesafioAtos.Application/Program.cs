@@ -4,10 +4,10 @@ using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitWork;
-using Microsoft.EntityFrameworkCore;
-using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
+using Microsoft.EntityFrameworkCore;
+using Np.Cryptography;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -38,11 +38,14 @@ void AplicarDependencias(WebApplication appSettings)
 }
 
 void ConfigurarControllers(WebApplicationBuilder appBuilder)
-{
-    appBuilder.Services.AddControllers()
-        .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; })
+{   
+    builder.Services.AddControllers()
+        .ConfigureApiBehaviorOptions(options =>
+        {
+            options.SuppressModelStateInvalidFilter = true;
+        })
         .AddJsonOptions(x =>
-            x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
     appBuilder.Services.AddEndpointsApiExplorer();
 }
@@ -65,15 +68,18 @@ void InjetarDependencias(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
     appBuilder.Services.AddScoped<IFabricaService, FabricaServices>();
 
-    appBuilder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
     appBuilder.Services.AddSingleton<ICriptografo, Criptografo>();
     appBuilder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
-    appBuilder.Services.AddSingleton<IMapper, Mapper>();
-    appBuilder.Services.AddSingleton<ITokenService, TokenService>();
+
+    builder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
+    builder.Services.AddSingleton<ICriptografo, Criptografo>();
+    builder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
+    builder.Services.AddSingleton<IMapper, Mapper>();
+    builder.Services.AddSingleton<ITokenService, TokenService>();
 
     appBuilder.Services.AddDbContext<DatabaseContext>(opt => opt
         .UseSqlServer(appConfigEcoleta
-            .ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
+            .ConnectionString()));
 }
 
 

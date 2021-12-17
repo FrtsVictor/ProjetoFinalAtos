@@ -8,9 +8,7 @@ namespace DesafioAtos.Infra.Repository
 {
     public class CategoriaEmpresaRepository : BaseRepository<CategoriaEmpresa>, ICategoriaEmpresaRepository
     {
-        public CategoriaEmpresaRepository(DatabaseContext context, ILogger logger) : base(context, logger)
-        {
-        }
+        public CategoriaEmpresaRepository(DatabaseContext context, ILogger logger) : base(context, logger) { }
 
         public async Task<CategoriaEmpresa?> ObterCategoriaPorId(int idCategoria, int idEmpresa) => await dbSet
             .Where(x => x.IdCategoria == idCategoria && x.IdEmpresaColetora == idEmpresa)

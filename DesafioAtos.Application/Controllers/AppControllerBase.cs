@@ -16,7 +16,10 @@ namespace DesafioAtos.Application.Controllers
             this._fabricaService = fabricaService;
             this._fabricaResponse = fabricaResponse;
         }
-
+        /// <summary>
+        /// Obter Token
+        /// </summary>
+        /// <returns></returns>
         protected int ObterIdDoToken()
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;

@@ -40,11 +40,11 @@ namespace DesafioAtos.Infra.Context
             optionsBuilder
                 .UseLoggerFactory(_myLoggerFactory)
                 .EnableSensitiveDataLogging()
-                .UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
+                //.UseSqlServer("Server=127.0.0.1;Database=projeto_final;User Id=sa;Password=yourStrong(!)Password");
 
 
             // HardCode por conta do bug com as migrations
-            //optionsBuilder.UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Initial Catalog=DesafioAtos;Integrated Security=True;MultipleActiveResultSets=true");
+            .UseSqlServer("Data Source=TIRANITAR\\SQLEXPRESS;Database=projeto_final;Integrated Security=True;MultipleActiveResultSets=true");
         }
     }
 }

@@ -25,7 +25,6 @@ namespace DesafioAtos.Infra.UnitWork
         private readonly ILogger _logger = null!;
 
         private IEmpresaColetoraRepository _empresaColetoraRepository = null!;
-
         public IEmpresaColetoraRepository EmpresaColetora
         {
             get
@@ -36,7 +35,6 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private IEnderecoRepository _enderecoRepository = null!;
-
         public IEnderecoRepository Endereco
         {
             get
@@ -47,7 +45,6 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private IUsuarioRepository _userRepository = null!;
-
         public IUsuarioRepository Users
         {
             get
@@ -58,7 +55,6 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private ICategoriaEmpresaRepository _categoriaEmpresaRepository = null!;
-
         public ICategoriaEmpresaRepository CategoriaEmpresa
         {
             get
@@ -69,7 +65,6 @@ namespace DesafioAtos.Infra.UnitWork
         }
 
         private ICategoriaUsuarioRepository _categoriaUsuarioRepository = null!;
-
         public ICategoriaUsuarioRepository CategoriaUsuario
         {
             get

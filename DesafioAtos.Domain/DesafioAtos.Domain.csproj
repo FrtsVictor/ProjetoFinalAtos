@@ -8,6 +8,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\NP-Criptography\Criptografo\Criptografo.csproj" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
   </ItemGroup>
 
 </Project>

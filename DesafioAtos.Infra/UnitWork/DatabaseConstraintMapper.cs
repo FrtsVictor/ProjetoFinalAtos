@@ -6,7 +6,6 @@ namespace DesafioAtos.Infra.UnitWork
     public class DatabaseConstraintMapper : IDatabaseConstraintMapper
     {
         private readonly ILogger<DatabaseConstraintMapper> _logger;
-
         public DatabaseConstraintMapper(ILogger<DatabaseConstraintMapper> logger)
         {
             this._logger = logger;

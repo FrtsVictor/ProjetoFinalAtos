@@ -1,4 +1,6 @@
-﻿using DesafioAtos.Application.Core.ActionFilters;
+using DesafioAtos.Application.Core.ActionFilters;
+using System.Security.Claims;
+using DesafioAtos.Application.Core.ActionFilters;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Service.Fabrica.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -17,6 +19,24 @@ namespace DesafioAtos.Application.Controllers
         {
         }
 
+        ///<summary>
+        /// Criar Usuário.
+        /// </summary>        /// 
+        /// <param name="userDto"></param>
+        /// <returns>Atualização do Usuário</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     POST /CriarUsuario
+        ///     {
+        ///          "login": "login",
+        ///          "senha": "senha",
+        ///          "nome": "Nome"
+        ///      }
+        /// </remarks>
+        /// <response code="201">Retorna criação ok</response>
+        /// <response code="400">Se o request for nulo</response>
+
         [HttpPost]
         [AllowAnonymous]
         public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
@@ -25,6 +45,23 @@ namespace DesafioAtos.Application.Controllers
             return Created("", _fabricaResponse.Criar(user.Id));
         }
 
+        ///<summary>
+        /// Atualizar Usuário.
+        /// </summary>        /// 
+        /// <param name="userDto"></param>
+        /// <returns>Atualização do Usuário</returns>
+        /// <remarks>
+        /// Sample request:
+        ///
+        ///     PUT /AlterarUsuario
+        ///     {
+        ///          "login": "login",
+        ///          "senha": "senha",
+        ///          "nome": "Nome"
+        ///      }
+        /// </remarks>
+        /// <response code="201">Retorna criação ok</response>
+        /// <response code="400">Se o request for nulo</response>
         [HttpPut]
         public async Task<IActionResult> EditarUsuario(EditarUsuarioDto atualizarUsuarioDto)
         {
@@ -32,7 +69,10 @@ namespace DesafioAtos.Application.Controllers
             return NoContent();
         }
 
-
+        /// <summary>
+        /// Deletar Usuário
+        /// </summary>
+        /// <returns></returns>
         [HttpDelete]
         public async Task<IActionResult> RemoverUsuario()
         {
@@ -40,7 +80,10 @@ namespace DesafioAtos.Application.Controllers
             return NoContent();
         }
 
-
+        /// <summary>
+        /// Listar todas as categorias
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("categoria")]
         public async Task<IActionResult?> ListarCategorias()
         {
@@ -48,23 +91,37 @@ namespace DesafioAtos.Application.Controllers
             return Ok(_fabricaResponse.Criar(categorias));
         }
 
+        /// <summary>
+        /// Adicionar Categoria
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
         [HttpPost("categoria/{idCategoria:int}")]
         public async Task<IActionResult> AdicionarCategoria(int idCategoria)
         {
-            var adicionarCategoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
+            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
             var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
             string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
             return Accepted(_fabricaResponse.Criar(response));
         }
 
+        /// <summary>
+        /// Deletar categoria
+        /// </summary>
+        /// <param name="idCategoria"></param>
+        /// <returns></returns>
         [HttpDelete("categoria/{idCategoria:int}")]
         public async Task<IActionResult> RemoverCategoria(int idCategoria)
         {
-            var categoriaDto = new CategoriaDto() {IdCategoria = idCategoria, IdLigacao = ObterIdDoToken()};
+            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
             await _fabricaService.UsuarioService.RemoverCategoria(categoriaDto);
             return NoContent();
         }
 
+        /// <summary>
+        /// Listar empresa por categoria
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("empresas")]
         public async Task<IActionResult?> ListarEmpresasPorCategoria()
         {

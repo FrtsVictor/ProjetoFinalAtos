@@ -2,7 +2,11 @@
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
 using DesafioAtos.Domain.Mapper;
+using DesafioAtos.Service.Exceptions;
+using DesafioAtos.Service.Validacoes;
+using Np.Cryptography;
 using DesafioAtos.Infra.UnitWork;
+using DesafioAtos.Service.Services;
 
 namespace DesafioAtos.Service.Services.Usuarios
 {
