@@ -19,7 +19,12 @@ Construir uma outra aplicação com a única finalidade de consumir eventos e
 expor consulta desses eventos deve ser construída para consumir os eventos gerados
 pela API principal escolhida e que irá registrar esses eventos em banco de dados.
 
-
+## Colalboradores ##
+@Anderson-MS
+@breno2012
+@joaopgreg
+@ThiagoCunhaDev
+@WALERIAMF
 
 ***Versionamento** = Git*
 
