@@ -18,7 +18,6 @@ namespace DesafioAtos.Service.Fabrica.Services
             ICriptografo criptografo,
             ITokenService tokenService,
             AppConfigEcoleta appConfigEcoleta,
-            AutoMapper.IMapper autoMapper,
             ILoggerFactory loggerFactory)
         {
             _unitOfWork = unitOfWork;
@@ -26,14 +25,10 @@ namespace DesafioAtos.Service.Fabrica.Services
             _criptografo = criptografo;
             _tokenService = tokenService;
             _appConfigEcoleta = appConfigEcoleta;
-            _autoMapper = autoMapper;
             _logger = loggerFactory.CreateLogger("Log Service");
         }
 
-        public ITokenService TokenService
-        {
-            get => _tokenService;
-        }
+        public ITokenService TokenService => _tokenService;
 
         private IAutenticacaoService _autenticacaoService = null!;
 

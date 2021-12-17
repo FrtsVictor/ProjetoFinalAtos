@@ -14,10 +14,10 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
 ConfigurarControllers(builder);
 InjetarDependencias(builder);
-SwaggerMiddlaware.ConfiguarSwagger(builder.Services);
+SwaggerMiddleware.ConfigurarSwagger(builder.Services);
 AuthenticationMiddlaware.ConfigurarAutenticacao(builder.Services, appConfigEcoleta.JwtKey());
 
-WebApplication app = builder.Build();
+var app = builder.Build();
 ConfigureExceptionMiddleware.ConfigureExceptionHandler(app);
 AplicarDependencias(app);
 app.Run();
@@ -74,7 +74,6 @@ void InjetarDependencias(WebApplicationBuilder appBuilder)
     appBuilder.Services.AddDbContext<DatabaseContext>(opt => opt
         .UseSqlServer(appConfigEcoleta
             .ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
-    appBuilder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 }
 
 

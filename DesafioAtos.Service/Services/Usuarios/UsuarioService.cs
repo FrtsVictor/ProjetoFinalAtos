@@ -19,7 +19,7 @@ namespace DesafioAtos.Service.Services.Usuarios
             this._mapper = mapper;
         }
 
-        public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
+        public async Task<Usuario> CriarUsuario(CriarUsuarioDto criarUsuarioDto)
         {
             var usuarioParaCriacao = _mapper.MapCriarUsuarioDtoToUsuario(criarUsuarioDto);
             return await _unitOfWork.ExecutarAsync(async () =>

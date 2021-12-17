@@ -21,7 +21,7 @@ namespace DesafioAtos.Application.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
         {
-            var user = await _fabricaService.UsuarioService.CriarConta(userDto);
+            var user = await _fabricaService.UsuarioService.CriarUsuario(userDto);
             return Created("", _fabricaResponse.Criar(user.Id));
         }
 

@@ -2,9 +2,9 @@ namespace Test.Utils
 {
     public abstract class EndpointsPath
     {
-        protected const string BasePath = "https://localhost:7286/";
-        protected const string ApiVersion = "api/v1";
-        protected const string Path = $"{BasePath}{ApiVersion}";
+        private const string BASE_PATH = "https://localhost:7286/";
+        private const string API_VERSION = "api/v1";
+        protected const string Path = $"{BASE_PATH}{API_VERSION}";
     }
 
     public class EndpointAutenticacao : EndpointsPath
@@ -22,8 +22,8 @@ namespace Test.Utils
 
     public class EndpointEmpresa : EndpointsPath
     {
-        public const string Empresa = $"{Path}/empresa";
-        public const string CategoriaUsuario = $"{Empresa}/categoria/";
-        public const string EmpresasUsuario = $"{Empresa}/usuarios/";
+        private const string EMPRESA = $"{Path}/empresa";
+        public const string CategoriaUsuario = $"{EMPRESA}/categoria/";
+        public const string EmpresasUsuario = $"{EMPRESA}/usuarios/";
     }
 }
