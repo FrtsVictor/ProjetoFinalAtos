@@ -69,7 +69,7 @@ Final Project Atos...
 
 ### Tecnologias
 
-* Net Framework 5.0.403
+* Net Framework 6.0.0
 * Entity Framework
 
 ## Setup
