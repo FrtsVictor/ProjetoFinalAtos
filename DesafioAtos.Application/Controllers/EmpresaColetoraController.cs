@@ -61,7 +61,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpDelete()]
         public async Task<IActionResult> RemoverEmpresa()
         {
-            await _fabricaService.EmpresaColetoraService.DeletaEmpresaColetora(ObterIdDoToken());
+            await _fabricaService.EmpresaColetoraService.DeletarEmpresaColetora(ObterIdDoToken());
             return Ok();
         }
     }

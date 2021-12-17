@@ -20,7 +20,6 @@ namespace DesafioAtos.Domain.Mapper
         UsuarioDto MapUsuarioToUsuarioDto(Usuario usuario);
         CategoriaEmpresa CriarCategoriaEmpresa(int idEmpresa, int idCategoria);
         CategoriaUsuario CriarCategoriaUsuario(int idUsuario, int idCategoria);
-
-
+        ObterEmpresaDto MapEmpresaToObterEmpresaDto(EmpresaColetora empresa);
     }
 }
