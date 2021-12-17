@@ -92,15 +92,18 @@ namespace DesafioAtos.Domain.Mapper
 
         public EnderecoDto MapEnderecoToEnderecoDto(Endereco endereco) => new EnderecoDto
         {
-            Id = endereco.Id,
-            Bairro = endereco.Bairro,
-            Cep = endereco.Cep,
-            Cidade = endereco.Cidade,
-            Complemento = endereco.Complemento,
-            Estado = endereco.Estado,
-            Numero = endereco.Numero,
-            Rua = endereco.Rua
-        };
+            return new EnderecoDto
+            {
+                Id = endereco.Id,
+                Bairro = endereco.Bairro,
+                Cep = endereco.Cep,
+                Cidade = endereco.Cidade,
+                Complemento = endereco.Complemento,
+                Estado = endereco.Estado,
+                Numero = endereco.Numero,
+                Rua = endereco.Rua
+            };
+        }
 
         public EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora) => new EmpresaColetoraDto
         {

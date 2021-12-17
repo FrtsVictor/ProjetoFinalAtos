@@ -45,7 +45,7 @@ namespace DesafioAtos.Application.Controllers
         /// </remarks>
         /// <response code="201">Retorna criação ok</response>
         /// <response code="400">Se o request for nulo</response>
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> EditarUsuario(EditarUsuarioDto atualizarUsuarioDto)
         {
             await _fabricaService.UsuarioService.Editar(ObterIdDoToken(), atualizarUsuarioDto);

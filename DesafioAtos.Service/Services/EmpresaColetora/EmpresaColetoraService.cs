@@ -95,14 +95,16 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
         public async Task EditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
         {
-            var verificarCnpj = ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
-            ValidarEntidade(verificarCnpj == false, CNPJ_INVALIDO);
 
+
+            var isCnpj = editarEmpresaDto.Cnpj != null && 
+                         ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
+            
+            ValidarEntidade(isCnpj!, CNPJ_INVALIDO);
             var verificaEmail = RegexUtilities.ValidaEmail(editarEmpresaDto.Email);
             ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
-
-            editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj);
-            editarEmpresaDto.Telefone = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Telefone);
+            editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj ?? "");
+            editarEmpresaDto.Telefone = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Telefone?? "");
 
             var empresaColetora = await _unitOfWork.ExecutarAsync(
                 async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));

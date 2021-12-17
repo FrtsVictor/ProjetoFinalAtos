@@ -76,7 +76,7 @@ public class EnderecoController : AppControllerBase
     /// <response code="400">Se o request for nulo ou inválido</response>
     /// <response code="401"> Caso nao possua autenticacao</response>
     /// <response code="403"> Caso nao possua autorizacao</response>
-    [HttpPut("/endereco-empresa/{idEndereco:int}")]
+    [HttpPatch("/endereco-empresa/{idEndereco:int}")]
     [Authorize(Roles = "EmpresaColetora")]
     public async Task<IActionResult> EditarEnderecoEmpresaColetora(int idEndereco, EditarEnderecoDto editarEmpresa)
     {
