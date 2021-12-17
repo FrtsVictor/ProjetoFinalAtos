@@ -1,10 +1,16 @@
 namespace DesafioAtos.Application.Controllers
 {
+    /// <inheritdoc />
     public class FabricaResponse : IFabricaResponse
     {
-        public object Criar(string message) => new { message = message };
-        public object Criar<T>(T data) => new { data = data };
-        public object Criar<T>(string message, T data) => new { message = message, data = data };
+        /// <inheritdoc />
+        public object Criar(string message) => new {message = message};
+
+        /// <inheritdoc />
+        public object Criar<T>(T data) => new {data = data};
+
+        /// <inheritdoc />
+        public object Criar<T>(string message, T data) => new {message = message, data = data};
     }
 }
 

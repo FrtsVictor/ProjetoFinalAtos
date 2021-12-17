@@ -6,7 +6,7 @@ using DesafioAtos.Service.Exceptions;
 using DesafioAtos.Service.Validacoes;
 using Np.Cryptography;
 using DesafioAtos.Infra.UnitWork;
-using DesafioAtos.Service.Services;
+using DesafioAtos.Service.Exceptions;
 
 namespace DesafioAtos.Service.Services.Usuarios
 {
@@ -21,6 +21,13 @@ namespace DesafioAtos.Service.Services.Usuarios
         {
             this._unitOfWork = unitOfWork;
             this._mapper = mapper;
+        }
+
+        public async Task<UsuarioDto> ObterUsuario(int id)
+        {
+            var usuario = await _unitOfWork.Users.ObterPorIdAsync(id);
+            if (usuario != null) return _mapper.MapUsuarioToUsuarioDto(usuario);
+            throw new BadRequestException("Verifique token");
         }
 
         public async Task<Usuario> CriarUsuario(CriarUsuarioDto criarUsuarioDto)

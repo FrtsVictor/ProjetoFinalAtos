@@ -1,3 +1,5 @@
+using System.Data.Common;
+using System.Diagnostics;
 using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
@@ -118,6 +120,13 @@ namespace DesafioAtos.Domain.Mapper
             endereco.Rua = editarEnderecoDto.Rua ?? endereco.Rua;
             endereco.Numero = editarEnderecoDto.Numero ?? endereco.Numero;
         }
+
+        public UsuarioDto MapUsuarioToUsuarioDto(Usuario usuario) => new UsuarioDto()
+        {
+            Id = usuario.Id,
+            Login = usuario.Login,
+            Nome = usuario.Nome,
+        };
 
         public CategoriaEmpresa CriarCategoriaEmpresa(int idEmpresa, int idCategoria) => new CategoriaEmpresa
         {

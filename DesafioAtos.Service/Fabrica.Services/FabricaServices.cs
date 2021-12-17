@@ -65,10 +65,6 @@ namespace DesafioAtos.Service.Fabrica.Services
             }
         }
 
-        IUsuarioService IFabricaService.UsuarioService => throw new NotImplementedException();
-
-        IEmpresaColetoraService IFabricaService.EmpresaColetoraService => throw new NotImplementedException();
-
         private void InstanciarServiceIfNull(EFabricaService tipoRepository)
         {
             switch (tipoRepository)
