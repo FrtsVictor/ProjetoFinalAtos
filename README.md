@@ -21,7 +21,7 @@ O projeto Garbage Collector consiste em uma API.NET para cadastro de empresas qu
 
 **Net Framework** 6.0.0
 
-***Versionamento** = Git*
+**Versionamento** = Git*
 
 **Persistência =** EnitityFramework **;** UnitOfWork;
 **Database = Sql Server**
