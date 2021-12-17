@@ -1,12 +1,9 @@
 # Projeto Final Atos EColeta #
 
-* [Escopo](#escopo)
-* [Requisitos](#requisitos)
-* [Dicas](#dicas)
-* [Entregas Mínimas](#entregas)
-* [Criterios de Avaliacao](#criterios)
-* [Informacoes Projeto](#informacoes)
-* [Setup](#setup)
+
+
+
+
 
 ## Escopo
 
@@ -26,12 +23,12 @@ O projeto Garbage Collector consiste em uma API.NET para cadastro de empresas qu
 
 ***Versionamento** = Git*
 
-**Persistenticia =** EnitityFramework **;** UnitOfWork;
+**Persistência =** EnitityFramework **;** UnitOfWork;
 **Database = Sql Server**
 
 **Segurança =** JwtBearerToken com filtro para Roles. ; Criptografia;
 
-**Mapemanto Enditades** = AutoMapper
+**Mapemanto Entidades** = AutoMapper
 
 **Arquitetura = DDD, RepositoryPatern, UnitOfWork**
 
