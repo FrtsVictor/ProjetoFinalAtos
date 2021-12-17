@@ -12,10 +12,10 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
         private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
         public const string ENDERECO_INVALIDO = "Id Endereco invalido";
-        public const string CNPJ_INVALIDO = "CNPJ inválido";
-        public const string EMAIL_INVALIDO = "Email inválido";
-        public const string FALHA_EMPRESA = "Falha ao encontrar Empresa, verificar Token";
-        public const string CATEGORIA_CADASTRADA = "Categoria já cadastrada";
+        private const string CnpjInvalido = "CNPJ inválido";
+        private const string EmailInvalido = "Email inválido";
+        private const string FALHA_EMPRESA = "Falha ao encontrar Empresa, verificar Token";
+        private const string CATEGORIA_CADASTRADA = "Categoria já cadastrada";
 
 
         public EmpresaColetoraService(
@@ -55,19 +55,19 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.RemoverAsync(idEndereco));
         }
 
-        public async Task<EmpresaColetoraDto> ObterEmpresaColetora(int idEmpresaColetora)
+        public async Task<ObterEmpresaDto> ObterEmpresaColetora(int idEmpresaColetora)
         {
             var empresaColetora = await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora);
-            return _mapper.MapEmpresaColetoraToEmpresaColetoraDto(empresaColetora);
+            return _mapper.MapEmpresaToObterEmpresaDto(empresaColetora);
         }
 
         public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
         {
             var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraDto.Cnpj);
-            ValidarEntidade(verificarCnpj == false, CNPJ_INVALIDO);
+            ValidarEntidade(verificarCnpj == false, CnpjInvalido);
 
-            var verificaEmail = RegexUtilities.ValidaEmail(empresaColetoraDto.Email);
-            ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+            var verificaEmail = RegexUtilities.isEmailValido(empresaColetoraDto.Email);
+            ValidarEntidade(verificaEmail == false, EmailInvalido);
 
             empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
             var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
@@ -100,9 +100,9 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             var isCnpj = editarEmpresaDto.Cnpj != null && 
                          ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
             
-            ValidarEntidade(isCnpj!, CNPJ_INVALIDO);
-            var verificaEmail = RegexUtilities.ValidaEmail(editarEmpresaDto.Email);
-            ValidarEntidade(verificaEmail == false, EMAIL_INVALIDO);
+            ValidarEntidade(isCnpj!, CnpjInvalido);
+            var verificaEmail = RegexUtilities.isEmailValido(editarEmpresaDto.Email);
+            ValidarEntidade(verificaEmail == false, EmailInvalido);
             editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj ?? "");
             editarEmpresaDto.Telefone = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Telefone?? "");
 
@@ -113,7 +113,7 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             _unitOfWork.Executar(() => _unitOfWork.EmpresaColetora.Atualizar(empresaColetora));
         }
 
-        public async Task DeletaEmpresaColetora(int id) =>
+        public async Task DeletarEmpresaColetora(int id) =>
             await _unitOfWork.EmpresaColetora.RemoverAsync(id);
 
         public async Task<int> AdicionarEndereco(CriarEnderecoDto enderecoDto, int idEmpresa)

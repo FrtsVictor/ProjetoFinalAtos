@@ -140,5 +140,14 @@ namespace DesafioAtos.Domain.Mapper
             IdCategoria = idCategoria,
             IdEmpresaColetora = idEmpresa
         };
+
+        public ObterEmpresaDto MapEmpresaToObterEmpresaDto(EmpresaColetora empresa) => new ObterEmpresaDto()
+        {
+            Cnpj = empresa.Cnpj,
+            Email = empresa.Email,
+            Nome = empresa.Nome,
+            Telefone = empresa.Telefone
+        };
+
     }
 }

@@ -3,8 +3,15 @@ using Microsoft.OpenApi.Models;
 
 namespace DesafioAtos.Application.Core.Middlewares
 {
+    /// <summary>
+    /// Centralizador de configurações para o Swagger Api
+    /// </summary>
     public static class SwaggerMiddleware
     {
+        /// <summary>
+        /// Metodo para adicionar as configurações ao ServceCollection
+        /// </summary>
+        /// <param name="service"></param>
         public static void ConfigurarSwagger(IServiceCollection service)
         {
             var xmlFilename = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
@@ -16,22 +23,22 @@ namespace DesafioAtos.Application.Core.Middlewares
                 {
                     Version = "v1",
                     Title = "Api para cadastro de pontos de coleta",
-                    Description = "Coleta API Swagger",
+                    Description = "Garbage Collector Swagger",
                     Contact = new OpenApiContact
                     {
-                        Name = "Atos Team",
-                        Email = "Atos@gmail.com",
+                        Name = "Garbage Collector",
+                        Email = "garbage-collector@net.com",
                     },
                     License = new OpenApiLicense
                     {
-                        Name = "Atos",
+                        Name = "Garbage Collector",
                         Url = new Uri("https://github.com/FrtsVictor/ProjetoFinalAtos")
                     }
                 });
 
                 s.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {
-                    Description = "JWT Authorization header using the Bearer scheme (Example: 'Bearer meuTokenAqui')",
+                    Description = "Token de autenticacao JWT (Example: 'Bearer meuTokenAqui')",
                     Name = "Authorization",
                     In = ParameterLocation.Header,
                     Type = SecuritySchemeType.ApiKey,
