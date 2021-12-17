@@ -5,6 +5,7 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 {
     public interface IEmpresaColetoraService : IBaseService
     {
+        Task<EmpresaColetoraDto> ObterEmpresaColetora(int idEmpresaColetora);
         Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto request);
         Task EditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto request);
         Task DeletaEmpresaColetora(int id);

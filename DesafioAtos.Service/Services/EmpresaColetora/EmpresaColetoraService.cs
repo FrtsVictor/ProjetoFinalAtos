@@ -54,6 +54,12 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
             await _unitOfWork.VoidExecutarAsync(async () => await _unitOfWork.Endereco.RemoverAsync(idEndereco));
         }
 
+        public async Task<EmpresaColetoraDto> ObterEmpresaColetora(int idEmpresaColetora)
+        {
+            var empresaColetora = await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora);
+            return _mapper.MapEmpresaColetoraToEmpresaColetoraDto(empresaColetora);
+        }
+
         public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
         {
             var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraDto.Cnpj);

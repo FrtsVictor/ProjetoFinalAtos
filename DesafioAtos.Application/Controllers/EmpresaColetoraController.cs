@@ -18,6 +18,16 @@ namespace DesafioAtos.Application.Controllers
         }
 
         /// <summary>
+        /// Retorna Empresa baseado no ID atrelado ao token.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> ObterEmpresaColetora()
+        {
+            return Ok(await _fabricaService.EmpresaColetoraService.ObterEmpresaColetora(ObterIdDoToken()));
+        }
+
+        /// <summary>
         /// Atualizar Empresa.
         /// </summary>
         /// <param name="request"></param>
