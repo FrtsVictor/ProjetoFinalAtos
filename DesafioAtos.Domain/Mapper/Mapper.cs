@@ -94,7 +94,6 @@ namespace DesafioAtos.Domain.Mapper
 
         public EnderecoDto MapEnderecoToEnderecoDto(Endereco? endereco)
         {
-            Debug.Assert(endereco != null, nameof(endereco) + " != null");
             return new EnderecoDto
             {
                 Id = endereco.Id,

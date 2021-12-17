@@ -47,7 +47,7 @@ namespace DesafioAtos.Application.Controllers
         /// </remarks>
         /// <response code="201">Retorna atualização ok</response>
         /// <response code="400">Se o request for nulo</response>
-        [HttpPut]
+        [HttpPatch]
         public async Task<IActionResult> AtualizarEmpresa(EditarEmpresaColetoraDto request)
         {
             await _fabricaService.EmpresaColetoraService.EditarEmpresaColetora(ObterIdDoToken(), request);
