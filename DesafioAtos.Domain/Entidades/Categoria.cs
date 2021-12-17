@@ -2,8 +2,10 @@
 {
     public partial class Categoria : EntidadeBase
     {
-        public Categoria() { }
-     
+        public Categoria()
+        {
+        }
+
         public string Nome { get; set; } = null!;
     }
 }

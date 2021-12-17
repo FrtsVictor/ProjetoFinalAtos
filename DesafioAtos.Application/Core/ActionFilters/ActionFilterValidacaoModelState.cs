@@ -12,9 +12,8 @@ namespace DesafioAtos.Application.Core.ActionFilters
             var listaDeErros = context.ModelState.SelectMany(sm => sm.Value?.Errors!)
                 .Select(s => s.ErrorMessage).ToList();
 
-                context.Result = new BadRequestObjectResult(new FabricaResponse()
-                    .Criar("Um ou mais campos invalidos!", listaDeErros));
-            }
+            context.Result = new BadRequestObjectResult(new FabricaResponse()
+                .Criar("Um ou mais campos invalidos!", listaDeErros));
         }
     }
 }

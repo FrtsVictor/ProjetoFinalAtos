@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Infra", "Desafi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DesafioAtos.Service", "DesafioAtos.Service\DesafioAtos.Service.csproj", "{777A6326-BB5E-4B43-A40F-659347A88364}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Test", "Test\Test.csproj", "{BA224555-80C7-43C2-AE51-F51B852F7254}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Np.Criptografia", "NP-Criptography\Cryptography\Np.Criptografia.csproj", "{6EB3BA9F-2BFA-44B3-9491-5AC6CAB696EE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{BA224555-80C7-43C2-AE51-F51B852F7254}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NP-Criptography", "NP-Criptography", "{30A707BE-7D2B-4EAA-A0D0-914C3C11F24D}"
 EndProject

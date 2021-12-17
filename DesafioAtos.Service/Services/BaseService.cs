@@ -9,15 +9,13 @@ namespace DesafioAtos.Service.Services
         public void ValidarCategoria(int value)
         {
             if (!Enum.IsDefined(typeof(ECategoria), value))
-                throw new InvalidEnumException();
+                throw new InvalidEnumException("Id categoria invalido.");
         }
 
         public void ValidarEntidade(bool isTrue, string mensagemErro)
         {
             if (isTrue)
-            {
                 throw new BadRequestException(mensagemErro);
-            }
         }
     }
 }

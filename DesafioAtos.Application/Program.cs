@@ -4,10 +4,10 @@ using DesafioAtos.Domain.Core;
 using DesafioAtos.Domain.Mapper;
 using DesafioAtos.Infra.Context;
 using DesafioAtos.Infra.UnitWork;
-using Microsoft.EntityFrameworkCore;
-using Np.Cryptography;
 using DesafioAtos.Service.Fabrica.Services;
 using DesafioAtos.Service.Services.Token;
+using Microsoft.EntityFrameworkCore;
+using Np.Cryptography;
 using System.Text.Json.Serialization;
 using FluentValidation.AspNetCore;
 
@@ -15,9 +15,7 @@ var builder = WebApplication.CreateBuilder(args);
 var appConfigEcoleta = CriarAppConfigEcoleta(builder);
 ConfigurarControllers(builder);
 InjetarDependencias(builder);
-
-SwaggerMiddlaware.ConfiguarSwagger(builder.Services);
-
+SwaggerMiddleware.ConfigurarSwagger(builder.Services);
 AuthenticationMiddlaware.ConfigurarAutenticacao(builder.Services, appConfigEcoleta.JwtKey());
 
 var app = builder.Build();
@@ -41,7 +39,7 @@ void AplicarDependencias(WebApplication appSettings)
 }
 
 void ConfigurarControllers(WebApplicationBuilder appBuilder)
-{
+{   
     builder.Services.AddControllers()
         .ConfigureApiBehaviorOptions(options =>
         {
@@ -67,9 +65,12 @@ AppConfigEcoleta CriarAppConfigEcoleta(WebApplicationBuilder webBuild)
 
 void InjetarDependencias(WebApplicationBuilder appBuilder)
 {
-    builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-    builder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
-    builder.Services.AddScoped<IFabricaService, FabricaServices>();
+    appBuilder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+    appBuilder.Services.AddScoped<IDatabaseConstraintMapper, DatabaseConstraintMapper>();
+    appBuilder.Services.AddScoped<IFabricaService, FabricaServices>();
+
+    appBuilder.Services.AddSingleton<ICriptografo, Criptografo>();
+    appBuilder.Services.AddSingleton<IFabricaResponse, FabricaResponse>();
 
     builder.Services.AddSingleton<AppConfigEcoleta>(appConfigEcoleta);
     builder.Services.AddSingleton<ICriptografo, Criptografo>();
@@ -79,8 +80,10 @@ void InjetarDependencias(WebApplicationBuilder appBuilder)
 
     appBuilder.Services.AddDbContext<DatabaseContext>(opt => opt
         .UseSqlServer(appConfigEcoleta
-            .ConnectionString(), x => x.MigrationsAssembly("DesafioAtos.Infra")));
+            .ConnectionString()));
 }
 
 
-public partial class Program { }
+public partial class Program
+{
+}

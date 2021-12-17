@@ -27,8 +27,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : EntidadeBase
 
     public virtual async Task<IEnumerable<T>> CriarVariosAsync(IEnumerable<T> entidades)
     {
-        await dbSet.AddRangeAsync(entidades);
-        return entidades;
+        var criarVariosAsync = entidades as T[] ?? entidades.ToArray();
+        await dbSet.AddRangeAsync(criarVariosAsync);
+        return criarVariosAsync;
     }
 
     public virtual bool Atualizar(T entidade)

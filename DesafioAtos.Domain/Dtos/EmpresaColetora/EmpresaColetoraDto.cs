@@ -1,9 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
 {
     public class EmpresaColetoraDto
     {
+        public int Id { get; set; }
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
         [StringLength(maximumLength: 200, MinimumLength = 4, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Nome { get; set; } = null!;

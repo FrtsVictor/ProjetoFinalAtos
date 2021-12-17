@@ -1,5 +1,6 @@
 using DesafioAtos.Application.Core.ActionFilters;
 using DesafioAtos.Domain.Dtos;
+using DesafioAtos.Service.Fabrica.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

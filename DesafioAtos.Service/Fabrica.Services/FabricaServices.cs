@@ -70,14 +70,12 @@ namespace DesafioAtos.Service.Fabrica.Services
             switch (tipoRepository)
             {
                 case EFabricaService.UsuarioService:
-                    if (_usuarioService == null)
-                        _usuarioService = new UsuarioService(_unitOfWork, _mapper);
+                    _usuarioService ??= new UsuarioService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.EnderecoService:
                     break;
                 case EFabricaService.EmpresaColetoraService:
-                    if (_empresaColetoraService == null)
-                        _empresaColetoraService = new EmpresaColetoraService(_unitOfWork, _mapper);
+                    _empresaColetoraService ??= new EmpresaColetoraService(_unitOfWork, _mapper);
                     break;
                 case EFabricaService.AutenticacaoService:
                     _autenticacaoService ??=

@@ -50,7 +50,7 @@ namespace DesafioAtos.Application.Controllers
         [HttpPatch]
         public async Task<IActionResult> AtualizarEmpresa(EditarEmpresaColetoraDto request)
         {
-            await _fabricaService.EmpresaColetoraService.EditarEditarEmpresaColetora(ObterIdDoToken(), request);
+            await _fabricaService.EmpresaColetoraService.EditarEmpresaColetora(ObterIdDoToken(), request);
             return Ok();
         }
 
