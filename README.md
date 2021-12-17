@@ -13,7 +13,7 @@
 O projeto Garbage Collector consiste em uma API.NET para cadastro de empresas que coletam resíduos. Possui autenticação por tipo de acesso e criptografia para guardar a senha no banco.
 
 
-## Colalboradores ##
+## Colaboradores ##
 @Anderson-MS
 @breno2012
 @joaopgreg
@@ -33,6 +33,8 @@ O projeto Garbage Collector consiste em uma API.NET para cadastro de empresas qu
 **Mapemanto Enditades** = AutoMapper
 
 **Arquitetura = DDD, RepositoryPatern, UnitOfWork**
+
+## Arquitetura do Banco ##
 
 ![Alt text](/diagrama.png?raw=true "Optional Title")
 
