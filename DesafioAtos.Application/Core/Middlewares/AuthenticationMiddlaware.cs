@@ -4,11 +4,11 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace DesafioAtos.Application.Core.Middlewares
 {
-    public class AuthenticationMiddlaware
+    public static class AuthenticationMiddlaware
     {
         public static void ConfigurarAutenticacao(IServiceCollection app, string tokenKey)
         {
-            var tokenBytearr = Encoding.ASCII.GetBytes(tokenKey);
+            var tokenByteArr = Encoding.ASCII.GetBytes(tokenKey);
 
             app.AddAuthentication(x =>
             {
@@ -19,7 +19,7 @@ namespace DesafioAtos.Application.Core.Middlewares
                 x.TokenValidationParameters = new TokenValidationParameters
                 {
                     ValidateIssuerSigningKey = true,
-                    IssuerSigningKey = new SymmetricSecurityKey(tokenBytearr),
+                    IssuerSigningKey = new SymmetricSecurityKey(tokenByteArr),
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };

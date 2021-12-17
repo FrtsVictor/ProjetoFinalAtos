@@ -1,14 +1,16 @@
 ﻿using System.Security.Cryptography;
 
+#pragma warning disable CS0618
+
 namespace Np.Cryptography;
 
 public sealed class Criptografo : ICriptografo
 {
-    private readonly byte[] Salt;
+    private readonly byte[] _salt;
 
     public Criptografo()
     {
-        Salt = GetSalt();
+        _salt = GetSalt();
     }
 
     private static byte[] GetSalt() => new byte[]
@@ -19,11 +21,11 @@ public sealed class Criptografo : ICriptografo
         0x61, 0x37, 0x69, 0x25, 0x75, 0x86, 0x45, 0x20, 0x14,
     };
 
-    private Rfc2898DeriveBytes GetSaltPassword(string password) => new Rfc2898DeriveBytes(password, Salt);
+    private Rfc2898DeriveBytes GetSaltPassword(string password) => new Rfc2898DeriveBytes(password, _salt);
 
     private static byte[] GetKey(DeriveBytes saltPassword) => saltPassword.GetBytes(32);
 
-    private static byte[] GetIV(DeriveBytes saltPassword) => saltPassword.GetBytes(16);
+    private static byte[] GetIv(DeriveBytes saltPassword) => saltPassword.GetBytes(16);
 
     public string Criptografar(string encryptPattern, string input)
     {
@@ -32,7 +34,7 @@ public sealed class Criptografo : ICriptografo
 
         using var aesService = new AesCryptoServiceProvider();
         aesService.Key = GetKey(saltPassword);
-        aesService.IV = GetIV(saltPassword);
+        aesService.IV = GetIv(saltPassword);
         var encryptor = aesService.CreateEncryptor(aesService.Key, aesService.IV);
 
         using var stream = new MemoryStream();
@@ -48,12 +50,12 @@ public sealed class Criptografo : ICriptografo
     public string Descriptografar(string decryptPattern, string input)
     {
         ValidarEntradaDeDados(decryptPattern, input);
-        byte[] byteText = Convert.FromBase64String(input);
+        var byteText = Convert.FromBase64String(input);
         var saltPassword = GetSaltPassword(decryptPattern);
 
         using var aesService = new AesCryptoServiceProvider();
         aesService.Key = GetKey(saltPassword);
-        aesService.IV = GetIV(saltPassword);
+        aesService.IV = GetIv(saltPassword);
         var decrypt = aesService.CreateDecryptor(aesService.Key, aesService.IV);
 
         using var stream = new MemoryStream(byteText);

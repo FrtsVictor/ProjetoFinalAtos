@@ -5,13 +5,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />    
     <Compile Remove="Migrations\**" />
     <EmbeddedResource Remove="Migrations\**" />
     <None Remove="Migrations\**" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DesafioAtos.Domain\DesafioAtos.Domain.csproj" />
-    <ProjectReference Include="..\NP-Criptography\Cryptography\Np.Criptografia.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.0" />

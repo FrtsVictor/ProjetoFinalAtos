@@ -7,3 +7,4 @@ namespace DesafioAtos.Application.Controllers
         public object Criar<T>(string message, T data) => new {message = message, data = data};
     }
 }
+

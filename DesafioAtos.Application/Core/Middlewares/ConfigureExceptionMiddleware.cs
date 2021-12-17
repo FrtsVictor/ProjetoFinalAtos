@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Diagnostics;
 
 namespace DesafioAtos.Application.Core.Middlewares
 {
-    public class ConfigureExceptionMiddleware
+    public static class ConfigureExceptionMiddleware
     {
         public static void ConfigureExceptionHandler(WebApplication app)
         {

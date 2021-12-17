@@ -14,13 +14,22 @@ namespace DesafioAtos.Application.Controllers
             : base(fabricaService, fabricaResponse)
         {
         }
-
+        /// <summary>
+        /// Login do Usu�rio
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns></returns>
         [HttpPost("usuario")]
         public async Task<IActionResult> LogarUsuario(LogarUsuarioDto loginDto) =>
             Ok(await _fabricaService.AutenticacaoService.LogarUsuario(loginDto));
 
+        /// <summary>
+        /// Login da Empresa
+        /// </summary>
+        /// <param name="loginDto"></param>
+        /// <returns></returns>
         [HttpPost("empresa")]
-        public async Task<IActionResult> LogarEmpresa(LogarEmpresaDto loginDto) =>
-            Ok(_fabricaResponse.Criar(await _fabricaService.AutenticacaoService.LogarEmpresa(loginDto)));
+        public async Task<IActionResult> LogarEmpresa(LogarEmpresaDto loginDto) => 
+            Ok(_fabricaResponse.Criar(await _fabricaService.AutenticacaoService.LogarEmpresa(loginDto)));       
     }
 }

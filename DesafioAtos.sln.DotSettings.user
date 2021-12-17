@@ -1,0 +1,24 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	
+	
+	
+	
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=91e9ba2b_002D0477_002D4b86_002Da1b0_002Dc84437a9d3be/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Test #8" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;MSTest::BA224555-80C7-43C2-AE51-F51B852F7254::net6.0::Test.Application.TestUsuarioControler.Test&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::BA224555-80C7-43C2-AE51-F51B852F7254::net6.0::Test.Application.TesteAutenticacaoController&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::BA224555-80C7-43C2-AE51-F51B852F7254::net6.0::Test.Application.TestUsuarioControler&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Quando/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>

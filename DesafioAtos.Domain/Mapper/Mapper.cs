@@ -96,6 +96,7 @@ namespace DesafioAtos.Domain.Mapper
             Debug.Assert(endereco != null, nameof(endereco) + " != null");
             return new EnderecoDto
             {
+                Id = endereco.Id,
                 Bairro = endereco.Bairro,
                 Cep = endereco.Cep,
                 Cidade = endereco.Cidade,
@@ -109,6 +110,7 @@ namespace DesafioAtos.Domain.Mapper
         public EmpresaColetoraDto MapEmpresaColetoraToEmpresaColetoraDto(EmpresaColetora empresaColetora) =>
             new EmpresaColetoraDto
             {
+                Id = empresaColetora.Id,
                 Email = empresaColetora.Email,
                 Enderecos = empresaColetora.Enderecos.Select(MapEnderecoToEnderecoDto).ToList(),
                 Nome = empresaColetora.Nome,

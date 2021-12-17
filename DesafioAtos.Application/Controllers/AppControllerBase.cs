@@ -9,14 +9,17 @@ namespace DesafioAtos.Application.Controllers
         protected readonly IFabricaService _fabricaService;
         protected readonly IFabricaResponse _fabricaResponse;
 
-        public AppControllerBase(
+        protected AppControllerBase(
             IFabricaService fabricaService,
             IFabricaResponse fabricaResponse)
         {
             this._fabricaService = fabricaService;
             this._fabricaResponse = fabricaResponse;
         }
-
+        /// <summary>
+        /// Obter Token
+        /// </summary>
+        /// <returns></returns>
         protected int ObterIdDoToken()
         {
             var claimsIdentity = this.User.Identity as ClaimsIdentity;

@@ -2,10 +2,6 @@
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Domain.Enums;
 using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
-using DesafioAtos.Service.Exceptions;
-using DesafioAtos.Service.Validacoes;
-using Np.Cryptography;
 using DesafioAtos.Infra.UnitWork;
 
 namespace DesafioAtos.Service.Services.Usuarios
@@ -23,7 +19,7 @@ namespace DesafioAtos.Service.Services.Usuarios
             this._mapper = mapper;
         }
 
-        public async Task<Usuario> CriarConta(CriarUsuarioDto criarUsuarioDto)
+        public async Task<Usuario> CriarUsuario(CriarUsuarioDto criarUsuarioDto)
         {
             var usuarioParaCriacao = _mapper.MapCriarUsuarioDtoToUsuario(criarUsuarioDto);
             return await _unitOfWork.ExecutarAsync(async () =>
