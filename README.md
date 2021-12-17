@@ -11,13 +11,10 @@
 ## Escopo
 
 A empresa fictícia NetBull precisa desenvolver alguns microsserviços em DotNET
-para compor funções que atendam o negócio da empresa, você poderá escolher entre
-alguns domínios como Pedido, Pagamento, Cliente ou Orçamento.
-Esses microsserviços devem expor API’s atendendo o padrão Restful e com uma documentação no modelo
+para compor funções que atendam o negócio da empresa.
+Esses microsserviços expões API’s atendendo o padrão Restful e com uma documentação no modelo
 Swagger.
-Construir uma outra aplicação com a única finalidade de consumir eventos e
-expor consulta desses eventos deve ser construída para consumir os eventos gerados
-pela API principal escolhida e que irá registrar esses eventos em banco de dados.
+
 
 ## Colalboradores ##
 @Anderson-MS
