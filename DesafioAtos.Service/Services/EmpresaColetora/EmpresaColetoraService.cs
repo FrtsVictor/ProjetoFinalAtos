@@ -1,17 +1,9 @@
-﻿
-using DesafioAtos.Domain.Core;
-using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitOfWorks;
-using DesafioAtos.Service.Validacoes;
-using Microsoft.Extensions.Configuration;
-using Np.Cryptography;
 ﻿using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Domain.Entidades;
-using DesafioAtos.Domain.Enums;
-using DesafioAtos.Domain.Mapper;
-using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Service.Validacoes;
+using DesafioAtos.Domain.Entidades;
+using DesafioAtos.Infra.UnitWork;
+using DesafioAtos.Domain.Mapper;
+using DesafioAtos.Domain.Enums;
 
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {

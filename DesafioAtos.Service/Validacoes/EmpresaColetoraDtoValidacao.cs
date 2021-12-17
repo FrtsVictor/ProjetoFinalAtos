@@ -7,12 +7,12 @@ namespace DesafioAtos.Service.Validacoes
     {
         public EmpresaColetoraDtoValidacao()
         {
-            RuleFor(x => x.Cnpj)
-                .NotEmpty()
-                .NotNull()
-                .WithMessage("Necessário Informar a Categoria")
-                .MinimumLength(14).WithMessage("CNPJ inválido")
-                .MaximumLength(14).WithMessage("CNPJ inválido");
+            // RuleFor(x => x.)
+            //     .NotEmpty()
+            //     .NotNull()
+            //     .WithMessage("Necessário Informar a Categoria")
+            //     .MinimumLength(14).WithMessage("CNPJ inválido")
+            //     .MaximumLength(14).WithMessage("CNPJ inválido");
 
             RuleFor(x => x.Telefone)
                 .NotEmpty()

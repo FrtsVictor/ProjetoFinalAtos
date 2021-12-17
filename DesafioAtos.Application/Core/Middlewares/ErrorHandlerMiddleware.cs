@@ -2,8 +2,8 @@ using System.Net;
 using System.Text.Json;
 using DesafioAtos.Application.Controllers;
 using DesafioAtos.Domain.Exceptions;
-using DesafioAtos.Infra.Exceptions;
 using DesafioAtos.Service.Exceptions;
+using DesafioAtos.Infra.Exceptions;
 
 namespace DesafioAtos.Application.Core.Middlewares
 {
