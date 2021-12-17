@@ -19,7 +19,7 @@ O projeto Garbage Collector consiste em uma API.NET para cadastro de empresas qu
 
 ## Tecnologia
 
-**Net Framework 6.0.0
+**Net Framework** 6.0.0*
 
 ***Versionamento** = Git*
 
