@@ -23,6 +23,8 @@ Swagger.
 @ThiagoCunhaDev
 @WALERIAMF
 
+## Tecnologias Utilizadas
+
 ***Versionamento** = Git*
 
 **Persistenticia =** EnitityFramework **;** UnitOfWork;
