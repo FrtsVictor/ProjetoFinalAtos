@@ -32,6 +32,7 @@ pela API principal escolhida e que irá registrar esses eventos em banco de dado
 
 **Arquitetura = DDD, RepositoryPatern, UnitOfWork**
 
+![Alt text](/diagrama.png?raw=true "Optional Title")
 
 ## Requisitos
 
