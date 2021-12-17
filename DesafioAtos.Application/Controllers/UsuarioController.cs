@@ -1,6 +1,4 @@
 using DesafioAtos.Application.Core.ActionFilters;
-using System.Security.Claims;
-using DesafioAtos.Application.Core.ActionFilters;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Service.Fabrica.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -8,47 +6,33 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DesafioAtos.Application.Controllers
 {
+    /// <inheritdoc />
     [Route("api/v1/usuario")]
     [ApiController]
     [ActionFilterValidacaoModelState]
     [Authorize(Roles = "Usuario")]
     public class UsuarioController : AppControllerBase
     {
+        /// <inheritdoc />
         public UsuarioController(IFabricaService fabricaService, IFabricaResponse fabricaResponse)
             : base(fabricaService, fabricaResponse)
         {
         }
 
-        ///<summary>
-        /// Criar Usuário.
-        /// </summary>        /// 
-        /// <param name="userDto"></param>
-        /// <returns>Atualização do Usuário</returns>
-        /// <remarks>
-        /// Sample request:
-        ///
-        ///     POST /CriarUsuario
-        ///     {
-        ///          "login": "login",
-        ///          "senha": "senha",
-        ///          "nome": "Nome"
-        ///      }
-        /// </remarks>
-        /// <response code="201">Retorna criação ok</response>
-        /// <response code="400">Se o request for nulo</response>
-
-        [HttpPost]
-        [AllowAnonymous]
-        public async Task<IActionResult> CriarUsuario(CriarUsuarioDto userDto)
+        /// <summary>
+        /// Retorna usuario baseado no ID atrelado ao token.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> ObterUsuario()
         {
-            var user = await _fabricaService.UsuarioService.CriarUsuario(userDto);
-            return Created("", _fabricaResponse.Criar(user.Id));
+            return Ok( await _fabricaService.UsuarioService.ObterUsuario(ObterIdDoToken()));
         }
 
         ///<summary>
         /// Atualizar Usuário.
         /// </summary>        /// 
-        /// <param name="userDto"></param>
+        /// <param name="atualizarUsuarioDto"></param>
         /// <returns>Atualização do Usuário</returns>
         /// <remarks>
         /// Sample request:
@@ -80,44 +64,7 @@ namespace DesafioAtos.Application.Controllers
             return NoContent();
         }
 
-        /// <summary>
-        /// Listar todas as categorias
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("categoria")]
-        public async Task<IActionResult?> ListarCategorias()
-        {
-            var categorias = await _fabricaService.UsuarioService.ObterCategorias(ObterIdDoToken());
-            return Ok(_fabricaResponse.Criar(categorias));
-        }
-
-        /// <summary>
-        /// Adicionar Categoria
-        /// </summary>
-        /// <param name="idCategoria"></param>
-        /// <returns></returns>
-        [HttpPost("categoria/{idCategoria:int}")]
-        public async Task<IActionResult> AdicionarCategoria(int idCategoria)
-        {
-            var adicionarCategoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
-            var categoria = await _fabricaService.UsuarioService.AdicionarCategoria(adicionarCategoriaDto);
-            string response = $"Categoria {categoria.ToString()} adicionada com sucesso!";
-            return Accepted(_fabricaResponse.Criar(response));
-        }
-
-        /// <summary>
-        /// Deletar categoria
-        /// </summary>
-        /// <param name="idCategoria"></param>
-        /// <returns></returns>
-        [HttpDelete("categoria/{idCategoria:int}")]
-        public async Task<IActionResult> RemoverCategoria(int idCategoria)
-        {
-            var categoriaDto = new CategoriaDto() { IdCategoria = idCategoria, IdLigacao = ObterIdDoToken() };
-            await _fabricaService.UsuarioService.RemoverCategoria(categoriaDto);
-            return NoContent();
-        }
-
+       
         /// <summary>
         /// Listar empresa por categoria
         /// </summary>
