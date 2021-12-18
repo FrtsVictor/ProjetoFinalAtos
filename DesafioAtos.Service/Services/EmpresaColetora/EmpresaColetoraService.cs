@@ -1,5 +1,4 @@
 ﻿using DesafioAtos.Domain.Dtos;
-using DesafioAtos.Service.Validacoes;
 using DesafioAtos.Domain.Entidades;
 using DesafioAtos.Infra.UnitWork;
 using DesafioAtos.Domain.Mapper;
@@ -43,7 +42,6 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
         public async Task EditarEndereco(int idEndereco, EditarEnderecoDto editarEndereco)
         {
-
             var endereco = await _unitOfWork.Endereco.ObterPorIdAsync(idEndereco);
             ValidarEntidade(endereco == null, "ENDERECO_INVALIDO");
             _mapper.MapEditarEnderecoToEndereco(editarEndereco, endereco);
@@ -63,17 +61,8 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
 
         public async Task<int> CriarEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto)
         {
-            var verificarCnpj = ValidaCnpj.IsCnpj(empresaColetoraDto.Cnpj);
-            ValidarEntidade(verificarCnpj == false, CnpjInvalido);
-
-            var verificaEmail = RegexUtilities.isEmailValido(empresaColetoraDto.Email);
-            ValidarEntidade(verificaEmail == false, EmailInvalido);
-
             empresaColetoraDto.Categorias.ForEach(ValidarCategoria);
             var empresaColetora = _mapper.MapCriarEmpresaDtoToEmpresaColetora(empresaColetoraDto);
-
-            empresaColetora.Cnpj = RegexUtilities.RemoveSpecialCharacters(empresaColetora.Cnpj);
-            empresaColetora.Telefone = RegexUtilities.RemoveSpecialCharacters(empresaColetora.Telefone);
 
             await _unitOfWork.ExecutarTransacaoAsync(
                 async () => await _unitOfWork.EmpresaColetora.CriarAsync(empresaColetora),
@@ -95,17 +84,6 @@ namespace DesafioAtos.Service.Services.EmpresaColetora
        
         public async Task EditarEmpresaColetora(int idEmpresaColetora, EditarEmpresaColetoraDto editarEmpresaDto)
         {
-
-
-            var isCnpj = editarEmpresaDto.Cnpj != null && 
-                         ValidaCnpj.IsCnpj(editarEmpresaDto.Cnpj);
-            
-            ValidarEntidade(isCnpj!, CnpjInvalido);
-            var verificaEmail = RegexUtilities.isEmailValido(editarEmpresaDto.Email);
-            ValidarEntidade(verificaEmail == false, EmailInvalido);
-            editarEmpresaDto.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj ?? "");
-            editarEmpresaDto.Telefone = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Telefone?? "");
-
             var empresaColetora = await _unitOfWork.ExecutarAsync(
                 async () => await _unitOfWork.EmpresaColetora.ObterPorIdAsync(idEmpresaColetora));
             ValidarEntidade(empresaColetora == null, FALHA_EMPRESA);
