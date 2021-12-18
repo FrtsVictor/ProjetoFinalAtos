@@ -1,4 +1,6 @@
-﻿using DesafioAtos.Domain.Entidades;
+﻿using DesafioAtos.Domain.DataAnotation;
+using DesafioAtos.Domain.DataAnotation.Email;
+using DesafioAtos.Domain.Entidades;
 using System.ComponentModel.DataAnnotations;
 
 namespace DesafioAtos.Domain.Dtos
@@ -10,11 +12,11 @@ namespace DesafioAtos.Domain.Dtos
         public string Nome { get; set; } = null!;
 
         [Required(ErrorMessage = "Propriedade {0} é obrigatória.")]
-        [StringLength(maximumLength: 18, MinimumLength = 14, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
+        [ValidacaoCnpj]
         public string Cnpj { get; set; } = null!;
 
         [Required(ErrorMessage = "Informe o seu email")]
-        [RegularExpression(".+\\@.+\\..+", ErrorMessage = "Informe um email válido...")]
+        [ValidacaoEmail]
         public string Email { get; set; } = null!;
 
 
@@ -25,17 +27,13 @@ namespace DesafioAtos.Domain.Dtos
 
         [Required]
         [Phone]
-        [StringLength(maximumLength: 14, MinimumLength = 9, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]          
+        [StringLength(maximumLength: 14, MinimumLength = 9, ErrorMessage = "A propriedade {0}  deve conter entre {1} e {2} caracteres")]
         public string Telefone { get; set; } = null!;
-        
-        
-        
+
+
         public List<CriarEnderecoDto> Enderecos { get; set; }
         public List<int> Categorias { get; set; }
 
-       
-        
-        
         public CriarEmpresaColetoraDto()
         {
             this.Enderecos = new List<CriarEnderecoDto>();
