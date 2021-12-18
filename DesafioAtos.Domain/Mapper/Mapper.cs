@@ -1,6 +1,5 @@
-using System.Data.Common;
-using System.Diagnostics;
 using DesafioAtos.Domain.Core;
+using DesafioAtos.Domain.DataAnotation;
 using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Dtos.Token;
 using DesafioAtos.Domain.Entidades;
@@ -38,10 +37,10 @@ namespace DesafioAtos.Domain.Mapper
         public EmpresaColetora MapCriarEmpresaDtoToEmpresaColetora(CriarEmpresaColetoraDto empresaColetoraDto) =>
             new EmpresaColetora()
             {
-                Cnpj = empresaColetoraDto.Cnpj,
+                Cnpj =  RegexUtilities.RemoveSpecialCharacters(empresaColetoraDto.Cnpj) ,
                 Email = empresaColetoraDto.Email,
                 Nome = empresaColetoraDto.Nome,
-                Telefone = empresaColetoraDto.Telefone,
+                Telefone = RegexUtilities.RemoveSpecialCharacters(empresaColetoraDto.Telefone),
                 Senha = _criptografo.Criptografar(_passKey, empresaColetoraDto.Senha),
                 Enderecos = empresaColetoraDto.Enderecos.Select(MapCriarEnderecoDtoToEndereco).ToList()
             };
@@ -69,7 +68,7 @@ namespace DesafioAtos.Domain.Mapper
             EmpresaColetora empresaColetora)
         {
             empresaColetora.Email = editarEmpresaDto.Email ?? empresaColetora.Email;
-            empresaColetora.Cnpj = editarEmpresaDto.Cnpj ?? empresaColetora.Cnpj;
+            empresaColetora.Cnpj = RegexUtilities.RemoveSpecialCharacters(editarEmpresaDto.Cnpj) ?? empresaColetora.Cnpj;
             empresaColetora.Nome = editarEmpresaDto.Nome ?? empresaColetora.Nome;
             empresaColetora.Telefone = editarEmpresaDto.Telefone ?? empresaColetora.Telefone;
             empresaColetora.Senha = string.IsNullOrEmpty(editarEmpresaDto.Senha)
@@ -148,6 +147,5 @@ namespace DesafioAtos.Domain.Mapper
             Nome = empresa.Nome,
             Telefone = empresa.Telefone
         };
-
     }
 }
