@@ -1,6 +1,7 @@
 ﻿using DesafioAtos.Domain.Dtos;
 using DesafioAtos.Domain.Enums;
 
+
 namespace DesafioAtos.Service.Services.EmpresaColetora
 {
     public interface IEmpresaColetoraService : IBaseService

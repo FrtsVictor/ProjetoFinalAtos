@@ -12,6 +12,7 @@ namespace DesafioAtos.Domain.Mapper
     {
         private readonly ICriptografo _criptografo;
         private readonly string _passKey;
+
         public Mapper(ICriptografo criptografo, AppConfigEcoleta appConfigEcoleta)
         {
             this._passKey = appConfigEcoleta.PasswordKey();
