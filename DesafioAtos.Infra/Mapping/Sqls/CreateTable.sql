@@ -38,7 +38,7 @@ CREATE TABLE Endereco (
     cidade VARCHAR(50) NOT NULL,
     estado VARCHAR(50) NOT NULL,
     bairro VARCHAR(20) NOT NULL,
-    id_empresa_coletora int REFERENCES Empresa_Coleta (id),    
+    id_empresa_coletora int REFERENCES Empresa_Coletora (id),    
 )
 
 CREATE TABLE Categoria (
@@ -59,5 +59,5 @@ CREATE TABLE Categoria_Usuario (
 CREATE TABLE Categoria_Empresa (
     id INT PRIMARY KEY IDENTITY (1, 1) ,
     id_categoria int REFERENCES Categoria (id) ON DELETE SET NULL,
-    id_empresa_coletora int REFERENCES EmpresaColetora (id) ON DELETE SET NULL
+    id_empresa_coletora int REFERENCES Empresa_Coletora (id) ON DELETE SET NULL
 );
